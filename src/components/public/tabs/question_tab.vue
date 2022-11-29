@@ -493,11 +493,15 @@ export default {
         /**
          * Si la réponse de lq question est soit un attachment ou camera capture.
          * */
-        if (this.documentUploaded === null && this.mustUploadDocument === true) {
-          if (this.question.reponse_type === "attachment") {
+        if (this.documentUploaded === null && this.mustUploadDocument === true)
+        {
+          if (this.question.reponse_type === "attachment")
+          {
             this.displayMsg("Veuillez attacher un document.");
             return false;
-          } else {
+          }
+          else
+            {
             this.displayMsg("Veuillez vous prendre en photo.");
             return false;
           }
@@ -589,6 +593,7 @@ export default {
             if (res.reponse === undefined || res.reponse.status !== "success") {
               this.displayMsg("Votre document précédent n'a pas été téléchargé");
             } else {
+              this.documentUploaded=null;
               answerSent = true;
               this.isQuesttionLoading = false;
             }
