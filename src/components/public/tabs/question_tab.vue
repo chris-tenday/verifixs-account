@@ -14,11 +14,11 @@
             </div>
           </div>
         </div>
-
         <div
           class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
-          v-if="question.reponse_type === 'text' || question.reponse_type === 'date'"
+          v-if="question.reponse_type === 'text' || question.reponse_type ==='telephone' || question.reponse_type === 'date'"
         >
+
           <div v-if="question.split === undefined">
             <div v-if="question.total_reponse !== 'multiple'">
               <!-- reponse type date !-->
@@ -30,7 +30,6 @@
                   @input="reponse.reponse = $event"
                 />
               </div>
-
               <!-- reponse type text !-->
               <div class="mb-3" v-else>
                 <input
@@ -47,24 +46,39 @@
 
             <div v-if="question.total_reponse === 'multiple'">
               <!-- reponse type phone !-->
-              <phone-input
-                id="inputPhone"
-                v-for="reponse in question.reponses"
-                :key="reponse.diligence_questionnaire_id"
-                v-model="reponse.reponse"
-                size="lg"
-                :translations="translations"
-                default-country-code="CD"
-                no-example="true"
-                @update="reponse.reponse = $event.e164"
-              />
+              <div v-if="question.reponse_type.includes('telephone')">
+                <phone-input
+                        id="inputPhone"
+                        v-for="reponse in question.reponses"
+                        :key="reponse.diligence_questionnaire_id"
+                        v-model="reponse.reponse"
+                        size="lg"
+                        :translations="translations"
+                        default-country-code="CD"
+                        no-example="true"
+                        @update="reponse.reponse = $event.e164"
+                />
+              </div>
+              <!-- reponse type text !-->
+              <div v-else>
+                <input
+                        v-for="reponse in question.reponses"
+                        :type="question.reponse_type"
+                        id="subj"
+                        class="form-control"
+                        placeholder="Entrez votre reponse !"
+                        v-model="reponse.reponse"
+                        :key="reponse.diligence_questionnaire_id"
+                />
+              </div>
+
             </div>
-            <button
+            <button style="margin-top: 5px;"
               v-if="question.total_reponse === 'multiple'"
               @click.prevent="addAnswer"
               class="btn btn-primary btn-sm mb-3"
             >
-              <i class="fa fa-plus me-2"></i>Ajouter un numéro
+              <i class="fa fa-plus me-2"></i>Ajouter
             </button>
           </div>
 

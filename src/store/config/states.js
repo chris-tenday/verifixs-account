@@ -11,7 +11,7 @@ if(location.href.includes(".com"))
         domain="https://back-system.verifixs.com"; /** live server */
     }
 }
-domain="https://back-system.verifixs.com";
+//domain="https://back-system.verifixs.com";
 
 
 const states = {
