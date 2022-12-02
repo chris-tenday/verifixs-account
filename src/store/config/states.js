@@ -1,4 +1,4 @@
-var domain="http://127.0.0.1/edge_verified-backend";
+var domain="http://127.0.0.1/verifixs-backend";
 if(location.href.includes(".com"))
 {
     if(location.protocol!="https:")

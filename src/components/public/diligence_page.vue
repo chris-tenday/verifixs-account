@@ -334,11 +334,19 @@ export default {
        * */
       var diligenceType = this.diligence.diligence_type;
 
-      if (tab === "actifs") {
-        if (diligenceType.includes("juridique")) {
+      if (tab === "actifs")
+      {
+        /**
+         * Exclure ces types des diligence pour ne pas accéder au tab actif,
+         * */
+        if (diligenceType.includes("juridique") || diligenceType.includes("fournisseur"))
+        {
           return false;
         }
       } else if (tab === "credits") {
+        /**
+         * Exclure ces types de diligence pour ne pas accéder au tab credits.
+         * */
         if (
           diligenceType.includes("juridique") ||
           diligenceType.includes("basique") ||
