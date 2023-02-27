@@ -51,21 +51,22 @@
 
                 <div class="col-md-6">
                   <label class="form-label" for="pass">Mot de passe <span class="text-danger">*</span></label>
-                  <input id="pass" name="pass" type="password" placeholder="Mot de passe... " class="form-control " 
+                  <input id="pass" name="pass" type="password" placeholder="Mot de passe... " class="form-control "
                     v-model="register.pass" required />
-                    <div class="text-danger" v-for="error in errors" :key="error.id">
-                      <!-- <ul :v-if='invalid'> -->
-                        {{ error }}
-                      <!-- </ul> -->
-                      
-                      
+                  <div class="text-danger" v-for="error in errors" :key="error.id">
+                    <!-- <ul :v-if='invalid'> -->
+                    {{ error }}
+                    <!-- </ul> -->
+
+
                     <!-- Mot de passe requis ! -->
                   </div>
                   <!-- <div class="invalid-feedback">Mot de passe requis !</div> -->
                 </div>
 
                 <div class="col-md-6">
-                  <label class="form-label" for="pass">Confirmation mot de passe <span class="text-danger">*</span></label>
+                  <label class="form-label" for="pass">Confirmation mot de passe <span
+                      class="text-danger">*</span></label>
                   <input id="confirmpass" name="confirmpass" type="password" placeholder="Confirmation mot de passe... "
                     v-model="register.confirmPass" class="form-control" required />
                   <div class="text-danger" v-if="isDifferent">
@@ -76,7 +77,7 @@
                 <div class="col-md-12">
                   <input class="form-check-input" type="checkbox" v-model="checked" id="invalidCheck" required />
                   <label class="form-check-label" for="invalidCheck">
-                    J'accepte les termes & politiques de confidentialité !
+                    <span class="ml-3">J'accepte les termes & politiques de confidentialité !</span>
                   </label>
                 </div>
 
@@ -130,7 +131,7 @@ export default {
       phone: "",
       invalid: true,
       errors: [],
-      isDifferent:false,
+      isDifferent: false,
     };
   },
   watch: {
@@ -143,7 +144,7 @@ export default {
       }
     },
 
-    'register.pass'(valeur){
+    'register.pass'(valeur) {
       this.validatePassword();
     }
 
@@ -156,9 +157,9 @@ export default {
       var min = 0;
       var spec = 0;
       var specialChar = /[`!@#$%^&*()_+\-=\\|,.`<>?~]/;
-      
-      if (this.register.pass.length >= 8) {    
-        
+
+      if (this.register.pass.length >= 8) {
+
         for (var i of this.register.pass) {
           if (!isNaN(i * 1)) {
             nmb += 1;
@@ -177,25 +178,25 @@ export default {
           if (nmb == 0) {
             this.errors.push('Votre mot de passe doit contenir au moins 1 chiffre');
           }
-          else{
+          else {
             this.errors.pop('Votre mot de passe doit contenir au moins 1 chiffre');
           }
           if (maj == 0) {
             this.errors.push('Votre mot de passe doit contenir au moins 1 lettre en majuscule');
           }
-          else{
+          else {
             this.errors.pop('Votre mot de passe doit contenir au moins 1 lettre en majuscule');
           }
           if (min == 0) {
             this.errors.push('Votre mot de passe doit contenir au moins 1 lettre en minuscule');
           }
-          else{
+          else {
             this.errors.pop('Votre mot de passe doit contenir au moins 1 lettre en minuscule');
           }
           if (spec == 0) {
             this.errors.push('Votre mot de passe doit contenir au moins 1 caractère spécial');
           }
-          else{
+          else {
             this.errors.pop('Votre mot de passe doit contenir au moins 1 caractère spécial');
           }
           if (this.errors == 0) {
@@ -209,12 +210,12 @@ export default {
         this.errors.push('Votre mot de passe doit contenir minimum 8 caractères')
       }
 
-      if (this.register.pass != this.register.confirmPass){
-        this.isDifferent=true
-        }
-        else{
-          this.isDifferent=false
-        }
+      if (this.register.pass != this.register.confirmPass) {
+        this.isDifferent = true
+      }
+      else {
+        this.isDifferent = false
+      }
 
       nmb = 0;
       maj = 0;
@@ -288,3 +289,18 @@ export default {
   },
 };
 </script>
+
+<style>
+.wrong .fa-check {
+  display: none;
+}
+
+.good .fa-times {
+  display: none;
+}
+
+.valid-feedback,
+.invalid-feedback {
+  margin-left: calc(2em + 0.25rem + 1.5rem);
+}
+</style>

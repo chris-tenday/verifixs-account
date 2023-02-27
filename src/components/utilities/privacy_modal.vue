@@ -61,6 +61,9 @@ export default {
       numPages: [],
     };
   },
+  mounted() {
+    this.currentPage = 0;
+  },
   methods: {
     onAccepted() {
       this.$emit("onAccepted", true);
