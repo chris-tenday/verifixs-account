@@ -20,7 +20,7 @@
                 <div class="mb-3">
                   <label class="form-label sr-only" for="pass">Mot de passe</label>
                   <input id="pass" name="pass" type="password" v-model="login.pass" placeholder="Mot de passe ..."
-                    class="form-control "  required />
+                    class="form-control " required />
                   <div class="invalid-feedback">
                     <!-- {{ error }} -->
                     Mot de passe requis !
@@ -30,7 +30,7 @@
                 <div class="mb-3 mb-0 d-grid">
                   <button type="submit" :disabled="isLoading" class="btn text-white border-0 bg-app">
                     <span class="spinner-border spinner-border-sm me-1" v-if="isLoading"></span>
-                    <i class="fas fa-unlock me-1" v-else></i> Connecter {{ login.pass }} {{ invalid }}
+                    <i class="fas fa-unlock me-1" v-else></i> Connecter
                   </button>
                 </div>
                 <p class="text-center">
@@ -61,8 +61,6 @@ export default {
     return {
       login: login,
       isLoading: false,
-      // invalid: true,
-      // errors: [],
       date: "",
     };
   },
@@ -70,7 +68,7 @@ export default {
 
     loginAccount(event) {
 
-      
+
       const forms = document.querySelectorAll("#form-login");
       // Loop over them and prevent submission
       Array.from(forms).forEach((form) => {

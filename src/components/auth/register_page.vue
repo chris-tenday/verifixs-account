@@ -21,7 +21,7 @@
                 </div>
                 <!-- Text input-->
                 <div class="col-md-6">
-                  <label class="form-label" for="email">E-Mail <span class="text-danger">*</span></label>
+                  <label class="form-label" for="email">Adresse email <span class="text-danger">*</span></label>
                   <input id="email" name="email" type="email" placeholder="adresse e-mail... ex:gaston@domain"
                     class="form-control" v-model="register.email" required />
                   <div class="invalid-feedback">Votre adresse e-mail est requise !</div>
@@ -29,36 +29,20 @@
                 <!-- Text input-->
                 <div class="col-md-6">
                   <label class="form-label" for="phone">Téléphone <span class="text-danger">*</span></label>
-
                   <phone-input v-model="phone" size="lg" :translations="translations" default-country-code="CD"
-                    :no-example="true" @update="updatePhone" required="true" />
+                    :no-example="true" @update="updatePhone" :required="true" />
                   <div class="invalid-feedback">Votre numéro de tél. requis !</div>
                 </div>
                 <!-- Select Basic -->
-
-                <!-- <div class="col-md-6">
-                  <label class="form-label" for="pass">Mot de passe</label>
-                  <input id="pass" name="pass" type="password" v-model="register.pass" placeholder="Mot de passe ..." minlength=8
-                    class="form-control" required />
-                  <div class="invalid-feedback" v-if="true" >
-                    {{ error }}
-                    <ul v-for="error, index in errors" :key="index">
-                      <li>{{ error }}</li>
-                    </ul>
-                    Mot de passe requis !
-                  </div>
-                </div> -->
 
                 <div class="col-md-6">
                   <label class="form-label" for="pass">Mot de passe <span class="text-danger">*</span></label>
                   <input id="pass" name="pass" type="password" placeholder="Mot de passe... " class="form-control "
                     v-model="register.pass" required />
-                  <div class="text-danger" v-for="error in errors" :key="error.id">
+                  <div class="text-danger" v-if="error">
                     <!-- <ul :v-if='invalid'> -->
                     {{ error }}
                     <!-- </ul> -->
-
-
                     <!-- Mot de passe requis ! -->
                   </div>
                   <!-- <div class="invalid-feedback">Mot de passe requis !</div> -->
@@ -125,30 +109,29 @@ export default {
       translations: {
         countrySelectorLabel: "Code pays",
         countrySelectorError: "Choisir un pays",
-        phoneNumberLabel: "Numéro de téléphone",
+        phoneNumberLabel: "Ex. 81xxxxxxx",
         example: "Ex. :810000000",
       },
       phone: "",
       invalid: true,
-      errors: [],
+      error: '',
       isDifferent: false,
     };
   },
   watch: {
     checked(val) {
       let modalShow = $("#btn-privacy");
-
       if (val) {
         console.log(val);
         modalShow.click();
       }
     },
 
-    'register.pass'(valeur) {
-      this.validatePassword();
+    'register.pass'(val) {
+      if (val) {
+        this.invalid = this.validatePassword();
+      }
     }
-
-
   },
   methods: {
     validatePassword() {
@@ -176,69 +159,31 @@ export default {
         }
         if (nmb || maj || min || spec) {
           if (nmb == 0) {
-            this.errors.push('Votre mot de passe doit contenir au moins 1 chiffre');
-          }
-          else {
-            this.errors.pop('Votre mot de passe doit contenir au moins 1 chiffre');
+            this.error = "Votre mot de passe doit contenir au moins 1 chiffre";
+            return true;
           }
           if (maj == 0) {
-            this.errors.push('Votre mot de passe doit contenir au moins 1 lettre en majuscule');
-          }
-          else {
-            this.errors.pop('Votre mot de passe doit contenir au moins 1 lettre en majuscule');
+            this.error = 'Votre mot de passe doit contenir au moins 1 lettre en majuscule';
+            return true;
           }
           if (min == 0) {
-            this.errors.push('Votre mot de passe doit contenir au moins 1 lettre en minuscule');
-          }
-          else {
-            this.errors.pop('Votre mot de passe doit contenir au moins 1 lettre en minuscule');
+            this.error = "Votre mot de passe doit contenir au moins 1 lettre en minuscule";
+            return true;
           }
           if (spec == 0) {
-            this.errors.push('Votre mot de passe doit contenir au moins 1 caractère spécial');
+            this.error = 'Votre mot de passe doit contenir au moins 1 caractère spécial';
+            return true;
           }
-          else {
-            this.errors.pop('Votre mot de passe doit contenir au moins 1 caractère spécial');
-          }
-          if (this.errors == 0) {
-            // this.errors.push('Valide');
-            this.invalid = false
-            console.log('Sinon', 'Nombre ', nmb, 'Majuscule', maj, 'Minuscule', min, 'Spécial', spec);
-          }
+          this.error = "";
+          return false;
         }
       }
       else {
-        this.errors.push('Votre mot de passe doit contenir minimum 8 caractères')
+        this.error = 'Votre mot de passe doit contenir minimum 8 caractères';
+        return true;
       }
-
-      if (this.register.pass != this.register.confirmPass) {
-        this.isDifferent = true
-      }
-      else {
-        this.isDifferent = false
-      }
-
-      nmb = 0;
-      maj = 0;
-      min = 0;
-      spec = 0;
-
-      this.errors = [...new Set(this.errors)];
-      console.log(this.errors);
-
-
-      // console.log(nmb);
-      // console.log(min);
-      // console.log(maj);
-      // console.log(spec);
-      console.log(this.errors, this.valid);
-      // if (this.login.pass.length >= 0 ){
-      //   alert('Court');
-      // }
-
-
     },
     registerAccount(event) {
-
       console.log(this.register.telephone);
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
       const forms = document.querySelectorAll("#form-register");

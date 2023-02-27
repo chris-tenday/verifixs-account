@@ -6,21 +6,11 @@
         <option value="" selected>-- Jour --</option>
         <option v-for="d in days" :key="d" :value="d">{{ d }}</option>
       </select>
-      <select
-        @change="updated"
-        v-model="month"
-        class="form-select w-25"
-        aria-label="Months"
-      >
+      <select @change="updated" v-model="month" class="form-select w-25" aria-label="Months">
         <option value="" selected>-- Mois --</option>
         <option v-for="m in months" :key="m.value" :value="m.value">{{ m.label }}</option>
       </select>
-      <select
-        @change="updated"
-        v-model="year"
-        class="form-select w-25"
-        aria-label="Years"
-      >
+      <select @change="updated" v-model="year" class="form-select w-25" aria-label="Years">
         <option value="" selected>-- Année --</option>
         <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
       </select>
@@ -60,8 +50,7 @@ export default {
     days() {
       let day = [];
       for (let i = 0; i <= 31; i++) {
-        if(i==31)
-        {
+        if (i == 31) {
           break;
         }
         let d = `${i + 1}`;
@@ -93,7 +82,7 @@ export default {
     years() {
       var currentYear = new Date().getFullYear();
       let y = [];
-      let startYear = 1900;
+      let startYear = 1950;
       while (startYear <= currentYear) {
         y.push(startYear++);
       }
@@ -118,3 +107,9 @@ export default {
   },
 };
 </script>
+
+<style>
+select {
+  font-family: Inter, "sans-serif"
+}
+</style>

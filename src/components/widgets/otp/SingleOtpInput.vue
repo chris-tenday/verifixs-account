@@ -1,21 +1,8 @@
 <template>
   <div style="display: flex; align-items: center; justify-items: center;">
-    <input
-      ref="input"
-      :type="inputType"
-      min="0"
-      max="9"
-      maxlength="1"
-      pattern="[0-9]"
-      v-model="model"
-      class="otp-input"
-      inputmode="numeric"
-      @input="handleOnChange"
-      @keydown="handleOnKeyDown"
-      @paste="handleOnPaste"
-      @focus="handleOnFocus"
-      @blur="handleOnBlur"
-    />
+    <input ref="input" :type="inputType" min="0" max="9" maxlength="1" pattern="[0-9]" v-model="model" class="otp-input"
+      inputmode="numeric" @input="handleOnChange" @keydown="handleOnKeyDown" @paste="handleOnPaste" @focus="handleOnFocus"
+      @blur="handleOnBlur" />
     <span v-if="!isLastChild && separator">
       <span v-html="separator" style="color:#fff"></span>
     </span>
@@ -89,9 +76,9 @@ export default {
       const keyEvent = (event) || window.event;
       const charCode = (keyEvent.which) ? keyEvent.which : keyEvent.keyCode;
       if (this.isCodeNumeric(charCode)
-          || (charCode === 8)
-          || (charCode === 86)
-          || (charCode === 46)) {
+        || (charCode === 8)
+        || (charCode === 86)
+        || (charCode === 46)) {
         this.$emit('on-keydown', event);
       } else {
         keyEvent.preventDefault();
@@ -115,17 +102,18 @@ export default {
 };
 </script>
 <style>
-  .otp-input{
-    width: 100%;
-    height: 50px;
-    background-color: #b6b6bb;
-    border: none;
-    text-align: center;
-    font-size: 20px;
-    box-sizing: border-box;
-    font-family: "Raleway", sans-serif;
-    font-weight: 900;
-    color: rgb(19, 15, 15);
-    margin: 0;
-  }
+.otp-input {
+  width: 100%;
+  height: 50px;
+  background-color: #b6b6bb;
+  border: none;
+  text-align: center;
+  font-size: 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 900;
+  color: rgb(19, 15, 15);
+  margin: 0;
+}
 </style>

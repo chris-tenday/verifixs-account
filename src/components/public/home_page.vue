@@ -7,51 +7,40 @@
           <div class="mt-n6 mb-10">
             <loader :data-loaded="loader" height="200">
               <div class="row" v-if="diligences.length > 0">
-                <div
-                  class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
-                  v-for="diligence in diligences"
-                  :key="diligence.diligence_id"
-                >
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in diligences"
+                  :key="diligence.diligence_id">
                   <div class="card mb-6 text-center border-0 smooth-shadow-sm">
-                    <span
-                      class="badge bg-danger p-2 position-absolute end-0 rounded-0 fs-7 rounded-top-end-2 rounded-bottom-start-2 fw-semi-bold"
-                      >status : {{ diligence.diligence_status }}</span
-                    >
+                    <span style="top: 5px; right: 5px;"
+                      class="badge bg-danger p-3 position-absolute text-center rounded-circle fs-5 fw-semi-bold"> {{
+                        diligence.diligence_status }}</span>
                     <div class="card-body p-5">
-                      <div class="mb-6">
-                        <img
-                          src="assets/images/icon/icon-2.svg"
-                          alt="Icon"
-                          class="icon-xxl"
-                        />
+                      <div class="mb-6 mt-3">
+                        <img src="assets/images/icon/icon-2.svg" alt="Icon" class="icon-xxl" />
                       </div>
                       <h3>
                         <a href="javascript:void(0)" class="text-inherit">{{
                           diligence.diligence_type
                         }}</a>
                       </h3>
-                      <span>{{ diligence.objet | sortlength(35, "...") }}</span
-                      ><br />
+                      <span>{{ diligence.objet | sortlength(35, "...") }}</span><br />
                       <span style="font-size: 10px; font-weight: 600">
                         <span class="me-2">
-                          <i class="fas fa-calendar text-success me-1"></i
-                          >{{ diligence.date_enregistrement.split("|")[0] }}</span
-                        >
-                        <span class="me-2"
-                          ><i class="fas fa-clock text-success me-1"></i
-                          >{{ diligence.date_enregistrement.split("|")[1] }}</span
-                        ></span
-                      ><br />
-                      <button
-                        @click.prevent="
-                          $router.push({
-                            name: 'loan-view',
-                            params: { id: diligence.diligence_id },
-                          })
-                        "
-                        class="btn btn-sm btn-light mt-3 border-bottom border-primary border-2 fw-bold fs-5"
-                      >
-                        <i class="fa fa-arrow-right"></i> Voir détails diligence
+                          <i class="fas fa-calendar text-success me-1"></i>{{ diligence.date_enregistrement.split("|")[0]
+                          }}</span>
+                        <span class="me-2"><i class="fas fa-clock text-success me-1"></i>{{
+                          diligence.date_enregistrement.split("|")[1] }}</span></span><br />
+                      <button @click.prevent="
+                        $router.push({
+                          name: 'loan-view',
+                          params: { id: diligence.diligence_id },
+                        })
+                      " class="btn btn-sm btn-info mt-3 text-white fw-medium fs-6">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="7px"
+                          viewBox="0 0 13 7" enable-background="new 0 0 13 7" xml:space="preserve">
+                          <polygon id="arrow_poly_1" class="arrow_poly" fill="#FFFFFF"
+                            points="13,3.5 9,0 9,3 0,3 0,4 9,4 9,7 " />
+                        </svg> Voir détails diligence
                       </button>
                     </div>
                   </div>
@@ -59,20 +48,13 @@
               </div>
               <div class="row" v-else>
                 <div class="col-md-12 text-center" data-aos="fade-down">
-                  <img
-                    src="assets/images/folder_1.png"
-                    style="width: 100px; height: 100px"
-                  />
+                  <img src="assets/images/folder_1.png" style="width: 100px; height: 100px" />
                   <div class="not_found">
                     <h3>Bienvenu(e) chez Verifixs !</h3>
-                    <a
-                      href="#/creation/diligence"
-                      class="btn btn-danger btn-lg p-3 btn-shadow"
-                      @click.prevent="viewConditions"
-                    >
+                    <a href="#/creation/diligence" class="btn btn-danger btn-lg p-3 btn-shadow"
+                      @click.prevent="viewConditions">
                       <i class="lnr lnr-plus-circle mr-2"></i> Postuler maintenant à une
-                      diligence</a
-                    >
+                      diligence</a>
                   </div>
                 </div>
               </div>
@@ -97,7 +79,7 @@
         </div>
       </div>
     </div>
-   
+
   </div>
   <!-- /.content end -->
 </template>

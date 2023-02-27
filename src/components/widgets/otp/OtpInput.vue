@@ -1,27 +1,11 @@
 <template>
   <div style="display: flex">
-<!--    To turn off autocomplete when otp-input is password-->
-    <input v-if="inputType === 'password'"
-           autocomplete="off"
-           name="hidden"
-           type="text"
-           style="display:none;">
-    <SingleOtpInput
-      v-for="(item, i) in numInputs"
-      :key="i"
-      :focus="activeInput === i"
-      :separator="separator"
-      :value="otp[i]"
-      :input-type="inputType"
-      :input-classes="inputClasses"
-      :is-last-child="i === numInputs - 1"
-      :should-auto-focus="shouldAutoFocus"
-      @on-change="handleOnChange"
-      @on-keydown="handleOnKeyDown"
-      @on-paste="handleOnPaste"
-      @on-focus="handleOnFocus(i)"
-      @on-blur="handleOnBlur"
-    />
+    <!--    To turn off autocomplete when otp-input is password-->
+    <input v-if="inputType === 'password'" autocomplete="off" name="hidden" type="text" style="display:none;">
+    <SingleOtpInput v-for="(item, i) in numInputs" :key="i" :focus="activeInput === i" :separator="separator"
+      :value="otp[i]" :input-type="inputType" :input-classes="inputClasses" :is-last-child="i === numInputs - 1"
+      :should-auto-focus="shouldAutoFocus" @on-change="handleOnChange" @on-keydown="handleOnKeyDown"
+      @on-paste="handleOnPaste" @on-focus="handleOnFocus(i)" @on-blur="handleOnBlur" />
   </div>
 </template>
 
@@ -157,3 +141,17 @@ export default {
   },
 };
 </script>
+
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
