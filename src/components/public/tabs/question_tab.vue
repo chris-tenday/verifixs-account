@@ -5,7 +5,7 @@
       <div class="row g-2">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <h2 class="fw-bold mb-3">{{ question.question }} <sup class="text-danger">*</sup></h2>
             </div>
           </div>
@@ -243,7 +243,17 @@ export default {
     },
     /** method pour passer à la question suivante */
     async nextQuestion() {
-      //console.log(this.question.reponses[0].reponse);
+      /* Checker les adresses vides */
+      if (this.question.split) {
+        let obj = this.question.reponses[this.question.reponses.length - 1]
+        for (let i in obj) {
+          console.log(JSON.stringify(obj[i]));
+          if (obj[i] === "") {
+            this.displayMsg("Vous devez entrer une adresse complet !", "warning");
+            return;
+          }
+        }
+      }
 
       if (this.question.question.includes('condamné en justice') && this.question.reponses[0].reponse.includes("Non")) {
         /**

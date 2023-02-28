@@ -69,7 +69,7 @@ export default {
         { value: "05", label: "Mai" },
         { value: "06", label: "Juin" },
         { value: "07", label: "Juil" },
-        { value: "08", label: "Aout" },
+        { value: "08", label: "Août" },
         { value: "09", label: "Sept" },
         { value: "10", label: "Oct" },
         { value: "11", label: "Nov" },
