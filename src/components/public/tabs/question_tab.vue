@@ -33,7 +33,8 @@
               <div v-if="question.reponse_type.includes('telephone')">
                 <phone-input id="inputPhone" v-for="reponse in question.reponses"
                   :key="reponse.diligence_questionnaire_id" v-model="reponse.reponse" size="lg"
-                  :translations="translations" default-country-code="CD" :no-example="true" @update="updateCountryCode" />
+                  :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
+                  @update="updateCountryCode" />
               </div>
               <!-- reponse type text !-->
               <div v-else>

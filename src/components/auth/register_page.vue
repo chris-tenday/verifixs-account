@@ -39,9 +39,9 @@
                   <label class="form-label" for="pass">Mot de passe <span class="text-danger">*</span></label>
                   <input id="pass" name="pass" type="password" placeholder="Mot de passe... " class="form-control "
                     v-model="register.pass" required />
-                  <div class="text-danger" v-if="error">
+                  <div class="text-danger" v-if="pwdError">
                     <!-- <ul :v-if='invalid'> -->
-                    {{ error }}
+                    {{ pwdError }}
                     <!-- </ul> -->
                     <!-- Mot de passe requis ! -->
                   </div>
@@ -108,13 +108,13 @@ export default {
       checked: "",
       translations: {
         countrySelectorLabel: "Code pays",
-        countrySelectorError: "Choisir un pays",
+        countrySelectorpwdError: "Choisir un pays",
         phoneNumberLabel: "Ex. 81xxxxxxx",
         example: "Ex. :810000000",
       },
       phone: "",
-      invalid: true,
-      error: '',
+      isPwValid: false,
+      pwdError: '',
       isDifferent: false,
     };
   },
@@ -129,11 +129,60 @@ export default {
 
     'register.pass'(val) {
       if (val) {
-        this.invalid = this.validatePassword();
+        this.isPwValid = this.validatePassword();
       }
     }
   },
   methods: {
+
+    registerAccount(event) {
+      console.log(this.register.telephone);
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll("#form-register");
+      // Loop over them and prevent submission
+      Array.from(forms).forEach((form) => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log("form not validated!");
+          form.classList.add("was-validated");
+          return;
+        }
+        //form.classList.add("was-validated");
+        if (form.checkValidity()) {
+          /* check password validation */
+          if (!this.isPwValid) {
+            return;
+          }
+
+
+          this.isLoading = true;
+          var formData = new FormData();
+          formData.append("personnalite", this.register.personalite);
+          formData.append("nom", this.register.nom);
+          formData.append("email", this.register.email);
+          formData.append("telephone", this.register.telephone);
+          formData.append("pass", this.register.pass);
+          this.$store.dispatch("registerAccount", formData).then((res) => {
+            this.isLoading = false;
+            console.log(res);
+            if (res.reponse !== undefined && res.reponse.status === "success") {
+              this.$router.go(this.$router.replace({ name: "home" }));
+            } else {
+              this.$swal({
+                title: res.pwdError,
+                icon: "pwdError",
+                timer: 3000,
+                toast: true,
+                showConfirmButton: false,
+              });
+            }
+          });
+        }
+      });
+    },
+
+    /*password validation */
     validatePassword() {
       var nmb = 0;
       var maj = 0;
@@ -159,73 +208,29 @@ export default {
         }
         if (nmb || maj || min || spec) {
           if (nmb == 0) {
-            this.error = "Votre mot de passe doit contenir au moins 1 chiffre";
-            return true;
+            this.pwdError = "Votre mot de passe doit contenir au moins 1 chiffre";
+            return false;
           }
           if (maj == 0) {
-            this.error = 'Votre mot de passe doit contenir au moins 1 lettre en majuscule';
-            return true;
+            this.pwdError = 'Votre mot de passe doit contenir au moins 1 lettre en majuscule';
+            return false;
           }
           if (min == 0) {
-            this.error = "Votre mot de passe doit contenir au moins 1 lettre en minuscule";
-            return true;
+            this.pwdError = "Votre mot de passe doit contenir au moins 1 lettre en minuscule";
+            return false;
           }
           if (spec == 0) {
-            this.error = 'Votre mot de passe doit contenir au moins 1 caractère spécial';
-            return true;
+            this.pwdError = 'Votre mot de passe doit contenir au moins 1 caractère spécial';
+            return false;
           }
-          this.error = "";
-          return false;
+          this.pwdError = "";
+          return true;
         }
       }
       else {
-        this.error = 'Votre mot de passe doit contenir minimum 8 caractères';
-        return true;
+        this.pwdError = 'Votre mot de passe doit contenir minimum 8 caractères';
+        return false;
       }
-    },
-    registerAccount(event) {
-      console.log(this.register.telephone);
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll("#form-register");
-      // Loop over them and prevent submission
-      Array.from(forms).forEach((form) => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-          console.log("form not validated!");
-          form.classList.add("was-validated");
-          return;
-        }
-        //form.classList.add("was-validated");
-        if (form.checkValidity()) {
-
-          // this.validatePassword();
-          // console.log('Hello');
-
-          this.isLoading = true;
-          var formData = new FormData();
-          formData.append("personnalite", this.register.personalite);
-          formData.append("nom", this.register.nom);
-          formData.append("email", this.register.email);
-          formData.append("telephone", this.register.telephone);
-          formData.append("pass", this.register.pass);
-          this.$store.dispatch("registerAccount", formData).then((res) => {
-            this.isLoading = false;
-            console.log(res);
-            if (res.reponse !== undefined && res.reponse.status === "success") {
-              this.$router.go(this.$router.replace({ name: "home" }));
-            } else {
-              this.$swal({
-                title: res.error,
-                icon: "error",
-                timer: 3000,
-                toast: true,
-                showConfirmButton: false,
-              });
-            }
-          });
-        }
-      });
     },
 
     updatePhone(value) {
