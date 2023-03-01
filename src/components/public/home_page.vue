@@ -10,9 +10,9 @@
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in diligences"
                   :key="diligence.diligence_id">
                   <div class="card mb-6 text-center border-0 smooth-shadow-sm">
-                    <!-- <span style="top: 5px; right: 5px;"
-                      class="badge bg-danger p-3 position-absolute text-center rounded-circle fs-5 fw-semi-bold"> {{
-                        diligence.diligence_status }}</span> -->
+                    <span style="top: 5px; right: 5px;"
+                      class="badge bg-danger p-2 position-absolute text-center fs-5 fw-semi-bold"> {{
+                        diligence.diligence_status || 'actif' }}</span>
                     <div class="card-body p-5">
                       <div class="mb-6 mt-3">
                         <img src="assets/images/icon/icon-2.svg" alt="Icon" class="icon-xxl" />

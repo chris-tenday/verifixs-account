@@ -83,12 +83,17 @@
                   <!-- if reponses multiple !-->
                   <div v-if="field.reponse_type.includes('multiple')">
 
-                    <div class="input-group" v-for="(reponse, i) in field.reponses" :key="reponse">
+                    <div class="input-group mt-2" v-for="(reponse, i) in field.reponses" :key="reponse">
                       <input :id="`field${index}`" type="text" v-model="reponse.reponse"
-                        class="form-control border-dark-primary mt-1" placeholder="Veuillez saisir.." />
-                      <button v-if="i === field.reponses.length - 1" type="button" class="btn btn-dark-primary mt-1"
+                        class="form-control border-dark-primary" placeholder="Veuillez saisir.." />
+
+                      <button v-if="i === field.reponses.length - 1" type="button" class="btn btn-light-primary"
                         @click.prevent="addAnswer(field)">
-                        <i class="fa fa-plus fs-7"></i>Ajouter
+                        <i class="fa fa-plus fs-7"></i>
+                      </button>
+                      <button v-else type="button" class="btn btn-light-danger"
+                        @click.prevent="field.reponses.splice(i, 1)">
+                        <i class="fa fa-times fs-7"></i>
                       </button>
                     </div>
                   </div>
