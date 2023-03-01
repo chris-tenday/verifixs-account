@@ -30,7 +30,7 @@
                 <div class="col-md-6">
                   <label class="form-label" for="phone">Téléphone <span class="text-danger">*</span></label>
                   <phone-input v-model="phone" size="lg" :translations="translations" default-country-code="CD"
-                    :no-example="true" @update="updatePhone" :required="true" />
+                    :no-example="true" @update="updatePhone" :required="true" color="#FF0000" />
                   <div class="invalid-feedback">Votre numéro de tél. requis !</div>
                 </div>
                 <!-- Select Basic -->
@@ -55,7 +55,6 @@
                     v-model="register.confirmPass" class="form-control" required />
                   <div class="text-danger" v-if="isDifferent">
                     Le mot de passe saisi ne correspond pas
-                    <!-- Veuillez rétaper votre mot de passe ! -->
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -109,8 +108,8 @@ export default {
       translations: {
         countrySelectorLabel: "Code pays",
         countrySelectorpwdError: "Choisir un pays",
-        phoneNumberLabel: "Ex. 81xxxxxxx",
-        example: "Ex. :810000000",
+        phoneNumberLabel: "Ex. 810000000",
+        example: "Ex. 810000000",
       },
       phone: "",
       isPwValid: false,
@@ -124,6 +123,14 @@ export default {
       if (val) {
         console.log(val);
         modalShow.click();
+      }
+    },
+    'register.confirmPass'(val) {
+      if (this.register.pass !== val) {
+        this.isDifferent = true;
+      }
+      else {
+        this.isDifferent = false;
       }
     },
 
@@ -165,7 +172,6 @@ export default {
           formData.append("pass", this.register.pass);
           this.$store.dispatch("registerAccount", formData).then((res) => {
             this.isLoading = false;
-            console.log(res);
             if (res.reponse !== undefined && res.reponse.status === "success") {
               this.$router.go(this.$router.replace({ name: "home" }));
             } else {

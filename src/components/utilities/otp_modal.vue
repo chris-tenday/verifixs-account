@@ -11,12 +11,13 @@
           <h3 class="text-center">
             <span class="fa fa-lock text-info"></span> Activation de compte
           </h3>
-          <p class="text-center" style="font-size: 14px;">Entrez le code réçu par e-mail
-            <strong>xxxxx{{ user.email.slice(-13)
-            }}</strong> ou au numero de
+          <p class="text-center" style="font-size: 14px;">Entrez le code réçu par e-mail/ boite spam
+            <strong>{{ user.email.substring(0, 1)
+            }}<small>xxxxx</small>{{ user.email.slice(-13) }}</strong> ou au numero de
             téléphone
-            <strong>+243xxxxxxxx{{ user.telephone.slice(-2) }} </strong> <strong v-if="time !== 0"> avant {{ time
-            }}</strong>!!
+            <strong>{{ user.telephone.substring(0, 6) }}<small>xxxxxxxx</small>{{ user.telephone.slice(-2) }} </strong>
+            <strong v-if="time !== 0"> avant {{ time
+            }}<sup>s</sup></strong>!!
           </p>
           <otp-input ref="otpInput1" :num-inputs="6" :should-auto-focus="true" separator="-" input-type="number"
             @on-change="handleOnChange" @on-complete="handleOnComplete" />
@@ -66,13 +67,14 @@ export default {
     */
     refreshUserData() {
       let user = localStorage.getItem("client");
-      console.log(user);
       this.user = JSON.parse(user);
     },
 
     async resendOtp() {
       let formData = new FormData();
+      console.log(this.user.telephone);
       formData.append('telephone', this.user.telephone);
+      console.log("loading");
       this.$store.dispatch('resendOtp', formData).then((res) => {
         this.time = 60;
         console.log(JSON.stringify(res));
@@ -102,3 +104,4 @@ export default {
   },
 };
 </script>
+
