@@ -1,25 +1,15 @@
 <template>
   <div class="row mb-lg-0">
     <div class="col-md-12 mb-2 col-12 d-flex align-items-center justify-content-end">
-      <button
-        v-if="previoustab"
-        type="button"
+      <button v-if="previoustab" type="button"
         class="btn me-2 flex-fill flex-lg-grow-0 fs-6 p-2 p-lg-3 text-white border-0"
-        :class="previoustab ? 'bg-app' : 'disabled bg-secondary'"
-        @click="goToTab(false)"
-        style="background-color: red"
-      >
+        :class="previoustab ? 'bg-app' : 'disabled bg-secondary'" @click="goToTab(false)" style="background-color: red">
         Etape précédente
       </button>
-      <button
-        v-if="nexttab === true && allownexttab === true"
-        type="button"
-        class="btn fs-6 flex-fill flex-lg-grow-0 p-2 p-lg-3 text-white border-0"
-        :class="
+      <button v-if="nexttab === true && allownexttab === true" type="button"
+        class="btn fs-6 flex-fill flex-lg-grow-0 p-2 p-lg-3 text-white border-0" :class="
           nexttab === true && allownexttab === true ? 'bg-app' : 'disabled bg-secondary'
-        "
-        @click="goToTab(true)"
-      >
+        " @click="goToTab(true)">
         Etape suivante
       </button>
     </div>
@@ -64,9 +54,8 @@ export default {
         var confirmed = false;
 
         await this.$swal({
-          title: this.permissiontext,
+          text: this.permissiontext,
           icon: "warning",
-          toast: true,
           showConfirmButton: true,
           confirmButtonText: "Oui",
           showCancelButton: true,

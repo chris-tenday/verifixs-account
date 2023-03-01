@@ -3,9 +3,7 @@
     <loader :data-loaded="dataLoaded" height="300">
       <div class="container" v-if="diligenceTypes.length > 0">
         <div class="row">
-          <div
-            class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12"
-          >
+          <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12">
             <div class="mb-10 text-center">
               <!-- section title start-->
               <h1 class="mb-2">Cher client veuillez postuler à une diligence !</h1>
@@ -18,36 +16,25 @@
         </div>
         <div>
           <div class="row">
-            <div
-              v-for="diligenceType in diligenceTypes"
-              :key="diligenceType.diligence_type_id"
-              class="col-xl-3 col-lg-3 col-md-6 col-sm-3 col-12 mb-lg-3"
-            >
+            <div v-for="diligenceType in diligenceTypes" :key="diligenceType.diligence_type_id"
+              class="col-xl-3 col-lg-3 col-md-6 col-sm-3 col-12 mb-lg-3">
               <div class="card text-center smooth-shadow-sm border-0 mb-4 mb-lg-0">
                 <div class="card-body">
                   <div class="mb-4 mt-4">
                     <a href="javascript:void(0)">
-                      <img
-                        src="assets/images/icon/icon-1.svg"
-                        alt="icon"
-                        class="icon icon-xxl"
-                    /></a>
+                      <img src="assets/images/icon/icon-2.svg" alt="icon" class="icon icon-xxl" /></a>
                   </div>
 
                   <div class="lh-1 mb-2">
                     <h3 class="mb-2">
-                      <a href="javascript:void(0)" class="text-inherit">{{
+                      {{
                         diligenceType.type
-                      }}</a>
+                      }}
                     </h3>
                   </div>
                   <div class="d-grid mt-5">
-                    <button
-                      data-bs-target="#myModal1"
-                      data-bs-toggle="modal"
-                      class="btn btn-primary btn-sm"
-                      @click="setChoosenType(diligenceType)"
-                    >
+                    <button data-bs-target="#myModal1" data-bs-toggle="modal" class="btn btn-primary btn-sm"
+                      @click="setChoosenType(diligenceType)">
                       Postuler
                     </button>
                   </div>
@@ -59,9 +46,7 @@
       </div>
       <div class="container" v-else>
         <div class="row">
-          <div
-            class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12"
-          >
+          <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12">
             <div class="mb-10 text-center">
               <!-- section title start-->
               <h1 class="mb-2">
@@ -78,53 +63,27 @@
     </loader>
 
     <!--Modal-->
-    <div
-      class="modal fade"
-      id="myModal1"
-      tabindex="-1"
-      role="dialog"
-      style="display: none"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" style="display: none" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title">
-              <img
-                src="assets/images/icon/icon-1.svg"
-                alt="icon"
-                class="icon icon-sm me-2"
-              />
+              <img src="assets/images/icon/icon-2.svg" alt="icon" class="icon icon-sm me-2" />
               {{ choosenType.type }}
             </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="row">
-              <form
-                name="formval2"
-                class="form-horizontal loan-eligibility-form"
-                id="postulat-form"
-              >
+              <form name="formval2" class="form-horizontal loan-eligibility-form" id="postulat-form">
                 <div class="mb-3">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Motif : </span>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control input-sm"
-                        id="loan"
-                        name="pr_amt2"
-                        v-model="objet"
-                        placeholder="Entrer le motif de votre demande..."
-                      />
+                      <input type="text" class="form-control input-sm" id="loan" name="pr_amt2" v-model="objet"
+                        placeholder="Entrer le motif de votre demande..." />
                     </div>
                   </div>
                 </div>
@@ -132,12 +91,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              :disabled="isLoading"
-              @click.prevent="postuler"
-              class="btn btn-success me-1"
-            >
+            <button type="button" :disabled="isLoading" @click.prevent="postuler" class="btn btn-success me-1">
               <span class="spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
               Postuler maintenant
             </button>

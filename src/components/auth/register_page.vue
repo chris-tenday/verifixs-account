@@ -135,7 +135,7 @@ export default {
   },
   methods: {
 
-    registerAccount(event) {
+    async registerAccount(event) {
       console.log(this.register.telephone);
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
       const forms = document.querySelectorAll("#form-register");

@@ -74,16 +74,32 @@ const actions = {
         });
     });
   },
-  registerAccount({ state, commit }, data) {
+  async registerAccount({ state, commit }, data) {
     return new Promise(function(resolve) {
       axios
         .post(state.baseURL + "/connexion/clients/registeraccount", data)
         .then(function(result) {
           var data = result.data;
-          resolve(data);
-
-          if (data.reponse !== undefined && data.reponse.status === "success") {
-            commit("setClient", data.reponse.data);
+          if (data.error !== undefined) {
+            axios
+              .post(state.baseURL + "/connexion/clients/registeraccount", data)
+              .then((result) => {
+                resolve(result.data);
+                if (
+                  result.data.reponse !== undefined &&
+                  result.data.status === "success"
+                ) {
+                  commit("setClient", result.data.reponse.data);
+                }
+              });
+          } else {
+            resolve(data);
+            if (
+              data.reponse !== undefined &&
+              data.reponse.status === "success"
+            ) {
+              commit("setClient", data.reponse.data);
+            }
           }
         });
     });
@@ -153,8 +169,8 @@ const actions = {
   },
 
   /*/
-     requete pour afficher les actifs
-     /*/
+               requete pour afficher les actifs
+               /*/
   viewActifs({ state, commit }) {
     axios.get(`${state.baseURL}/config/actifs`).then((result) => {
       var data = result.data.actifs;
