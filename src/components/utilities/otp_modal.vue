@@ -22,7 +22,8 @@
             @on-change="handleOnChange" @on-complete="handleOnComplete" />
 
           <div class="d-flex mt-2 align-center justify-content-center align-items-center">
-            <p>Vous n'avez reussi le code ? <a href="" class="link-dark-info">Renvoyez le code </a></p>
+            <p>Vous n'avez reussi le code ? <a href="javascript:void(0)" class="link-dark-info"
+                @click="resendOtp">Renvoyez le code </a></p>
           </div>
         </div>
         <!-- end /.modal-body -->
@@ -67,6 +68,13 @@ export default {
       let user = localStorage.getItem("client");
       console.log(user);
       this.user = JSON.parse(user);
+    },
+
+    async resendOtp() {
+      let formData = new FormData();
+      formData.append('telephone', this.user.telephone);
+      let otp = await this.$store.dispatch('resendOtp', formData);
+      console.log(JSON.stringify(otp));
     },
 
 

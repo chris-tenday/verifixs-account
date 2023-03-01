@@ -83,13 +83,13 @@ const actions = {
           if (data.error !== undefined) {
             axios
               .post(state.baseURL + "/connexion/clients/registeraccount", data)
-              .then((result) => {
+              .then((res) => {
                 resolve(result.data);
                 if (
-                  result.data.reponse !== undefined &&
-                  result.data.status === "success"
+                  res.data.reponse !== undefined &&
+                  res.data.status === "success"
                 ) {
-                  commit("setClient", result.data.reponse.data);
+                  commit("setClient", res.data.reponse.data);
                 }
               });
           } else {
@@ -102,6 +102,17 @@ const actions = {
             }
           }
         });
+    });
+  },
+
+  resendOtp({ commit, state }, data) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(state.baseURL + "/connexion/clients/otp", data)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => reject(err));
     });
   },
   loginAccount({ state, commit }, data) {
@@ -169,8 +180,8 @@ const actions = {
   },
 
   /*/
-               requete pour afficher les actifs
-               /*/
+                         requete pour afficher les actifs
+                         /*/
   viewActifs({ state, commit }) {
     axios.get(`${state.baseURL}/config/actifs`).then((result) => {
       var data = result.data.actifs;
