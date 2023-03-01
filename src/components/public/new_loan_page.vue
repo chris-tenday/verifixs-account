@@ -6,7 +6,7 @@
           <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12">
             <div class="mb-10 text-center">
               <!-- section title start-->
-              <h1 class="mb-2">Cher client veuillez postuler à une diligence !</h1>
+              <h1 class="mb-2">Bienvenu(e) {{ client.nom }}, veuillez choisir une diligence !</h1>
               <p class="lead px-lg-8 fs-6 text-danger">
                 Vous devrez suivre minutieusement toutes les étapes pour postuler!
               </p>
