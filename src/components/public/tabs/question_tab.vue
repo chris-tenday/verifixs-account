@@ -244,17 +244,17 @@ export default {
     /** method pour passer à la question suivante */
     async nextQuestion() {
       /* Checker les adresses vides */
+
       if (this.question.split) {
         let obj = this.question.reponses[this.question.reponses.length - 1]
         for (let i in obj) {
-          console.log(JSON.stringify(obj[i]));
-          if (obj[i] === "") {
+          let address = `${obj[i]}`.trim();
+          if (address === "") {
             this.displayMsg("Vous devez entrer une adresse complet !", "warning");
             return;
           }
         }
       }
-
       if (this.question.question.includes('condamné en justice') && this.question.reponses[0].reponse.includes("Non")) {
         /**
          * Exiger la permission de vérification sur l'authentification de cette reponse.

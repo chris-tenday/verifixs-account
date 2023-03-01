@@ -9,6 +9,8 @@ import "vue-phone-number-input/dist/vue-phone-number-input.css";
 
 Vue.config.productionTip = false;
 
+import PortalVue from "portal-vue";
+Vue.use(PortalVue);
 Vue.filter("sortlength", function(text, length, suffix) {
   var sorted = text.length > length ? text.substring(0, length) + suffix : text;
   return sorted;

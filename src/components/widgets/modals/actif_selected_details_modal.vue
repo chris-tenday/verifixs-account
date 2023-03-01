@@ -1,32 +1,15 @@
 <template>
-  <div
-    class="modal fade"
-    id="actifDetails"
-    tabindex="-1"
-    role="dialog"
-    data-bs-backdrop="false"
-    aria-hidden="true"
-    style="background-color: rgba(0, 0, 0, 0.5)"
-  >
+  <div class="modal fade" id="actifDetails" tabindex="-1" role="dialog" data-bs-backdrop="false" aria-hidden="true"
+    style="background-color: rgba(0, 0, 0, 0.5)">
     <div class="modal-dialog modal-lg rounded-0" role="document">
       <div class="modal-content">
         <div class="modal-header bg-dual-gradient rounded-0">
           <h3 class="modal-title fs-5 text-white">
             Actif : {{ data.titre }}
           </h3>
-          <button
-            type="button"
-            class="btn-close text-white"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            id="btnExitModal"
-          ></button>
-          <button
-            id="detailShowBtn"
-            class="d-none"
-            data-bs-target="#actifDetails"
-            data-bs-toggle="modal"
-          ></button>
+          <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"
+            id="btnExitModal"></button>
+          <button id="detailShowBtn" class="d-none" data-bs-target="#actifDetails" data-bs-toggle="modal"></button>
         </div>
         <!-- end /.modal-header -->
 
@@ -36,23 +19,14 @@
               <p class="text-danger fs-5">Veuillez renseigner tous ces champs ci-bas !</p>
             </div>
             <form name="formval2" class="form-horizontal loan-eligibility-form">
-              <div
-                class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
-                v-for="(field, index) in data.details"
-                :key="index"
-              >
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" v-for="(field, index) in data.details"
+                :key="index">
                 <!--Field is file-->
                 <div class="mb-2" v-if="field.reponse_type.includes('file')">
-                  <label :for="`field${index}`" class="form-label text-dark-primary"
-                    >{{ field.detail }} :</label
-                  >
+                  <label :for="`field${index}`" class="form-label text-dark-primary">{{ field.detail }} :</label>
                   <div class="input-group">
-                    <input
-                      class="form-control border-dark-primary"
-                      :id="`field${index}`"
-                      :type="field.reponse_type"
-                      v-model="field.data"
-                    />
+                    <input class="form-control border-dark-primary" :id="`field${index}`" :type="field.reponse_type"
+                      v-model="field.data" />
                   </div>
                 </div>
 
@@ -60,45 +34,18 @@
 
                 <!--Field is adress location-->
                 <div class="mb-2" v-else-if="field.adresse_split !== undefined">
-                  <label :for="`field${index}`" class="form-label text-dark-primary"
-                    >{{ field.detail }} :</label
-                  >
+                  <label :for="`field${index}`" class="form-label text-dark-primary">{{ field.detail }} :</label>
                   <div class="input-group">
-                    <input
-                      v-model="field.adresse_split.avenue"
-                      style="width: 120px"
-                      type="text"
-                      class="form-control border-dark-primary m-1 rounded"
-                      placeholder="avenue"
-                    />
-                    <input
-                      v-model="field.adresse_split.numero"
-                      style="width: 60px"
-                      type="text"
-                      class="form-control border-dark-primary rounded m-1"
-                      placeholder="no."
-                    />
-                    <input
-                      v-model="field.adresse_split.quartier"
-                      style="width: 110px"
-                      type="text"
-                      class="form-control border-dark-primary rounded m-1"
-                      placeholder="quartier"
-                    />
-                    <input
-                      v-model="field.adresse_split.reference"
-                      style="width: 110px"
-                      type="text"
-                      class="form-control border-dark-primary rounded m-1"
-                      placeholder="référence"
-                    />
-                    <input
-                      v-model="field.adresse_split.commune"
-                      style="width: 110px"
-                      type="text"
-                      class="form-control border-dark-primary m-1 rounded"
-                      placeholder="commune"
-                      @change="
+                    <input v-model="field.adresse_split.avenue" style="width: 120px" type="text"
+                      class="form-control border-dark-primary m-1 rounded" placeholder="avenue" />
+                    <input v-model="field.adresse_split.numero" style="width: 60px" type="text"
+                      class="form-control border-dark-primary rounded m-1" placeholder="no." />
+                    <input v-model="field.adresse_split.quartier" style="width: 110px" type="text"
+                      class="form-control border-dark-primary rounded m-1" placeholder="quartier" />
+                    <input v-model="field.adresse_split.reference" style="width: 110px" type="text"
+                      class="form-control border-dark-primary rounded m-1" placeholder="référence" />
+                    <input v-model="field.adresse_split.commune" style="width: 110px" type="text"
+                      class="form-control border-dark-primary m-1 rounded" placeholder="commune" @change="
                         handleSplit(
                           field,
                           'Avenue ' + field.adresse_split.avenue,
@@ -107,8 +54,7 @@
                           ' Référence ' + field.adresse_split.reference,
                           ' Commune ' + field.adresse_split.commune
                         )
-                      "
-                    />
+                      " />
                   </div>
                 </div>
                 <!--end field adress location -->
@@ -118,62 +64,39 @@
                   <label :for="`field${index}`" class="form-label text-dark-primary">{{
                     field.detail
                   }}</label>
-                  <select v-if="field.select==='oui'"
-                    class="form-select border-dark-primary"
-                    :id="`field${index}`"
-                    v-model="field.data"
-                    @change="field.select = field.data"
-                    aria-label="Select value"
-                  >
+                  <select v-if="field.select === 'oui'" class="form-select border-dark-primary" :id="`field${index}`"
+                    v-model="field.data" @change="field.select = field.data" aria-label="Select value">
                     <option value="" selected>-------------</option>
                     <option :value="option" v-for="option in field.options" :key="option">
                       {{ option }}
                     </option>
                     <option value="autre" class="text-primary">Autre...</option>
                   </select>
-                  <input
-                    v-if="field.select === 'autre'"
-                    v-model="field.data"
-                    :id="`field${index}`"
-                    type="text"
-                    class="form-control mt-2 border-dark-primary"
-                    placeholder="Veuillez saisir.."
-                  />
+                  <input v-if="field.select === 'autre'" v-model="field.data" :id="`field${index}`" type="text"
+                    class="form-control mt-2 border-dark-primary" placeholder="Veuillez saisir.." />
                 </div>
 
                 <!-- Field is text !-->
                 <div class="mb-2" v-else>
-                  <label :for="`field${index}`" class="form-label text-dark-primary"
-                    >{{ field.detail }} :
+                  <label :for="`field${index}`" class="form-label text-dark-primary">{{ field.detail }} :
                   </label>
                   <!-- if reponses multiple !-->
                   <div v-if="field.reponse_type.includes('multiple')">
-                    <a
-                            href=""
-                            class="pull-right"
-                            style="margin: 10px; font-weight: bold; font-family: Arial; text-transform: uppercase;"
-                            @click.prevent="addAnswer(field)"
-                    ><span class="fa fa-plus-circle"></span> Ajouter</a>
 
-                    <div class="input-group" v-for="reponse in field.reponses" :key="reponse">
-                      <input
-                              :id="`field${index}`"
-                              type="text"
-                              v-model="reponse.reponse"
-                              class="form-control border-dark-primary input-sm"
-                              placeholder="Veuillez saisir.."
-                      />
+                    <div class="input-group" v-for="(reponse, i) in field.reponses" :key="reponse">
+                      <input :id="`field${index}`" type="text" v-model="reponse.reponse"
+                        class="form-control border-dark-primary mt-1" placeholder="Veuillez saisir.." />
+                      <button v-if="i === field.reponses.length - 1" type="button" class="btn btn-dark-primary mt-1"
+                        @click.prevent="addAnswer(field)">
+                        <i class="fa fa-plus fs-7"></i>Ajouter
+                      </button>
                     </div>
                   </div>
-                  <div style="margin-bottom: 5px; padding-bottom: 5px;" class="input-group" v-else-if="!field.reponse_type.includes('multiple')">
-                    <input
-                            :id="`field${index}`"
-                            :type="field.reponse_type"
-                            v-model="field.data"
-                            class="form-control border-dark-primary input-sm"
-                            placeholder="Veuillez saisir.."
-                            style="margin-bottom: 5px;"
-                    />
+                  <div style="margin-bottom: 5px; padding-bottom: 5px;" class="input-group"
+                    v-else-if="!field.reponse_type.includes('multiple')">
+                    <input :id="`field${index}`" :type="field.reponse_type" v-model="field.data"
+                      class="form-control border-dark-primary input-sm" placeholder="Veuillez saisir.."
+                      style="margin-bottom: 5px;" />
                   </div>
 
 
@@ -185,21 +108,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-success btn-sm me-2"
-            :class="isLoading ? 'disabled' : ''"
-            @click="submitData"
-          >
+          <button type="button" class="btn btn-success btn-sm me-2" :class="isLoading ? 'disabled' : ''"
+            @click="submitData">
             <span class="spinner-border spinner-border-sm" v-if="isLoading"></span>
             Enregistrer & valider
           </button>
-          <button
-            type="reset"
-            @click="clearFields"
-            data-bs-dismiss="modal"
-            class="btn btn-sm btn-secondary"
-          >
+          <button type="reset" @click="clearFields" data-bs-dismiss="modal" class="btn btn-sm btn-secondary">
             Fermer
           </button>
         </div>
@@ -217,11 +131,11 @@ export default {
   props: {
     data: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
     diligence: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
     diligenceId: {
       type: String,
@@ -239,9 +153,8 @@ export default {
     }),
   },
   methods: {
-    addAnswer(field) /** Method pour ajouter une réponse */
-    {
-      var reponse={reponse:""};
+    addAnswer(field) /** Method pour ajouter une réponse */ {
+      var reponse = { reponse: "" };
 
       field.reponses.push(reponse);
     }
@@ -337,6 +250,7 @@ export default {
 
             await this.$store.dispatch("viewDiligenceDetails", s);
             $("#btnExitModal").click();
+            this.$emit("allowNext");
           } else if (data.error !== undefined) {
             this.$swal.fire({
               text:
@@ -357,21 +271,17 @@ export default {
       formData.append("client_id", this.client.client_id);
       formData.append("diligence_actif_id", id);
       formData.append("actif_detail_id", detail.actif_detail_id);
-      if(detail.reponse_type.includes("multiple")) /** if reponse multiple */
-      {
-        var d="";
-        for(var i =0 ; i<detail.reponses.length; i++)
-        {
-          d+=detail.reponses[i].reponse;
-          if(i<detail.reponses.length-1)
-          {
-            d+=" , ";
+      if (detail.reponse_type.includes("multiple")) /** if reponse multiple */ {
+        var d = "";
+        for (var i = 0; i < detail.reponses.length; i++) {
+          d += detail.reponses[i].reponse;
+          if (i < detail.reponses.length - 1) {
+            d += " , ";
           }
         }
         formData.append("detail", d);
       }
-      else
-      {
+      else {
         formData.append("detail", detail.data);
       }
       this.$axios

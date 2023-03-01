@@ -8,23 +8,16 @@
               <div class="card-body p-3 d-flex align-items-center justify-content-start">
                 <div>
                   <h1 class="fw-bold text-dark-primary">
-                    <img
-                      src="assets/images/icon/icon-2.svg"
-                      alt="Icon"
-                      class="icon-sm me-2"
-                    />{{ diligence.diligence_type }}
+                    <img src="assets/images/icon/icon-2.svg" alt="Icon" class="icon-sm me-2" />{{ diligence.diligence_type
+                    }}
                   </h1>
                   <h2 class="fw-semi-bold fs-4">Motif : {{ diligence.objet }}</h2>
                   <p class="fs-6">
-                    <span class="badge bg-danger mx-1 p-2"
-                      >status : {{ diligence.diligence_status }}</span
-                    >
-                    <span class="mx-1 fw-semi-bold"
-                      ><i class="fas fa-calendar text-success mx-1"></i>
+                    <span class="badge bg-danger mx-1 p-2">status : {{ diligence.diligence_status }}</span>
+                    <span class="mx-1 fw-semi-bold"><i class="fas fa-calendar text-success mx-1"></i>
                       {{ diligence.date_enregistrement.split("|")[0] }}
-                      <i class="fas fa-clock text-success mx-1"></i
-                      >{{ diligence.date_enregistrement.split("|")[1] }}</span
-                    >
+                      <i class="fas fa-clock text-success mx-1"></i>{{ diligence.date_enregistrement.split("|")[1]
+                      }}</span>
                   </p>
                 </div>
               </div>
@@ -37,86 +30,40 @@
             <!--Nav tab header-->
             <ul
               class="nav nav-pills nav-justified bg-white rounded border-top mb-2 flex-nowrap overflow-scroll overflow-md-hidden"
-              id="myTab"
-              role="tablist"
-            >
+              id="myTab" role="tablist">
               <li class="nav-item" data-aos="zoom-in">
-                <button
-                  class="nav-link active rounded-0 d-grid py-3"
-                  id="questionsTab"
-                  data-bs-toggle="pill"
-                  href="#questionsTabView"
-                  role="tab"
-                  aria-controls="questionsTabView"
-                  aria-selected="true"
-                >
+                <button class="nav-link active rounded-0 d-grid py-3" id="questionsTab" data-bs-toggle="pill"
+                  href="#questionsTabView" role="tab" aria-controls="questionsTabView" aria-selected="true">
                   <i class="bi bi-question-circle-fill fs-3"></i>
                   <p class="mb-0 mt-1 fs-5">Questions</p>
                 </button>
               </li>
-              <li
-                class="nav-item"
-                v-if="canAccessTab('actifs') === true"
-                data-aos="zoom-in"
-              >
-                <button
-                  class="nav-link rounded-0 d-grid py-3 border-start"
-                  style="pointer-events: none"
-                  id="actifTab"
-                  data-bs-toggle="pill"
-                  href="#actifTabView"
-                  role="tab"
-                  aria-controls="actifTabView"
-                  aria-selected="false"
-                >
+              <li class="nav-item" v-if="canAccessTab('actifs') === true" data-aos="zoom-in">
+                <button class="nav-link rounded-0 d-grid py-3 border-start" style="pointer-events: none" id="actifTab"
+                  data-bs-toggle="pill" href="#actifTabView" role="tab" aria-controls="actifTabView"
+                  aria-selected="false">
                   <i class="bi bi-house-fill fs-3"></i>
                   <p class="mb-0 mt-1 fs-5">Actifs</p>
                 </button>
               </li>
-              <li
-                class="nav-item"
-                v-if="canAccessTab('credits') === true"
-                data-aos="zoom-in"
-              >
-                <button
-                  class="nav-link rounded-0 d-grid py-3 border-start"
-                  style="pointer-events: none"
-                  id="creditsTab"
-                  data-bs-toggle="pill"
-                  href="#creditsTabView"
-                  role="tab"
-                  aria-controls="creditsTabView"
-                  aria-selected="false"
-                >
+              <li class="nav-item" v-if="canAccessTab('credits') === true" data-aos="zoom-in">
+                <button class="nav-link rounded-0 d-grid py-3 border-start" style="pointer-events: none" id="creditsTab"
+                  data-bs-toggle="pill" href="#creditsTabView" role="tab" aria-controls="creditsTabView"
+                  aria-selected="false">
                   <i class="bi bi-cash-stack fs-3"></i>
                   <p class="mb-0 mt-1 fs-5">Credits</p>
                 </button>
               </li>
               <li class="nav-item" data-aos="zoom-in">
-                <button
-                  class="nav-link rounded-0 d-grid py-3 border-start"
-                  style="pointer-events: none"
-                  id="docTab"
-                  data-bs-toggle="pill"
-                  href="#docTabView"
-                  role="tab"
-                  aria-controls="docTabView"
-                  aria-selected="false"
-                >
+                <button class="nav-link rounded-0 d-grid py-3 border-start" style="pointer-events: none" id="docTab"
+                  data-bs-toggle="pill" href="#docTabView" role="tab" aria-controls="docTabView" aria-selected="false">
                   <i class="bi bi-files-alt fs-3"></i>
                   <p class="mb-0 mt-1 fs-5">Documents</p>
                 </button>
               </li>
               <li class="nav-item" data-aos="zoom-in">
-                <button
-                  class="nav-link rounded-0 d-grid py-3 border-start"
-                  id="certificatTab"
-                  data-bs-toggle="pill"
-                  href="#certificatTabView"
-                  role="tab"
-                  aria-controls="certificatTabView"
-                  aria-selected="false"
-                >
+                <button class="nav-link rounded-0 d-grid py-3 border-start" id="certificatTab" data-bs-toggle="pill"
+                  href="#certificatTabView" role="tab" aria-controls="certificatTabView" aria-selected="false">
                   <i class="bi bi-file-earmark-check-fill fs-3"></i>
                   <p class="mb-0 mt-1 fs-5">Certificats</p>
                 </button>
@@ -125,52 +72,28 @@
             <!-- End Nav tab header -->
             <!-- Nav tab content -->
             <div class="tab-content bg-white p-3 p-lg-5 p-sm-2 rounded smooth-shadow-sm">
-              <div
-                role="tabpanel"
-                class="tab-pane fade show active"
-                id="questionsTabView"
-              >
-                <question-tab
-                  @gotonexttab="goToTab('questions')"
-                  @gotoprevioustab="goToTab('questions', false)"
-                  @updatecontent="updateContent"
-                ></question-tab>
+              <div role="tabpanel" class="tab-pane fade show active" id="questionsTabView">
+                <question-tab @gotonexttab="goToTab('questions')" @gotoprevioustab="goToTab('questions', false)"
+                  @updatecontent="updateContent"></question-tab>
               </div>
 
               <div role="tabpanel" class="tab-pane fade" id="actifTabView">
-                <actif-tab
-                  :diligence="diligence"
-                  @gotonexttab="goToTab('actifs')"
-                  @onSelectedActif="onSelectedActif($event)"
-                  @showDetails="onShowDetails($event)"
-                  @gotoprevioustab="goToTab('actifs', false)"
-                ></actif-tab>
+                <actif-tab :diligence="diligence" @gotonexttab="goToTab('actifs')"
+                  @onSelectedActif="onSelectedActif($event)" @showDetails="onShowDetails($event)"
+                  @gotoprevioustab="goToTab('actifs', false)"></actif-tab>
               </div>
               <div role="tabpanel" class="tab-pane fade" id="creditsTabView">
-                <credits-tab
-                  @alert="displayMsg"
-                  @updatecontent="updateContent"
-                  @gotonexttab="goToTab('credits')"
-                  @gotoprevioustab="goToTab('credits', false)"
-                ></credits-tab>
+                <credits-tab @alert="displayMsg" @updatecontent="updateContent" @gotonexttab="goToTab('credits')"
+                  @gotoprevioustab="goToTab('credits', false)"></credits-tab>
               </div>
               <div role="tabpanel" class="tab-pane fade" id="docTabView">
-                <doc-tab
-                  @loading="displayLoader"
-                  @updatecontent="updateContent"
-                  @gotonexttab="goToTab('documents')"
-                  @gotoprevioustab="goToTab('documents', false)"
-                ></doc-tab>
+                <doc-tab @loading="displayLoader" @updatecontent="updateContent" @gotonexttab="goToTab('documents')"
+                  @gotoprevioustab="goToTab('documents', false)"></doc-tab>
               </div>
 
               <div role="tabpanel" class="tab-pane fade" id="certificatTabView">
-                <pay-tab
-                  :diligence="diligence"
-                  @loading="displayLoader"
-                  @updatecontent="updateContent"
-                  @gotonexttab="goToTab('certificat')"
-                  @gotoprevioustab="goToTab('certificat', false)"
-                ></pay-tab>
+                <pay-tab :diligence="diligence" @loading="displayLoader" @updatecontent="updateContent"
+                  @gotonexttab="goToTab('certificat')" @gotoprevioustab="goToTab('certificat', false)"></pay-tab>
               </div>
             </div>
           </div>
@@ -179,14 +102,22 @@
     </loader>
 
     <!-- modal pour ajouter un nouvel actif !-->
-    <detail-modal
-      :data="actif_details"
-      :diligence="diligence"
-      :diligenceId="diligenceId"
-    ></detail-modal>
+    <!-- <portal to='body'>
+      <detail-modal :data="actif_details" :diligence="diligence" :diligenceId="diligenceId"></detail-modal>
+    </portal> -->
 
     <!-- modal pour voir actif enregistré !-->
-    <actif-modal :data="selected_actif"></actif-modal>
+    <portal to='body'>
+      <actif-modal :data="selected_actif"></actif-modal>
+    </portal>
+
+    
+  <portal-target name="modal">
+    <!--
+  This component can be located anywhere in your App.
+  The slot content of the above portal component will be rendered here.
+  -->
+  </portal-target>
 
   </div>
 </template>
@@ -239,8 +170,7 @@ export default {
         showConfirmButton: false,
       });
     },
-    goToTab(fromTab,next = true ) /** method pour gerer le passage d'une tab à une uatre */
-    {
+    goToTab(fromTab, next = true) /** method pour gerer le passage d'une tab à une uatre */ {
       var tabs = [
         { name: "questions", buttonId: "questionsTab" },
         { name: "actifs", buttonId: "actifTab" },
@@ -334,13 +264,11 @@ export default {
        * */
       var diligenceType = this.diligence.diligence_type;
 
-      if (tab === "actifs")
-      {
+      if (tab === "actifs") {
         /**
          * Exclure ces types des diligence pour ne pas accéder au tab actif,
          * */
-        if (diligenceType.includes("juridique") || diligenceType.includes("fournisseur"))
-        {
+        if (diligenceType.includes("juridique") || diligenceType.includes("fournisseur")) {
           return false;
         }
       } else if (tab === "credits") {
