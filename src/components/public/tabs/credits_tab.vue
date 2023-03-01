@@ -6,7 +6,7 @@
     <div v-if="credits.length < 1">
       <div v-if="newCredit === false">
         <div>
-          <div class="mb-2">
+          <div class="mb-2 mt-2">
             <p class="fs-4 text-dark">Avez-vous des crédits bancaire ?</p>
             <div>
               <div class="form-check form-check-inline" style="cursor: pointer">
@@ -55,8 +55,8 @@
                 <td>{{ credit.dernier_paiement_date }}</td>
                 <td>{{ credit.solde }}</td>
                 <td>
-                  <button class="btn btn-danger" style="padding: 5px">
-                    <span class="fa fa-trash"></span>
+                  <button @click="deleteOneCredit(credit.credit_id)" class="btn btn-danger p-2">
+                    <span class="fa fa-trash fs-7"></span>
                   </button>
                 </td>
               </tr>
@@ -83,7 +83,7 @@
         <div class="row">
           <div class="col-md-6 col-lg-6">
             <div class="form-group">
-              <label class="mr-2 form-label">Banque</label>
+              <label class="mb-2 mt-2 form-label">Banque <sup class="text-danger">*</sup></label>
               <input style="display: none" type="text" class="text_field form-control" placeholder="Banque.."
                 v-model="credit.banque" required />
               <select v-if="selectBanque" name="" id="" v-model="credit.banque" class="form-control" required>
@@ -106,7 +106,7 @@
           </div>
           <div class="col-md-6 col-lg-6">
             <div class="form-group">
-              <label class="mr-2">Motif du crédit</label>
+              <label class="mb-2 mt-2">Motif du crédit <sup class="text-danger">*</sup></label>
 
               <select v-if="selectMofif" name="" id="" class="form-control" v-model="credit.motif" required>
                 <option value="">-----------</option>
@@ -121,8 +121,8 @@
           </div>
           <div class="col-md-6 col-lg-6">
             <div>
-              <label class="mr-2">Montant <span v-if="devise === 'USD'">(USD)</span><span
-                  v-else-if="devise === 'CDF'">(CDF)</span></label>
+              <label class="mb-2 mt-2">Montant <span v-if="devise === 'USD'">(USD)</span><span
+                  v-else-if="devise === 'CDF'">(CDF)</span> <sup class="text-danger">*</sup></label>
             </div>
             <div class="input-group form-group">
               <input type="text" class="text_field form-control" placeholder="Montant.." v-model="credit.montant"
@@ -139,13 +139,13 @@
 
           <div class="col-md-6 col-lg-6">
             <div class="form-group">
-              <label class="mr-2">Date de souscription</label>
+              <label class="mb-2 mt-2">Date de souscription <sup class="text-danger">*</sup></label>
               <input type="date" class="text_field form-control" v-model="credit.date_credit" required />
             </div>
           </div>
           <div class="col-md-6 col-lg-6">
             <div>
-              <label class="mr-2">Durée</label>
+              <label class="mb-2 mt-2">Durée <sup class="text-danger">*</sup></label>
             </div>
             <div class="input-group form-group">
               <input type="number" class="text_field form-control" placeholder="Durée" v-model="credit.duree_credit"
@@ -161,21 +161,21 @@
           </div>
           <div class="col-md-6 col-lg-6">
             <div class="form-group">
-              <label class="mr-2">Echéance du remboursement</label>
+              <label class="mb-2 mt-2">Echéance du remboursement <sup class="text-danger">*</sup></label>
               <input type="text" class="text_field form-control" placeholder="Echéance.."
                 v-model="credit.echeance_remboursement" required />
             </div>
           </div>
           <div class="col-md-6 col-lg-6">
             <div class="form-group">
-              <label class="mr-2">Date du dernier paiement</label>
+              <label class="mb-2 mt-2">Date du dernier paiement <sup class="text-danger">*</sup></label>
               <input type="date" class="text_field form-control" v-model="credit.date_dernier_paiement" required />
             </div>
           </div>
           <div class="col-md-6 col-lg-6">
             <div class="form-group">
-              <label class="mr-2">Solde <span v-if="devise === 'USD'">(USD)</span><span
-                  v-else-if="devise === 'CDF'">(CDF)</span></label>
+              <label class="mb-2 mt-2">Solde <span v-if="devise === 'USD'">(USD)</span><span
+                  v-else-if="devise === 'CDF'">(CDF)</span> <sup class="text-danger">*</sup></label>
               <input type="text" class="text_field form-control" placeholder="Solde.." v-model="credit.solde" required />
             </div>
           </div>
@@ -234,6 +234,16 @@ export default {
     },
   },
   methods: {
+    deleteOneCredit(creditId) {
+      let data = {
+        credit_id: creditId,
+        client_id: this.client.client_id,
+      }
+      this.$store.dispatch('deleteCredit', data).then((res) => {
+        console.log(JSON.stringify(res));
+        this.$emit("updatecontent");
+      })
+    },
     toggleSelectMotif() {
       this.credit.motif = "";
       if (this.selectMofif) {
@@ -292,11 +302,6 @@ export default {
            */
           this.$emit("alert", res.error);
         }
-        const forms = document.querySelectorAll("#creditForm");
-        // Loop over them and prevent submission
-        Array.from(forms).forEach((form) => {
-          form.reset();
-        })
         this.$emit("updatecontent");
         this.newCredit = false;
         this.isLoading = false;

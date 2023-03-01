@@ -115,6 +115,21 @@ const actions = {
         .catch((err) => reject(err));
     });
   },
+
+  deleteCredit({ commit, state }, data) {
+    console.log("loading deleting");
+    return new Promise((resolve, reject) => {
+      axios
+        .post(state.baseURL + "/clients/diligences/credits/supprimer", {
+          client_id: data.client_id,
+          credit_id: data.credit_id,
+        })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => reject(err));
+    });
+  },
   loginAccount({ state, commit }, data) {
     return new Promise(function(resolve) {
       axios
@@ -180,8 +195,8 @@ const actions = {
   },
 
   /*/
-                         requete pour afficher les actifs
-                         /*/
+                                 requete pour afficher les actifs
+                                 /*/
   viewActifs({ state, commit }) {
     axios.get(`${state.baseURL}/config/actifs`).then((result) => {
       var data = result.data.actifs;
