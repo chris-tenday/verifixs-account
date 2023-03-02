@@ -125,6 +125,33 @@ export default {
         modalShow.click();
       }
     },
+    phone(val) {
+      if (val !== null) {
+        let f = `${val}`[0];
+        if (f === "0") {
+          this.$swal({
+            text: 'Numéro de téléphone ne doit pas commencer par 0 !',
+            icon: "warning",
+            timer: 3000,
+            toast: true,
+            showConfirmButton: false,
+          });
+          this.phone = "";
+          return;
+        }
+        if (val.length > 9) {
+          this.$swal({
+            text: 'Numéro de téléphone invalide',
+            icon: "warning",
+            timer: 3000,
+            toast: true,
+            showConfirmButton: false,
+          });
+          this.phone = "";
+          return;
+        }
+      }
+    },
     'register.confirmPass'(val) {
       if (this.register.pass !== val) {
         this.isDifferent = true;
@@ -161,8 +188,6 @@ export default {
           if (!this.isPwValid) {
             return;
           }
-
-
           this.isLoading = true;
           var formData = new FormData();
           formData.append("personnalite", this.register.personalite);
@@ -176,8 +201,8 @@ export default {
               this.$router.go(this.$router.replace({ name: "home" }));
             } else {
               this.$swal({
-                title: res.pwdError,
-                icon: "pwdError",
+                title: res.error,
+                icon: "error",
                 timer: 3000,
                 toast: true,
                 showConfirmButton: false,

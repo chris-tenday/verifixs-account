@@ -205,7 +205,31 @@ export default {
   },
   methods: {
     updateCountryCode(value) {
-      this.question.reponses[0].reponse = value.e164;
+      if (value.formatNational !== undefined) {
+        if (value.nationalNumber[0] === "0") {
+          this.$swal({
+            text: 'Numéro de téléphone ne doit pas commencer par 0 !',
+            icon: "warning",
+            timer: 3000,
+            toast: true,
+            showConfirmButton: false,
+          });
+          this.question.reponses[0].reponse = "";
+          return;
+        }
+        if (value.nationalNumber.length > 9) {
+          this.$swal({
+            text: 'Numéro de téléphone invalide',
+            icon: "warning",
+            timer: 3000,
+            toast: true,
+            showConfirmButton: false,
+          });
+          this.question.reponses[0].reponse = "";
+          return;
+        }
+        this.question.reponses[0].reponse = value.e164;
+      }
     },
     /** method pour checker si le questionnaire est complètement bien rempli */
     isQuestionnaireCompleted() {

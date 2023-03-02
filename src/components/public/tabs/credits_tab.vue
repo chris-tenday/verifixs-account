@@ -239,10 +239,24 @@ export default {
         credit_id: creditId,
         client_id: this.client.client_id,
       }
-      this.$store.dispatch('deleteCredit', data).then((res) => {
-        console.log(JSON.stringify(res));
-        this.$emit("updatecontent");
-      })
+      this.$swal.fire({
+        title: 'Etes-vous sûr ?',
+        text: "Voulez vous supprimer le crédit sélectionné!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui',
+        cancelButtonText: "Non",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch('deleteCredit', data).then((res) => {
+            console.log(JSON.stringify(res));
+            this.$emit("updatecontent");
+          })
+        }
+      });
+
     },
     toggleSelectMotif() {
       this.credit.motif = "";
