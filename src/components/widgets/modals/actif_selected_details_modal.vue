@@ -18,34 +18,39 @@
             <div class="col-12">
               <p class="text-danger fs-5">Veuillez renseigner tous ces champs ci-bas !</p>
             </div>
-            <form name="formval2" class="form-horizontal loan-eligibility-form">
+            <form name="formval2" @submit.prevent="submitData" class="form-horizontal loan-eligibility-form">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" v-for="(field, index) in data.details"
                 :key="index">
                 <!--Field is file-->
                 <div class="mb-2" v-if="field.reponse_type.includes('file')">
-                  <label :for="`field${index}`" class="form-label text-dark-primary">{{ field.detail }} :</label>
+                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail }} <sup
+                      class="text-danger">*</sup></label>
                   <div class="input-group">
-                    <input class="form-control border-dark-primary" :id="`field${index}`" :type="field.reponse_type"
-                      v-model="field.data" />
+                    <input class="form-control border-light" :id="`field${index}`" :type="field.reponse_type"
+                      v-model="field.data" required aria-required="veuillez renseigner ce champs !" />
                   </div>
                 </div>
-
                 <!--End Field file-->
 
                 <!--Field is adress location-->
                 <div class="mb-2" v-else-if="field.adresse_split !== undefined">
-                  <label :for="`field${index}`" class="form-label text-dark-primary">{{ field.detail }} :</label>
+                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail }} <sup
+                      class="text-danger">*</sup></label>
                   <div class="input-group">
                     <input v-model="field.adresse_split.avenue" style="width: 120px" type="text"
-                      class="form-control border-dark-primary m-1 rounded" placeholder="avenue" />
+                      class="form-control border-light m-1 rounded" placeholder="avenue" required
+                      aria-required="veuillez renseigner ce champs !" />
                     <input v-model="field.adresse_split.numero" style="width: 60px" type="text"
-                      class="form-control border-dark-primary rounded m-1" placeholder="no." />
+                      class="form-control border-light rounded m-1" placeholder="no." required
+                      aria-required="veuillez renseigner ce champs !" />
                     <input v-model="field.adresse_split.quartier" style="width: 110px" type="text"
-                      class="form-control border-dark-primary rounded m-1" placeholder="quartier" />
+                      class="form-control border-light rounded m-1" placeholder="quartier" required
+                      aria-required="veuillez renseigner ce champs !" />
                     <input v-model="field.adresse_split.reference" style="width: 110px" type="text"
-                      class="form-control border-dark-primary rounded m-1" placeholder="référence" />
+                      class="form-control border-light rounded m-1" placeholder="référence" required
+                      aria-required="veuillez renseigner ce champs !" />
                     <input v-model="field.adresse_split.commune" style="width: 110px" type="text"
-                      class="form-control border-dark-primary m-1 rounded" placeholder="commune" @change="
+                      class="form-control border-light m-1 rounded" placeholder="commune" @change="
                         handleSplit(
                           field,
                           'Avenue ' + field.adresse_split.avenue,
@@ -54,38 +59,39 @@
                           ' Référence ' + field.adresse_split.reference,
                           ' Commune ' + field.adresse_split.commune
                         )
-                      " />
+                      " required aria-required="veuillez renseigner ce champs !" />
                   </div>
                 </div>
                 <!--end field adress location -->
 
                 <!--Field is select-->
                 <div class="mb-2" v-else-if="field.reponse_type.includes('select')">
-                  <label :for="`field${index}`" class="form-label text-dark-primary">{{
+                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{
                     field.detail
-                  }}</label>
-                  <select v-if="field.select === 'oui'" class="form-select border-dark-primary" :id="`field${index}`"
-                    v-model="field.data" @change="field.select = field.data" aria-label="Select value">
+                  }} <sup class="text-danger">*</sup></label>
+                  <select v-if="!field.select.includes('autre')" class="form-select border-light" :id="`field${index}`"
+                    v-model="field.data" @change="field.select = field.data" aria-label="Select value" required
+                    aria-required="veuillez renseigner ce champs !">
                     <option value="" selected>-------------</option>
                     <option :value="option" v-for="option in field.options" :key="option">
                       {{ option }}
                     </option>
                     <option value="autre" class="text-primary">Autre...</option>
                   </select>
-                  <input v-if="field.select === 'autre'" v-model="field.data" :id="`field${index}`" type="text"
-                    class="form-control mt-2 border-dark-primary" placeholder="Veuillez saisir.." />
+                  <input v-if="field.select.includes('autre')" v-model="field.data" :id="`field${index}`" type="text"
+                    class="form-control mt-2 border-light" placeholder="Veuillez saisir.." required
+                    aria-required="veuillez renseigner ce champs !" />
                 </div>
-
                 <!-- Field is text !-->
                 <div class="mb-2" v-else>
-                  <label :for="`field${index}`" class="form-label text-dark-primary">{{ field.detail }} :
+                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail }} <sub
+                      class="text-danger">*</sub>
                   </label>
                   <!-- if reponses multiple !-->
                   <div v-if="field.reponse_type.includes('multiple')">
-
                     <div class="input-group mt-2" v-for="(reponse, i) in field.reponses" :key="reponse">
-                      <input :id="`field${index}`" type="text" v-model="reponse.reponse"
-                        class="form-control border-dark-primary" placeholder="Veuillez saisir.." />
+                      <input :id="`field${index}`" type="text" v-model="reponse.reponse" class="form-control border-light"
+                        placeholder="Veuillez saisir.." required aria-required="veuillez renseigner ce champs !" />
 
                       <button v-if="i === field.reponses.length - 1" type="button" class="btn btn-light-primary"
                         @click.prevent="addAnswer(field)">
@@ -100,29 +106,26 @@
                   <div style="margin-bottom: 5px; padding-bottom: 5px;" class="input-group"
                     v-else-if="!field.reponse_type.includes('multiple')">
                     <input :id="`field${index}`" :type="field.reponse_type" v-model="field.data"
-                      class="form-control border-dark-primary input-sm" placeholder="Veuillez saisir.."
-                      style="margin-bottom: 5px;" />
+                      class="form-control border-light input-sm" placeholder="Veuillez saisir.."
+                      style="margin-bottom: 5px;" required aria-required="veuillez renseigner ce champs !" />
                   </div>
-
-
                 </div>
-
                 <!--end field select -->
+              </div>
+
+              <div class="mt-4">
+                <button type="submit" class="btn btn-success me-2" :class="isLoading ? 'disabled' : ''">
+                  <span class="spinner-border spinner-border-sm" v-if="isLoading"></span>
+                  Enregistrer & valider
+                </button>
+                <button type="reset" @click="clearFields" data-bs-dismiss="modal" class="btn btn-secondary">
+                  Fermer
+                </button>
               </div>
             </form>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success btn-sm me-2" :class="isLoading ? 'disabled' : ''"
-            @click="submitData">
-            <span class="spinner-border spinner-border-sm" v-if="isLoading"></span>
-            Enregistrer & valider
-          </button>
-          <button type="reset" @click="clearFields" data-bs-dismiss="modal" class="btn btn-sm btn-secondary">
-            Fermer
-          </button>
-        </div>
-        <!-- end /.modal-body -->
+
       </div>
     </div>
   </div>
@@ -196,7 +199,7 @@ export default {
       }
     },
 
-    submitData() {
+    submitData(event) {
       /**
        * check detail input data if isn't empty
        **/

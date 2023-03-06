@@ -28,7 +28,7 @@
       <div class="col-lg-12 col-md-12 col-12 mb-3">
         <div class="d-flex justify-content-between">
           <h1 class="mb-0">Mes actifs</h1>
-          <button @click="toggleScrollerBottom" class="btn bg-dual-gradient text-white rounded border-0">
+          <button @click="toggleScrollerBottom" class="btn btn-danger rounded border-0">
             <span v-if="!newActif" class="fs-7"><i class="fas fa-plus me-1"></i>Ajouter plus d'actifs</span>
             <span v-else class="fs-7"><i class="fas fa-minus me-1"></i>Fermer</span>
           </button>
@@ -117,6 +117,7 @@ export default {
   methods: {
     onShowDetails(inputs) {
       console.log("open modal");
+      console.log(JSON.stringify(inputs));
       this.actif_details = inputs;
       $("#detailShowBtn").click();
     },
@@ -153,6 +154,7 @@ export default {
     },
     getSelectedActifDetails(actif) {
       this.selected_actif = actif;
+
       const scrollTo = scroller();
       setTimeout(() => {
         scrollTo("#bottom");

@@ -27,7 +27,7 @@
 
     <!-- affichage des credits !-->
     <div class="mb-4 mt-4" v-if="credits.length > 0">
-      <div class="single-title" data-aos="fade-up">
+      <div class="single-title">
         <h2><i class="fa fa-money"></i> <span>Vos Crédits</span></h2>
       </div>
       <div class="row">
@@ -58,8 +58,9 @@
                   <button class="btn btn-info text-white p-2 me-1">
                     <span class="fa fa-edit fs-7"></span>
                   </button>
-                  <button @click="deleteOneCredit(credit.credit_id)" class="btn btn-danger p-2">
-                    <span v-if="isDeleteLoading" class="spinner-border spinner-border-sm"></span>
+                  <button @click="deleteOneCredit(credit)" class="btn btn-danger p-2"
+                    :disabled="isDeleteLoading === credit.credit_id">
+                    <span v-if="isDeleteLoading === credit.credit_id" class="spinner-border spinner-border-sm"></span>
                     <span v-else class="fa fa-trash fs-7"></span>
                   </button>
                 </td>
@@ -218,7 +219,7 @@ export default {
     return {
       devise: "USD",
       isLoading: false,
-      isDeleteLoading: false,
+      isDeleteLoading: '',
       credit: credit,
       diligenceId: 0,
       newCredit: false,
@@ -238,11 +239,12 @@ export default {
     },
   },
   methods: {
-    deleteOneCredit(creditId) {
+    deleteOneCredit(credit) {
       let data = {
-        credit_id: creditId,
+        credit_id: credit.credit_id,
         client_id: this.client.client_id,
       }
+
       this.$swal.fire({
         title: 'Etes-vous sûr ?',
         text: "Voulez vous supprimer le crédit sélectionné!",
@@ -254,9 +256,9 @@ export default {
         cancelButtonText: "Non",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.isDeleteLoading = true;
+          this.isDeleteLoading = credit.credit_id;
           this.$store.dispatch('deleteCredit', data).then((res) => {
-            this.isDeleteLoading = false;
+            this.isDeleteLoading = '';
             console.log(JSON.stringify(res));
             this.$emit("updatecontent");
           })

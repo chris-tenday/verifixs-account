@@ -1,16 +1,15 @@
 <template>
   <div class="row mb-lg-0">
     <div class="col-md-12 mb-2 col-12 d-flex align-items-center justify-content-end">
-      <button v-if="previoustab" type="button"
-        class="btn me-2 flex-fill flex-lg-grow-0 fs-6 p-2 p-lg-3 text-white border-0"
+      <button v-if="previoustab" type="button" class="btn me-2 flex-fill flex-lg-grow-0 fs-6 text-white border-0"
         :class="previoustab ? 'bg-app' : 'disabled bg-secondary'" @click="goToTab(false)" style="background-color: red">
-        Etape précédente
+        <i class="bi-arrow-bar-left mr-1"></i>Etape précédente
       </button>
       <button v-if="nexttab === true && allownexttab === true" type="button"
-        class="btn fs-6 flex-fill flex-lg-grow-0 p-2 p-lg-3 text-white border-0" :class="
+        class="btn fs-6 flex-fill flex-lg-grow-0 text-white border-0" :class="
           nexttab === true && allownexttab === true ? 'bg-app' : 'disabled bg-secondary'
         " @click="goToTab(true)">
-        Etape suivante
+        Etape suivante <i class="bi-arrow-bar-right ml-1"></i>
       </button>
     </div>
   </div>

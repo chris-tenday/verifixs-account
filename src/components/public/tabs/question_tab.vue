@@ -4,11 +4,9 @@
     <form>
       <div class="row g-2">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <div class="row">
-            <div class="col-md-12">
-              <h2 class="fw-bold mb-3">{{ question.question | capitalize }} <sup class="text-danger">*</sup></h2>
-            </div>
-          </div>
+          <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup
+              class="text-danger">*</sup>
+          </label>
         </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
           v-if="question.reponse_type === 'text' || question.reponse_type === 'telephone' || question.reponse_type === 'date'">
