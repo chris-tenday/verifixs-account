@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card mb-2" data-aos="fade-down">
-              <div class="card-body p-3 d-flex align-items-center justify-content-start">
+              <div class="card-body p-3 d-flex align-items-start justify-content-between">
                 <div>
                   <h1 class="fw-bold text-dark-primary">
                     <img src="assets/images/icon/icon-2.svg" alt="Icon" class="icon-sm me-2" />{{ diligence.diligence_type
@@ -20,6 +20,8 @@
                       }}</span>
                   </p>
                 </div>
+
+                <button class="btn btn-info btn-sm text-white">Voir mes reponses</button>
               </div>
             </div>
             <!-- /.section title start-->
@@ -111,13 +113,13 @@
       <actif-modal :data="selected_actif"></actif-modal>
     </portal>
 
-    
-  <portal-target name="modal">
-    <!--
+
+    <portal-target name="modal">
+      <!--
   This component can be located anywhere in your App.
   The slot content of the above portal component will be rendered here.
   -->
-  </portal-target>
+    </portal-target>
 
   </div>
 </template>

@@ -15,6 +15,10 @@ Vue.filter("sortlength", function(text, length, suffix) {
   var sorted = text.length > length ? text.substring(0, length) + suffix : text;
   return sorted;
 });
+Vue.filter("capitalize", function(text) {
+  return text[0].toUpperCase() + text.slice(1);
+});
+
 Vue.use(Vuex);
 
 //axios instance

@@ -6,7 +6,7 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <div class="row">
             <div class="col-md-12">
-              <h2 class="fw-bold mb-3">{{ question.question }} <sup class="text-danger">*</sup></h2>
+              <h2 class="fw-bold mb-3">{{ question.question | capitalize }} <sup class="text-danger">*</sup></h2>
             </div>
           </div>
         </div>
@@ -23,7 +23,7 @@
               <!-- reponse type text !-->
               <div class="mb-3" v-else>
                 <input v-for="reponse in question.reponses" :type="question.reponse_type" id="subj" class="form-control"
-                  placeholder="Entrez votre reponse !" v-model="reponse.reponse"
+                  placeholder="Entrez votre réponse !" v-model="reponse.reponse"
                   :key="reponse.diligence_questionnaire_id" />
               </div>
             </div>
@@ -53,7 +53,7 @@
           <div v-else>
             <div v-for="(reponse, i) in question.reponses" :key="i">
               <div class="d-flex align-items-center mb-2 justify-content-between">
-                <h3 class="fw-semi-bold mb-3 text-dark fs-4" v-if="reponse.reponse !== ''">
+                <h3 class="fw-400 mb-3 text-dark fs-4" v-if="reponse.reponse !== ''">
                   <i class="fa fa-map-marker me-2 text-success"></i> {{ reponse.reponse }}
                 </h3>
                 <p v-else></p>

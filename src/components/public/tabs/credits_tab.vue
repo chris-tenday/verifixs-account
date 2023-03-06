@@ -55,8 +55,12 @@
                 <td>{{ credit.dernier_paiement_date }}</td>
                 <td>{{ credit.solde }}</td>
                 <td>
+                  <button class="btn btn-info text-white p-2 me-1">
+                    <span class="fa fa-edit fs-7"></span>
+                  </button>
                   <button @click="deleteOneCredit(credit.credit_id)" class="btn btn-danger p-2">
-                    <span class="fa fa-trash fs-7"></span>
+                    <span v-if="isDeleteLoading" class="spinner-border spinner-border-sm"></span>
+                    <span v-else class="fa fa-trash fs-7"></span>
                   </button>
                 </td>
               </tr>
@@ -107,7 +111,6 @@
           <div class="col-md-6 col-lg-6">
             <div class="form-group">
               <label class="mb-2 mt-2">Motif du crédit <sup class="text-danger">*</sup></label>
-
               <select v-if="selectMofif" name="" id="" class="form-control" v-model="credit.motif" required>
                 <option value="">-----------</option>
                 <option value="Scolaire">Scolaire</option>
@@ -125,7 +128,7 @@
                   v-else-if="devise === 'CDF'">(CDF)</span> <sup class="text-danger">*</sup></label>
             </div>
             <div class="input-group form-group">
-              <input type="text" class="text_field form-control" placeholder="Montant.." v-model="credit.montant"
+              <input type="number" class="text_field form-control" placeholder="Montant.." v-model="credit.montant"
                 aria-label="Text input with dropdown button" required />
 
               <div class="input-group-append">
@@ -215,6 +218,7 @@ export default {
     return {
       devise: "USD",
       isLoading: false,
+      isDeleteLoading: false,
       credit: credit,
       diligenceId: 0,
       newCredit: false,
@@ -250,7 +254,9 @@ export default {
         cancelButtonText: "Non",
       }).then((result) => {
         if (result.isConfirmed) {
+          this.isDeleteLoading = true;
           this.$store.dispatch('deleteCredit', data).then((res) => {
+            this.isDeleteLoading = false;
             console.log(JSON.stringify(res));
             this.$emit("updatecontent");
           })
