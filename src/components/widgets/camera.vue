@@ -115,8 +115,8 @@ export default {
 
 <style>
 #outer {
-  width: 400px;
-  height: 400px;
+  max-width: 400px;
+  max-height: 400px;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
@@ -132,7 +132,7 @@ export default {
 
 .video-btns {
   position: absolute;
-  bottom: 90px;
+  bottom: 15px;
   width: 100%;
   display: flex;
   align-items: center;

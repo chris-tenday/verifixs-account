@@ -127,7 +127,11 @@
         <div v-if="question.reponse_type === 'capture'" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <camera v-if="mustUploadDocument === true" @onCapture="cameraCapture" @onDelete="deleteCapture"
             :captured="documentUploaded"></camera>
-          <img v-else :src="question.reponses[0].media" alt="Photo preview" class="img-fluid w-100 rounded img-fluid" />
+          <div v-else id="outer">
+            <img :src="question.reponses[0].media" alt="Photo preview" class="rounded img-fluid" />
+            <div class="btn-clear bg-info" @click.prevent="mustUploadDocument = true"><i class="fa fa-pen text-white"></i>
+            </div>
+          </div>
         </div>
 
         <!-- next & previos button section !-->
