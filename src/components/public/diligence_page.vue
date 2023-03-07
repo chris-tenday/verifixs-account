@@ -20,8 +20,8 @@
                       }}</span>
                   </p>
                 </div>
-
-                <button class="btn btn-info btn-sm text-white">Voir mes reponses</button>
+                <button class="btn btn-info btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalQuestions"><i
+                    class="bi-person"></i> Voir mes reponses</button>
               </div>
             </div>
             <!-- /.section title start-->
@@ -101,7 +101,44 @@
           </div>
         </div>
       </div>
+
+      <!-- Modal -->
+      <div v-if="!questions.diligenceDetails === undefined">
+        <div class="modal fade" id="modalQuestions" tabindex="-1" aria-labelledby="modalQuestionsLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title" id="modalQuestionsLabel">Mes réponses</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <ul class="list-group list-group-numbered">
+                  <li v-for="(question, i) in questions" :key="i"
+                    class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                      <div class="fw-bold">{{ question.question }}</div>
+                      <div v-if="question.reponse_type.includes('attachment')">
+                        <a :href="question.reponses[0].media" target="_blank"><img :src="question.reponses[0].media"
+                            :alt="question.reponses[0].designation" class="img-4by3-xxl img-fluid"></a>
+                      </div>
+                      <div v-else>
+                        {{ question.reponses[0].reponse }}
+                      </div>
+                    </div>
+                    <!-- <button class="btn btn-sm btn-primary"><i class="bi-pen"></i></button> -->
+                  </li>
+
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
     </loader>
+
+
 
     <!-- modal pour ajouter un nouvel actif !-->
     <!-- <portal to='body'>
@@ -132,6 +169,7 @@ import actifTab from "@/components/public/tabs/actif_tab";
 import creditsTab from "@/components/public/tabs/credits_tab";
 import loader from "../loader";
 import $ from "jquery";
+import { scroller } from "vue-scrollto/src/scrollTo"
 export default {
   components: {
     questionTab,
@@ -154,6 +192,9 @@ export default {
     };
   },
   methods: {
+    showQuestions() {
+      console.log(JSON.stringify(this.questions));
+    },
     onSelectedActif(actif) {
       this.selected_actif = actif;
       console.log(JSON.stringify(actif));
@@ -236,7 +277,7 @@ export default {
       }
     },
     /** method pour mettre à jour le contenu affiché */
-    updateContent() {
+    async updateContent() {
       var formData = new FormData();
       formData.append("diligence_id", this.diligenceId);
       formData.append("client_id", this.client.client_id);
@@ -305,12 +346,21 @@ export default {
       }
       return diligence;
     },
+    questions() {
+      return this.$store.getters.getQuestionnaire;
+    },
     questionnaireCompletion() {
       return this.$store.getters.getQuestionsCompletion;
     },
   },
   mounted() {
+    /* scroll to top when user shown due diligence */
+    const scrollTo = scroller();
+    scrollTo("#header-layout");
+    /*End  scroll to top */
+
     this.diligenceId = this.$route.params.id;
+
 
     /**
      * Si client a été redirigé sur cette page après avoir effectué un paiement bancaire.

@@ -17,19 +17,11 @@
     <!--End otp modal-->
 
     <!-- privacy modal !-->
-    <privacy-modal
-      pdfSrc="assets/privacy-policy.pdf"
-      @onAccepted="conditionAccepted(true)"
-      @onRefused="conditionAccepted(false)"
-    />
+    <privacy-modal pdfSrc="assets/privacy-policy.pdf" @onAccepted="conditionAccepted(true)"
+      @onRefused="conditionAccepted(false)" />
 
     <!--Button trigger show privacy modal-->
-    <button
-      id="btn-privacy"
-      data-bs-toggle="modal"
-      data-bs-target="#privacyModal"
-      class="d-none"
-    ></button>
+    <button id="btn-privacy" data-bs-toggle="modal" data-bs-target="#privacyModal" class="d-none"></button>
   </div>
 </template>
 
@@ -37,6 +29,7 @@
 import $ from "jquery";
 import headerLayout from "@/components/layouts/header_layout";
 import footerLayout from "@/components/layouts/footer_layout";
+import { scroller } from "vue-scrollto/src/scrollTo"
 export default {
   name: "MainLayout",
   components: {
@@ -56,6 +49,10 @@ export default {
     },
   },
   mounted() {
+    /* scroll to top when user shown due diligence */
+    const scrollTo = scroller();
+    scrollTo("#header-layout");
+    /*End  scroll to top */
     /**
      * Si le compte est encore en pending , exigez l'activation du compte.
      * */

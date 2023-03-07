@@ -10,7 +10,6 @@
         </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
           v-if="question.reponse_type === 'text' || question.reponse_type === 'telephone' || question.reponse_type === 'date'">
-
           <div v-if="question.split === undefined">
             <div v-if="question.total_reponse !== 'multiple'">
               <!-- reponse type date !-->
@@ -126,14 +125,9 @@
 
         <!-- reponse type camera capture !-->
         <div v-if="question.reponse_type === 'capture'" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <div class="d-flex align-content-center justify-content-center m-lg-5 m-sm-2">
-            <div style="width: 300px; height: 300px" class="p-2">
-              <camera v-if="mustUploadDocument === true" @onCapture="cameraCapture" @onDelete="deleteCapture"
-                :captured="documentUploaded"></camera>
-              <img v-else :src="question.reponses[0].media" alt="Photo preview"
-                class="img-fluid w-100 rounded img-thumbnail" />
-            </div>
-          </div>
+          <camera v-if="mustUploadDocument === true" @onCapture="cameraCapture" @onDelete="deleteCapture"
+            :captured="documentUploaded"></camera>
+          <img v-else :src="question.reponses[0].media" alt="Photo preview" class="img-fluid w-100 rounded img-fluid" />
         </div>
 
         <!-- next & previos button section !-->
@@ -190,6 +184,9 @@ export default {
       },
     };
   },
+
+
+
   computed: {
     questionnaire() {
       return this.$store.getters.getQuestionnaire;

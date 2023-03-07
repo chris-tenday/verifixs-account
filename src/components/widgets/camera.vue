@@ -1,35 +1,56 @@
 <template>
-  <div style="text-align: center; margin: 0 auto">
-    <div class="position-relative">
-      <video
-        ref="video"
-        class="video-size rounded img-fluid shadow-lg"
-        @canplay="initCapture()"
-      >
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <div id="outer">
+      <video ref="video" class="img-fluid video" @canplay="initCapture()">
         Stream unvailable
       </video>
+
+      <div class="video-btns">
+        <button class="btn btn-light-success me-2" @click.prevent="takePicture()">
+          <i class="bi-camera-fill"></i> Capturer photo
+        </button>
+        <button class="btn btn-light-primary" @click.prevent="$emit('onDelete')">
+          <i class="bi bi-upload"></i> charger photo
+        </button>
+      </div>
     </div>
-    <div
-      class="d-flex align-items-center mt-2 mb-2 justify-content-between position-relative"
-    >
-      <button
-        class="btn btn-success btn-sm me-1 fs-7 flex-fill"
-        @click.prevent="takePicture()"
-      >
-        <i class="fa fa-camera"></i> Capturer
-      </button>
-      <button
-        class="btn btn-secondary btn-sm fs-7 flex-fill"
-        @click.prevent="$emit('onDelete')"
-      >
-        <i class="fa fa-times"></i> Annuler
-      </button>
-    </div>
+
     <canvas ref="canvas" class="rounded img-fluid" style="display: none"></canvas>
   </div>
 </template>
 
 <script>
+
+function Sound(source, volume, loop) {
+  this.source = source;
+  this.volume = volume;
+  this.loop = loop;
+  var son;
+  this.son = son;
+  this.finish = false;
+  this.stop = function () {
+    document.body.removeChild(this.son);
+  }
+  this.start = function () {
+    if (this.finish) return false;
+    this.son = document.createElement("embed");
+    this.son.setAttribute("src", this.source);
+    this.son.setAttribute("hidden", "true");
+    this.son.setAttribute("volume", this.volume);
+    this.son.setAttribute("autostart", "true");
+    this.son.setAttribute("loop", this.loop);
+    document.body.appendChild(this.son);
+  }
+  this.remove = function () {
+    document.body.removeChild(this.son);
+    this.finish = true;
+  }
+  this.init = function (volume, loop) {
+    this.finish = false;
+    this.volume = volume;
+    this.loop = loop;
+  }
+}
 function dataURLtoFile(dataurl, filename) {
   var arr = dataurl.split(","),
     mime = arr[0].match(/:(.*?);/)[1],
@@ -77,11 +98,13 @@ export default {
 
     takePicture() {
       let context = this.canvas.getContext("2d");
+      var s = new Sound("assets/audios/sound.mp3", 100, false);
+      s.start();
       context.drawImage(this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
       let imgPath = dataURLtoFile(this.canvas.toDataURL("image/png"), "cap-image.png");
       this.$emit("onCapture", imgPath);
-
       this.video.pause();
+      s.stop();
     },
   },
   watch: {
@@ -95,9 +118,28 @@ export default {
 </script>
 
 <style>
-.video-size {
-  height: 200px;
-  width: 200px;
-  margin: 0 auto;
+#outer {
+  width: 400px;
+  height: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.video {
+  position: relative;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  top: 0;
+}
+
+.video-btns {
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-dual-gradient py-1">
+    <div class="bg-dual-gradient py-1" id="header-layout">
       <!-- top-bar -->
       <div class="container px-md-0">
         <div class="d-flex justify-content-between align-items-center">
