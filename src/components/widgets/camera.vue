@@ -1,12 +1,13 @@
 <template>
   <div style="display: flex; align-items: center; justify-content: center;">
     <div id="outer">
-      <div v-if="!captured" class="btn-clear" data-aos="zoom-in" @click.prevent="$emit('onDelete')">
+      <div v-if="video === null || img === null" class="btn-clear" data-aos="zoom-in" @click.prevent="$emit('onDelete')">
         <i class="bi bi-x"></i>
       </div>
-      <video ref="video" class="img-fluid video" @canplay="initCapture()">
+      <video v-if="img === null" ref="video" class="img-fluid video" @canplay="initCapture()">
         Stream unvailable
       </video>
+      <img v-else :src="img" class="img-fluid video">
 
       <div class="video-btns">
         <button class="btn btn-light-success me-2" @click.prevent="takePicture()">
@@ -15,7 +16,7 @@
         <label for="uploader" class="btn btn-light-primary">
           <i class="bi bi-upload"></i> charger photo
         </label>
-        <input type="file" class="d-none" id="uploader">
+        <input type="file" class="d-none" id="uploader" @change="uploadImage">
       </div>
     </div>
 
@@ -43,6 +44,7 @@ export default {
   data() {
     return {
       video: null,
+      img: null,
       canvas: null,
     };
   },
@@ -65,6 +67,27 @@ export default {
           this.video.play();
         })
         .catch((err) => console.log(err));
+    },
+
+    uploadImage(event) {
+      let file = event.target.files[0];
+      try {
+        if (file.size > 1048576) {
+          alert("Desolé! cette image est invalide");
+          return
+        }
+        else {
+          let reader = new FileReader();
+          reader.onload = event => {
+            this.img = event.target.result;
+            this.$emit("onCapture", file);
+
+          };
+          reader.readAsDataURL(file);
+        }
+      } catch (error) {
+        console.log("uploading error", error);
+      }
     },
 
     initCapture() {
