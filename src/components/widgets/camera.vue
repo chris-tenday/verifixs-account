@@ -1,25 +1,32 @@
 <template>
-  <div style="display: flex; align-items: center; justify-content: center;">
-    <div id="outer">
-      <div v-if="video === null || img === null" class="btn-clear" data-aos="zoom-in" @click.prevent="$emit('onDelete')">
-        <i class="bi bi-x"></i>
-      </div>
-      <video v-if="img === null" ref="video" class="img-fluid video" @canplay="initCapture()">
-        Stream unvailable
-      </video>
-      <img v-else :src="img" class="img-fluid video">
-
-      <div class="video-btns">
-        <button class="btn btn-light-success me-2" @click.prevent="takePicture()">
-          <i class="bi-camera-fill"></i> Capturer photo
-        </button>
-        <label for="uploader" class="btn btn-light-primary">
-          <i class="bi bi-upload"></i> charger photo
-        </label>
-        <input type="file" class="d-none" id="uploader" @change="uploadImage">
+  <div class="row">
+    <div class="col-md-4 mx-auto">
+      <div class="card">
+        <div v-if="media === ''" class="btn-clear" data-aos="zoom-in" @click.prevent="onDelete">
+          <i class="bi bi-trash"></i>
+        </div>
+        <!-- <div v-else class="btn-clear bg-info" data-aos="zoom-in" @click.prevent="onDelete">
+          <i class="bi bi-pen text-white"></i>
+        </div> -->
+        <div class="card-body">
+          <img data-aos="zoom-in" v-if="media !== ''" :src="media" class="img-fluid rounded">
+          <video data-aos="zoom-in" v-else-if="img === null && media === ''" ref="video" class="img-fluid rounded"
+            @canplay="initCapture()">
+            Stream unvailable
+          </video>
+          <img data-aos="zoom-in" v-else :src="img" class="img-fluid rounded">
+        </div>
+        <div class="card-footer d-flex" v-if="media === ''">
+          <button class="btn btn-success btn-lg me-2 flex-fill rounded" @click.prevent="takePicture()">
+            <i class="bi-camera-fill"></i>
+          </button>
+          <label for="uploader" class="btn btn-lg btn-primary flex-fill rounded">
+            <i class="bi bi-upload"></i>
+          </label>
+          <input type="file" class="d-none" id="uploader" @change="uploadImage">
+        </div>
       </div>
     </div>
-
     <canvas ref="canvas" class="rounded img-fluid" style="display: none"></canvas>
   </div>
 </template>
@@ -46,17 +53,22 @@ export default {
       video: null,
       img: null,
       canvas: null,
+      media: this.dataImg
     };
   },
   props: {
-    captured: {},
+    captured: {
+      type: String,
+      default: null
+    },
+    dataImg: {
+      type: String,
+      default: ''
+    }
   },
   mounted() {
-    this.video = this.$refs.video;
-    this.canvas = this.$refs.canvas;
-    this.startCapture();
-
-    console.log("captured value", this.captured);
+    this.startCamera()
+    console.log("captured value", this.dataImg);
   },
   methods: {
     startCapture() {
@@ -81,7 +93,6 @@ export default {
           reader.onload = event => {
             this.img = event.target.result;
             this.$emit("onCapture", file);
-
           };
           reader.readAsDataURL(file);
         }
@@ -102,10 +113,30 @@ export default {
       this.$emit("onCapture", imgPath);
       this.video.pause();
     },
+    onDelete() {
+      this.$nextTick(() => {
+        this.media = '';
+        setTimeout(() => {
+          this.$emit('onDelete');
+        }, 100);
+        this.startCamera();
+      })
+      console.log("image", this.dataImg);
+    },
+
+    startCamera() {
+      this.img = null;
+      setTimeout(() => {
+        this.video = this.$refs.video;
+        this.canvas = this.$refs.canvas;
+        this.startCapture();
+      }, 200)
+      this.$forceUpdate();
+    }
   },
   watch: {
-    captured() {
-      if (this.captured === null) {
+    captured(val) {
+      if (!val) {
         this.startCapture();
       }
     },
@@ -133,6 +164,8 @@ export default {
 .video-btns {
   position: absolute;
   bottom: 15px;
+  left: 10px;
+  right: 10px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -142,14 +175,14 @@ export default {
 .btn-clear {
   height: 40px;
   width: 40px;
-  border-radius: 40px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
   z-index: 999;
-  top: 20px;
-  right: 20px;
+  top: 15px;
+  right: 15px;
   background-color: #ffffffa0;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;

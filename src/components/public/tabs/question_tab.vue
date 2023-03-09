@@ -125,13 +125,8 @@
 
         <!-- reponse type camera capture !-->
         <div v-if="question.reponse_type === 'capture'" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <camera v-if="mustUploadDocument === true" @onCapture="cameraCapture" @onDelete="deleteCapture"
-            :captured="documentUploaded"></camera>
-          <div v-else id="outer">
-            <img :src="question.reponses[0].media" alt="Photo preview" class="rounded img-fluid" />
-            <div class="btn-clear bg-info" @click.prevent="mustUploadDocument = true"><i class="fa fa-pen text-white"></i>
-            </div>
-          </div>
+          <camera :dataImg="question.reponses[0].media" @onCapture="cameraCapture" :captured="documentUploaded"
+            @onDelete="deleteCapture"></camera>
         </div>
 
         <!-- next & previos button section !-->
@@ -259,6 +254,7 @@ export default {
     },
     cameraCapture(data) {
       this.documentUploaded = data;
+      this.question.reponses[0].reponse = data;
     },
     /** method pour supprimer une capture */
     deleteCapture() {

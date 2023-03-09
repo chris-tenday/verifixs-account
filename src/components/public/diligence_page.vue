@@ -103,7 +103,7 @@
       </div>
 
       <!-- Modal -->
-      <div v-if="!questions.diligenceDetails === undefined">
+      <div v-if="diligenceQuestionnaire !== undefined">
         <div class="modal fade" id="modalQuestions" tabindex="-1" aria-labelledby="modalQuestionsLabel"
           aria-hidden="true">
           <div class="modal-dialog modal-lg">
@@ -119,6 +119,11 @@
                     <div class="ms-2 me-auto">
                       <div class="fw-bold">{{ question.question }}</div>
                       <div v-if="question.reponse_type.includes('attachment')">
+                        <a :href="question.reponses[0].media" target="_blank"><img :src="question.reponses[0].media"
+                            :alt="question.reponses[0].designation" class="img-4by3-xxl img-fluid"></a>
+                      </div>
+                      <div v-else-if="question.reponse_type.includes('capture')">
+
                         <a :href="question.reponses[0].media" target="_blank"><img :src="question.reponses[0].media"
                             :alt="question.reponses[0].designation" class="img-4by3-xxl img-fluid"></a>
                       </div>
@@ -349,9 +354,14 @@ export default {
     questions() {
       return this.$store.getters.getQuestionnaire;
     },
+    diligenceQuestionnaire() {
+      return this.$store.state.diligenceDetails.questionnaire;
+    },
     questionnaireCompletion() {
       return this.$store.getters.getQuestionsCompletion;
     },
+
+
   },
   mounted() {
     /* scroll to top when user shown due diligence */
