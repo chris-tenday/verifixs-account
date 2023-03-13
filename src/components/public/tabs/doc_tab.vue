@@ -7,22 +7,11 @@
       </p>
 
       <div class="row">
-        <div
-          class="col-lg-4 col-md-4 mb-2 mb-lg-0"
-          v-for="fixedFile in fixedFiles"
-          :key="fixedFile"
-        >
-          <a
-            href="#!"
-            class="card text-center smooth-shadow-sm"
-            :class="
-              uploadedDocument.designation === fixedFile ? 'border-primary border-2' : ''
-            "
-            @click.prevent="setDesignation('')"
-          >
-            <div
-              class="card-body p-4 px-4 d-flex align-content-center align-items-center"
-            >
+        <div class="col-lg-4 col-md-4 mb-2 mb-lg-0" v-for="fixedFile in fixedFiles" :key="fixedFile">
+          <a href="#!" class="card text-center smooth-shadow-sm" :class="
+            uploadedDocument.designation === fixedFile ? 'border-primary border-2' : ''
+          " @click.prevent="setDesignation('')">
+            <div class="card-body p-4 px-4 d-flex align-content-center align-items-center">
               <div class="icon-shape bg-light-pink rounded-circle icon-xl">
                 <img src="assets/images/icon/icon-3.svg" alt="document title" />
               </div>
@@ -37,30 +26,24 @@
       {{ documents.length }} document(s) attaché(s).
     </p>
     <div v-if="documents.length > 0" class="row">
-      <div
-        class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
-        v-for="document in documents"
-        :key="document.document_upload_id"
-      >
+      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="document in documents"
+        :key="document.document_upload_id">
         <div class="card mb-5 border-1 border-light-success">
           <div class="card-body">
             <!-- card listing -->
             <div class="card-img">
-              <a href="#!"
-                ><img
-                  :src="document.media"
-                  alt="document"
-                  class="img-fluid w-100 rounded mb-4"
-              /></a>
+              <a href="#!"><img :src="document.media" alt="document" class="img-fluid w-100 rounded mb-4" /></a>
             </div>
-            <div>
+            <div class="d-flex justify-content-between align-content-center">
               <h3 class="mb-2">
                 <a href="#" class="text-inherit">{{
                   document.designation.includes("Carte")
-                    ? "Pièce d'identité"
-                    : document.designation
+                  ? "Pièce d'identité"
+                  : document.designation
                 }}</a>
+
               </h3>
+              <button class="btn btn-sm btn-light-danger" @click="deleteDoc(document)"><i class="bi-trash"></i></button>
             </div>
           </div>
         </div>
@@ -72,67 +55,32 @@
     </div>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="uploadModal"
-      tabindex="-1"
-      aria-labelledby="uploadModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="uploadModalLabel">
               <span class="fa fa-file"></span> Joindre un document supplémentaire
             </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-            <button
-              type="button"
-              id="uploadModalBtn"
-              class="btn btn-primary d-none"
-              data-bs-toggle="modal"
-              data-bs-target="#uploadModal"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" id="uploadModalBtn" class="btn btn-primary d-none" data-bs-toggle="modal"
+              data-bs-target="#uploadModal"></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Veuillez saisir le libellé du document"
-                v-model="uploadedDocument.designation"
-                id="designation"
-              />
+              <input class="form-control" type="text" placeholder="Veuillez saisir le libellé du document"
+                v-model="uploadedDocument.designation" id="designation" />
             </div>
             <div class="mb-3">
-              <input
-                class="form-control"
-                type="file"
-                @change="chooseFile"
-                id="uploadedFile"
-              />
+              <input class="form-control" type="file" @change="chooseFile" id="uploadedFile" />
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              id="uploadModalDismissBtn"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" id="uploadModalDismissBtn" class="btn btn-secondary" data-bs-dismiss="modal">
               Fermer
             </button>
-            <button
-              type="button"
-              :class="uploadLoading ? 'disabled' : ''"
-              class="btn btn-primary"
-              @click.prevent="uploadDocument"
-            >
+            <button type="button" :class="uploadLoading ? 'disabled' : ''" class="btn btn-primary"
+              @click.prevent="uploadDocument">
               <span v-if="uploadLoading" class="spinner-border spinner-border-sm"></span>
               Charger le document
             </button>
@@ -168,12 +116,28 @@ export default {
     },
   },
   methods: {
+
     goToTab(nextTab) {
       if (nextTab) {
         this.$emit("gotonexttab");
       } else {
         this.$emit("gotoprevioustab");
       }
+    },
+
+    deleteDoc(doc) {
+      console.clear();
+      console.log(JSON.stringify(doc));
+      this.$swal({
+        text: "Etes-vous sûr de vouloir supprimer le document sélectionné ?",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Oui",
+        showCancelButton: true,
+        cancelButtonText: "Non",
+      }).then((value) => {
+
+      });
     },
     openUploadModal(noEdit = false) {
       this.noEdit = noEdit;

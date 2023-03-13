@@ -30,7 +30,8 @@
       <div class="single-title d-flex align-center justify-content-between mb-2 mt-2">
         <h2><i class="fa fa-money"></i> <span>Vos Crédits</span></h2>
 
-        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalCredit">
+        <button @click="credit.hasEdited = false" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+          data-bs-target="#modalCredit">
           <span class="bi-plus"></span> Ajouter
         </button>
       </div>
@@ -81,7 +82,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h2 class="modal-title" id="modalCreditLabel">{{ credit.banque === '' ? 'Rengistrement de votre crédit' :
+            <h2 class="modal-title" id="modalCreditLabel">{{ !credit.hasEdited ? 'Rengistrement de votre crédit' :
               'Modification du crédit sélectionné' }}</h2>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
               @click.prevent="toggleNewCredit(false)"></button>
@@ -195,14 +196,14 @@
               </div>
               <div class="mt-3">
 
-                <button v-if="credit.banque === ''" class="btn btn-success me-2" :class="isLoading ? 'disabled' : ''"
+                <button v-if="!credit.hasEdited" class="btn btn-success me-2" :class="isLoading ? 'disabled' : ''"
                   type="submit">
                   <span class="spinner spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
-                  <i class="fa fa-plus" v-else></i> Enregistrer
+                  <i class="fa fa-plus" v-else></i> Sauvegarder
                 </button>
-                <button v-else class="btn btn-primary me-2" :class="isLoading ? 'disabled' : ''" type="submit">
+                <button v-else class="btn btn-info me-2 text-white" :class="isLoading ? 'disabled' : ''" type="submit">
                   <span class="spinner spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
-                  <i class="fa fa-pen-alt" v-else></i> Modifier
+                  <i class="fa fa-pen" v-else></i> Sauvegarder les modifications
                 </button>
                 <button class="btn me-2 btn-danger" data-bs-dismiss="modal" aria-label="Close"
                   @click.prevent="toggleNewCredit(false)">
@@ -236,6 +237,7 @@ export default {
       echeance_remboursement: "",
       date_dernier_paiement: "",
       solde: "",
+      hasEdited: false,
     };
     return {
       devise: "USD",
@@ -289,12 +291,15 @@ export default {
     },
 
     editCredit(credit) {
-      this.credit.montant = credit.montant;
-      this.credit.motif = credit.motif;
-      this.credit.banque = credit.banque;
-      this.credit.devise = credit.devise;
-      this.credit.solde = credit.solde;
-      $('#btn-trigger-modal').click();
+      this.credit.hasEdited = true;
+      if (this.credit.hasEdited) {
+        this.credit.montant = credit.montant;
+        this.credit.motif = credit.motif;
+        this.credit.banque = credit.banque;
+        this.credit.devise = credit.devise;
+        this.credit.solde = credit.solde;
+        $('#btn-trigger-modal').click();
+      }
     },
     toggleSelectMotif() {
       this.credit.motif = "";

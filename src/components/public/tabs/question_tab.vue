@@ -119,7 +119,10 @@
               :src="question.reponses[0].media" id="documentUploadedPreview"
               class="img-fluid w-lg-30 w-sm-100 mb-3 img-thumbnail rounded shadow-sm" alt="Show Document preview" /></a>
           <div class="mb-3">
-            <input type="file" id="documentUploaded" @change="uploadDocument" class="form-control-file" />
+            <form ref="formFile">
+              <input type="file" ref="documentUploaded" id="documentUploaded" @change="uploadDocument"
+                class="form-control-file" />
+            </form>
           </div>
         </div>
 
@@ -164,7 +167,7 @@ import camera from "@/components/widgets/camera";
 import QuestionTabMixin from "../mixins/question-tab.mixin";
 export default {
   components: { camera, go_to_tab },
- mixins:[QuestionTabMixin]
+  mixins: [QuestionTabMixin]
 };
 </script>
 <style>
