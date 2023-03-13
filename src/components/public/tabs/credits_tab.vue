@@ -195,7 +195,6 @@
                 </div>
               </div>
               <div class="mt-3">
-
                 <button v-if="!credit.hasEdited" class="btn btn-success me-2" :class="isLoading ? 'disabled' : ''"
                   type="submit">
                   <span class="spinner spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
@@ -215,7 +214,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
