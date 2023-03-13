@@ -21,7 +21,7 @@
                   </p>
                 </div>
                 <button class="btn btn-info btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalQuestions"><i
-                    class="bi-person"></i> Voir mes reponses</button>
+                    class="bi-person"></i> Voir mes réponses</button>
               </div>
             </div>
             <!-- /.section title start-->

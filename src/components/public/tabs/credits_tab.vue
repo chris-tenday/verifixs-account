@@ -7,7 +7,7 @@
       <div v-if="newCredit === false">
         <div>
           <div class="mb-2 mt-2">
-            <p class="fs-12 fw-bold text-danger">Avez-vous des crédits bancaire ?</p>
+            <p class="fs-12 fw-bold text-danger">Avez-vous des crédits bancaires ?</p>
             <div>
               <div class="form-check form-check-inline" style="cursor: pointer">
                 <input class="form-check-input" type="radio" value="oui" @change="checkedChanged($event)"
