@@ -113,7 +113,7 @@
                       <option value="BOA Bank">BOA Bank</option>
                       <option value="Autre">Autre banque...</option>
                     </select>
-                    <div v-else class="input-group mb-3">
+                    <div v-else class="input-group">
                       <input type="text" class="text_field form-control" placeholder="Saisissez la banque.."
                         v-model="credit.banque" aria-label="Text input with dropdown button" required />
                       <button class="btn btn-outline-secondary" @click="selectBanque = true" type="button"
@@ -132,7 +132,7 @@
                       <option value="Achat parcelle">Achat parcelle</option>
                       <option value="Autre">Autre motif...</option>
                     </select>
-                    <div v-else class="input-group mb-3">
+                    <div v-else class="input-group">
                       <input type="text" class="text_field form-control" placeholder="Saisissez le motif.."
                         v-model="credit.motif" aria-label="Text input with dropdown button" required />
                       <button class="btn btn-outline-secondary" @click="selectMofif = true" type="button"

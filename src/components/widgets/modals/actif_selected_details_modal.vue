@@ -78,9 +78,14 @@
                     </option>
                     <option value="autre" class="text-primary">Autre...</option>
                   </select>
-                  <input v-if="field.select.includes('autre')" v-model="field.data" :id="`field${index}`" type="text"
-                    class="form-control mt-2 border-light" placeholder="Veuillez saisir.." required
-                    aria-required="veuillez renseigner ce champs !" />
+
+                  <div v-if="field.select.includes('autre')" class="input-group">
+                    <input v-model="field.data" :id="`field${index}`" type="text" class="form-control mt-2 border-light"
+                      placeholder="Veuillez saisir.." required aria-required="veuillez renseigner ce champs !" />
+                    <button class="btn btn-outline-secondary" @click="field.select = ''" type="button"><i
+                        class="bi-arrows-collapse"></i>
+                    </button>
+                  </div>
                 </div>
                 <!-- Field is text !-->
                 <div class="mb-2" v-else>
