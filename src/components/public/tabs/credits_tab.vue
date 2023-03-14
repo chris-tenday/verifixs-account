@@ -30,7 +30,7 @@
       <div class="single-title d-flex align-center justify-content-between mb-2 mt-2">
         <h2><i class="fa fa-money"></i> <span>Vos Crédits</span></h2>
 
-        <button @click="credit.hasEdited = false" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+        <button @click="onModalOpenned" class="btn btn-sm btn-primary" data-bs-toggle="modal"
           data-bs-target="#modalCredit">
           <span class="bi-plus"></span> Ajouter
         </button>
@@ -98,9 +98,8 @@
                 <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label class="mb-2 mt-2 form-label">Banque <sup class="text-danger">*</sup></label>
-                    <input style="display: none" type="text" class="text_field form-control" placeholder="Banque.."
-                      v-model="credit.banque" required />
-                    <select v-if="selectBanque" name="" id="" v-model="credit.banque" class="form-control" required>
+                    <select v-if="selectBanque" name="" id="" @change="toggleSelectBanque" v-model="credit.banque"
+                      class="form-control" required>
                       <option value="">--------</option>
                       <option value="EquityBCDC">EquityBCDC</option>
                       <option value="Rawbank">Rawbank</option>
@@ -112,24 +111,34 @@
                       <option value="Afriland First Bank">Afriland First Bank</option>
                       <option value="BGFI Bank">BGFI Bank</option>
                       <option value="BOA Bank">BOA Bank</option>
-                      <option @click.prevent="toggleSelectBanque">Autre banque..</option>
+                      <option value="Autre">Autre banque...</option>
                     </select>
-                    <input v-else type="text" class="text_field form-control" placeholder="Saisissez la banque.."
-                      v-model="credit.banque" aria-label="Text input with dropdown button" required />
+                    <div v-else class="input-group mb-3">
+                      <input type="text" class="text_field form-control" placeholder="Saisissez la banque.."
+                        v-model="credit.banque" aria-label="Text input with dropdown button" required />
+                      <button class="btn btn-outline-secondary" @click="selectBanque = true" type="button"
+                        id="button-addon2"><i class="bi-arrows-collapse"></i></button>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label class="mb-2 mt-2">Motif du crédit <sup class="text-danger">*</sup></label>
-                    <select v-if="selectMofif" name="" id="" class="form-control" v-model="credit.motif" required>
+                    <select v-if="selectMofif" name="" id="" @change="toggleSelectMotif" class="form-control"
+                      v-model="credit.motif" required>
                       <option value="">-----------</option>
                       <option value="Scolaire">Scolaire</option>
                       <option value="Business">Business</option>
                       <option value="Achat parcelle">Achat parcelle</option>
-                      <option @click.prevent="toggleSelectMotif">Autre motif..</option>
+                      <option value="Autre">Autre motif...</option>
                     </select>
-                    <input v-else type="text" class="text_field form-control" placeholder="Saisissez le motif.."
-                      v-model="credit.motif" aria-label="Text input with dropdown button" required />
+                    <div v-else class="input-group mb-3">
+                      <input type="text" class="text_field form-control" placeholder="Saisissez le motif.."
+                        v-model="credit.motif" aria-label="Text input with dropdown button" required />
+                      <button class="btn btn-outline-secondary" @click="selectMofif = true" type="button"
+                        id="button-addon2"><i class="bi-arrows-collapse"></i></button>
+                    </div>
+
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6">
@@ -288,7 +297,17 @@ export default {
 
     },
 
+    /*Before modal openning */
+    onModalOpenned() {
+      credit.hasEdited = false;
+      this.selectMofif = true;
+      this.selectBanque = true;
+    },
+
+    /*Edit existing credit*/
     editCredit(credit) {
+      this.selectMofif = true;
+      this.selectBanque = true;
       this.credit.hasEdited = true;
       if (this.credit.hasEdited) {
         this.credit.montant = credit.montant;
@@ -299,18 +318,20 @@ export default {
         $('#btn-trigger-modal').click();
       }
     },
-    toggleSelectMotif() {
-      this.credit.motif = "";
-      if (this.selectMofif) {
+    toggleSelectMotif(event) {
+      console.log(event.target.value);
+      if (event.target.value.includes('Autre')) {
         this.selectMofif = false;
+        this.credit.motif = "";
       } else {
         this.selectMofif = true;
       }
     },
-    toggleSelectBanque() {
-      this.credit.banque = "";
-      if (this.selectBanque) {
+    toggleSelectBanque(event) {
+      console.log(event.target.value);
+      if (event.target.value.includes('Autre')) {
         this.selectBanque = false;
+        this.credit.banque = "";
       } else {
         this.selectBanque = true;
       }

@@ -1,6 +1,5 @@
 export default {
   name: "Question-tab-mixin",
-
   data() {
     return {
       index: 0,
@@ -311,7 +310,7 @@ export default {
             .dispatch("repondreQuestion", formData)
             .then((res) => {
               //console.log(res);
-              this.$refs.formFile.reset();
+
               if (
                 res.reponse === undefined ||
                 res.reponse.status !== "success"
@@ -339,8 +338,11 @@ export default {
       formData = new FormData();
       formData.append("diligence_id", this.diligenceId);
       formData.append("client_id", this.client.client_id);
-      await this.$store.dispatch("viewDiligenceDetails", formData);
-
+      this.$store.dispatch("viewDiligenceDetails", formData).then((_) => {
+        if (this.question.reponse_type === "attachment") {
+          this.$refs.formFile.reset();
+        }
+      });
       if (answerSent) {
         return true;
       } else {
@@ -369,7 +371,7 @@ export default {
           avenue: "",
           numero: "",
           quartier: "",
-          reference: "",
+          thiserence: "",
           commune: "",
         };
       }
@@ -399,8 +401,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                  console.log("Old: "+oldQuestion.question);
-                                                                                                  console.log("New:" +newQuestion.question);*/
+                                                                                                                                console.log("Old: "+oldQuestion.question);
+                                                                                                                                console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */
