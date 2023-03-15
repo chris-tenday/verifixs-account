@@ -87,6 +87,7 @@
                     </button>
                   </div>
                 </div>
+
                 <!-- Field is text !-->
                 <div class="mb-2" v-else>
                   <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail }} <sub
@@ -121,7 +122,7 @@
               <div class="mt-4">
                 <button type="submit" class="btn btn-success me-2" :class="isLoading ? 'disabled' : ''">
                   <span class="spinner-border spinner-border-sm" v-if="isLoading"></span>
-                  Enregistrer & valider
+                  Sauvegarder
                 </button>
                 <button type="reset" @click="clearFields" data-bs-dismiss="modal" class="btn btn-secondary">
                   Fermer
