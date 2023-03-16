@@ -143,9 +143,6 @@
       </div>
     </loader>
 
-
-
-
     <!-- modal pour voir actif enregistré !-->
     <detail-modal :data="actif_details" :diligence="diligence" :diligenceId="diligenceId"></detail-modal>
 
