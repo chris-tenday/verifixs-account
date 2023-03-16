@@ -9,8 +9,7 @@
           </h3>
           <button type="button" class="btn-close text-white" @click="clearFields" data-bs-dismiss="modal"
             aria-label="Close" id="btnExitModal"></button>
-          <button type="reset" id="detailShowBtn" class="d-none" data-bs-target="#actifDetails"
-            data-bs-toggle="modal"></button>
+          <button id="inputsShowBtn" class="d-none" data-bs-target="#actifDetails" data-bs-toggle="modal"></button>
         </div>
         <!-- end /.modal-header -->
 
@@ -24,7 +23,7 @@
                 :key="index">
                 <!--Field is file-->
                 <div class="mb-2" v-if="field.reponse_type.includes('file')">
-                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail }} <sup
+                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail | capitalize }} <sup
                       class="text-danger">*</sup></label>
                   <div class="input-group">
                     <input class="form-control border-light" :id="`field${index}`" :type="field.reponse_type"
@@ -35,7 +34,7 @@
 
                 <!--Field is adress location-->
                 <div class="mb-2" v-else-if="field.adresse_split !== undefined">
-                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail }} <sup
+                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail | capitalize }} <sup
                       class="text-danger">*</sup></label>
                   <div class="input-group">
                     <input v-model="field.adresse_split.province" style="width: 150px" type="text"
@@ -72,10 +71,10 @@
                 <!--Field is select-->
                 <div class="mb-2" v-else-if="field.reponse_type.includes('select')">
                   <label :for="`field${index}`" class="form-label text-dark fw-bold">{{
-                    field.detail
+                    field.detail | capitalize
                   }} <sup class="text-danger">*</sup></label>
                   <select v-if="!field.select.includes('autre')" class="form-select border-light" :id="`field${index}`"
-                    v-model="field.data" @change="field.select = field.data" aria-label="Select value" required
+                    v-model="field.data" @change="onselectionchange(field)" aria-label="Select value" required
                     aria-required="veuillez renseigner ce champs !">
                     <option value="" selected>-------------</option>
                     <option :value="option" v-for="option in field.options" :key="option">
@@ -86,8 +85,9 @@
 
                   <div v-if="field.select.includes('autre')" class="input-group">
                     <input v-model="field.data" :id="`field${index}`" type="text" class="form-control mt-2 border-light"
-                      placeholder="Veuillez saisir.." required aria-required="veuillez renseigner ce champs !" />
-                    <button class="btn btn-outline-secondary" @click="field.select = ''" type="button"><i
+                      placeholder="Veuillez saisir autre choix..." required
+                      aria-required="veuillez renseigner ce champs !" />
+                    <button class="btn btn-light-danger btn-sm mt-2" @click="field.select = ''" type="button"><i
                         class="bi-arrows-collapse"></i>
                     </button>
                   </div>
@@ -95,8 +95,8 @@
 
                 <!-- Field is text !-->
                 <div class="mb-2" v-else>
-                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail }} <sub
-                      class="text-danger">*</sub>
+                  <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail | capitalize }} <sup
+                      class="text-danger">*</sup>
                   </label>
                   <!-- if reponses multiple !-->
                   <div v-if="field.reponse_type.includes('multiple')">
@@ -177,6 +177,10 @@ export default {
   },
 
   methods: {
+    onselectionchange(field) {
+      field.select = field.data;
+      field.data = "";
+    },
     /** Method pour ajouter une réponse */
     addAnswer(field) {
       var reponse = { reponse: "" };

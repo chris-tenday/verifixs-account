@@ -198,11 +198,12 @@ export default {
       console.log(JSON.stringify(this.questions));
     },
     onSelectedActif(actif) {
+      console.log('show details');
       this.selected_actif = actif;
-      $("#actifDetailBtn").click();
+      $("#inputsShowBtn").click();
     },
     onShowDetails(inputs) {
-      console.log(JSON.stringify(inputs));
+      console.log('inputs');
       this.actif_details = inputs;
       $("#detailShowBtn").click();
     },
