@@ -313,7 +313,6 @@ export default {
           console.log(err);
         });
     },
-
     saveDetail(detail, id) {
       let formData = new FormData();
       formData.append("client_id", this.client.client_id);
