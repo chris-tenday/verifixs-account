@@ -44,9 +44,13 @@
               {{ actif.titre }}
             </h3>
 
-            <button @click="getSelectedActif(actif)"
-              class="btn-link border-primary border p-2 rounded border-2 fw-bold fs-5">
-              Voir détail
+            <button @click.prevent="getSelectedActif(actif)
+            " class="btn btn-sm btn-info mt-3 text-white fw-medium fs-6">
+              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="7px" viewBox="0 0 13 7"
+                enable-background="new 0 0 13 7" xml:space="preserve">
+                <polygon id="arrow_poly_1" class="arrow_poly" fill="#FFFFFF" points="13,3.5 9,0 9,3 0,3 0,4 9,4 9,7 " />
+              </svg> Voir détails
             </button>
           </div>
         </div>

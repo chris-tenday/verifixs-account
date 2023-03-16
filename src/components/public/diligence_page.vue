@@ -146,9 +146,7 @@
 
 
     <!-- modal pour ajouter un nouvel actif !-->
-    <!-- <portal to='body'>
-      <detail-modal :data="actif_details" :diligence="diligence" :diligenceId="diligenceId"></detail-modal>
-    </portal> -->
+    <detail-modal :data="actif_details" :diligence="diligence" :diligenceId="diligenceId"></detail-modal>
 
     <!-- modal pour voir actif enregistré !-->
     <portal to='body'>

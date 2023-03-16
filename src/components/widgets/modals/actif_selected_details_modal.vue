@@ -9,7 +9,8 @@
           </h3>
           <button type="button" class="btn-close text-white" @click="clearFields" data-bs-dismiss="modal"
             aria-label="Close" id="btnExitModal"></button>
-          <button id="detailShowBtn" class="d-none" data-bs-target="#actifDetails" data-bs-toggle="modal"></button>
+          <button type="reset" id="detailShowBtn" class="d-none" data-bs-target="#actifDetails"
+            data-bs-toggle="modal"></button>
         </div>
         <!-- end /.modal-header -->
 
@@ -19,7 +20,7 @@
               <p class="text-danger fs-5">Veuillez renseigner tous ces champs ci-bas !</p>
             </div>
             <form name="formval2" ref="form" @submit.prevent="submitData" class="form-horizontal loan-eligibility-form">
-              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" v-for="(field, index) in fields.details"
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" v-for="(field, index) in data.details"
                 :key="index">
                 <!--Field is file-->
                 <div class="mb-2" v-if="field.reponse_type.includes('file')">
@@ -163,7 +164,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      fields: this.data
     };
   },
   computed: {
@@ -202,14 +202,31 @@ export default {
 
     clearFields() {
       this.$refs.form.reset();
+      for (let i = 0; i < this.data.details.length; i++) {
+        let detail = this.data.details[i];
+        if (detail.data !== "") {
+          detail.data = "";
+        }
+        if (detail.adresse_split !== undefined) {
+          detail.adresse_split.province = "";
+          detail.adresse_split.avenue = "";
+          detail.adresse_split.numero = "";
+          detail.adresse_split.quartier = "";
+          detail.adresse_split.reference = "";
+          detail.adresse_split.commune = "";
+        }
+      }
     },
+
     submitData(event) {
       /**
        * check detail input data if isn't empty
        **/
+
+
+
       for (let i = 0; i < this.data.details.length; i++) {
         let detail = this.data.details[i];
-        console.log(JSON.stringify(detail));
         if (detail.data === "" && detail.obligatoire === "oui") {
           this.$swal.fire({
             text: "Vous devez renseigner tous les champs obligatoires!",
@@ -217,7 +234,25 @@ export default {
           });
           return;
         }
+
+        /* Verification de la date entrée */
+        if (detail.reponse_type.includes('date')) {
+          const date = new Date(detail.data).getTime();
+          const now = new Date(Date.now()).getTime();
+          if (date >= now) {
+            this.$swal.fire({
+              text: "Les dates entrées sont invalides !",
+              icon: 'warning',
+              toast: true,
+              timer: 3000,
+              showConfirmButton: false,
+            });
+            return;
+          }
+        }
       }
+
+
       /**
        * actifs save details formData
        **/
