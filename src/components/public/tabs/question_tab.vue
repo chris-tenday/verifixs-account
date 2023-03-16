@@ -48,30 +48,32 @@
           </div>
 
           <div v-else>
+            <div class="col-md-12" v-if="question.reponses[0].reponse.reponse === ''">
+              <div class="form-check form-check-inline mb-2">
+                <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" checked />
+                <label class="form-check-label" style="cursor: pointer" id="adresse_type" name="adresse_type">
+                  Domiciliaire
+                </label>
+              </div>
+              <div class="form-check form-check-inline mb-2">
+                <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" />
+                <label class="form-check-label" style="cursor: pointer" id="adresse_type">
+                  Professionnelle
+                </label>
+              </div>
+            </div>
             <div v-for="(reponse, i) in question.reponses" :key="i">
               <div class="d-flex align-items-center mb-2 justify-content-between">
-                <h3 class="fw-400 mb-3 text-dark fs-4" v-if="reponse.reponse !== ''">
-                  <i class="fa fa-map-marker me-2 text-success"></i> {{ reponse.reponse }}
-                </h3>
-                <p v-else></p>
+                <p class="fw-300 mb-2" v-if="reponse.reponse !== ''">
+                  <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}
+                </p>
               </div>
-              <div class="input-group mb-2" v-if="i === question.reponses.length - 1">
-                <div class="col-md-12" v-if="reponse.reponse === ''">
-                  <div class="form-check form-check-inline mb-2">
-                    <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" checked />
-                    <label class="form-check-label" style="cursor: pointer" id="adresse_type" name="adresse_type">
-                      Domiciliaire
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline mb-2">
-                    <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" />
-                    <label class="form-check-label" style="cursor: pointer" id="adresse_type">
-                      Professionnelle
-                    </label>
-                  </div>
-                </div>
+              <div class="input-group mb-2">
+
 
                 <!-- reponse type adresse !-->
+                <input v-if="reponse.reponse === ''" type="text" id="subj" class="form-control rounded m-1"
+                  style="width: 150px" placeholder="Ville|province" v-model="reponse.split.province" />
                 <input v-if="reponse.reponse === ''" type="text" id="subj" class="form-control rounded m-1"
                   style="width: 120px" placeholder="Avenue" v-model="reponse.split.avenue" />
                 <input v-if="reponse.reponse === ''" type="text" style="width: 60px" id="subj"
@@ -84,18 +86,26 @@
                   class="form-control rounded m-1" placeholder="Commune" @change="
                     handleSplit(
                       reponse,
-                      'Avenue ' + reponse.split.avenue,
-                      ' Numéro ' + reponse.split.numero,
-                      'Quartier ' + reponse.split.quartier,
-                      ' Référence ' + reponse.split.reference,
-                      ' Commune ' + reponse.split.commune
+                      'Province : ' + reponse.split.province,
+                      'Avenue : ' + reponse.split.avenue,
+                      ' Numéro : ' + reponse.split.numero,
+                      'Quartier : ' + reponse.split.quartier,
+                      ' Référence : ' + reponse.split.reference,
+                      ' Commune : ' + reponse.split.commune
                     )
                   " v-model="reponse.split.commune" />
-                <button v-if="i === question.reponses.length - 1" type="button"
-                  class="btn btn-dark-primary mt-1 rounded btn-sm" style="height: 48px" @click.prevent="addAnswer">
-                  <span v-if="reponse.reponse !== ''">Ajouter adresse</span>
-                  <i v-else class="fa fa-plus fs-7"></i>
-                </button>
+                <div v-if="i === question.reponses.length - 1">
+                  <button v-if="reponse.reponse !== ''" class=" btn btn-dark-primary mt-1 rounded btn-sm"
+                    style="height: 48px" @click.prevent="addAnswer">
+                    Ajouter adresse
+                  </button>
+                  <div v-else style="display: flex; flex-direction: column; flex-shrink: 2;" class="mt-1 mb-1">
+                    <button @click="addAnswer" class="btn-increment bg-primary"><i class="bi-plus"></i></button>
+                    <button @click="question.reponses.splice(i, 1)" class="btn-increment bg-danger"><i
+                        class="bi-x"></i></button>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -173,5 +183,17 @@ export default {
 <style>
 #inputPhone {
   margin-bottom: 10px;
+}
+
+.btn-increment {
+  width: 100%;
+  height: auto;
+  border: none;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  border-radius: 3px;
+  margin: 1px;
+
 }
 </style>

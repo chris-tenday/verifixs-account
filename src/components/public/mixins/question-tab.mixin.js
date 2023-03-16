@@ -98,6 +98,8 @@ export default {
     async nextQuestion() {
       /* Checker les adresses vides */
 
+      console.log(JSON.stringify(this.question));
+
       if (this.question.split) {
         let obj = this.question.reponses[this.question.reponses.length - 1];
         for (let i in obj) {
@@ -368,6 +370,7 @@ export default {
          * Gerer le split d'address
          * */
         reponse.split = {
+          province: "",
           avenue: "",
           numero: "",
           quartier: "",
@@ -377,6 +380,7 @@ export default {
       }
       this.question.reponses.push(reponse);
     },
+
     uploadDocument(event) {
       let file = event.target.files[0];
       //console.log(file);
@@ -401,8 +405,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                console.log("Old: "+oldQuestion.question);
-                                                                                                                                console.log("New:" +newQuestion.question);*/
+                                                                                                                                                        console.log("Old: "+oldQuestion.question);
+                                                                                                                                                        console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */

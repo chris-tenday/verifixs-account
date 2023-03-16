@@ -1,14 +1,14 @@
 <template>
   <div class="modal fade" id="actifDetails" tabindex="-1" role="dialog" data-bs-backdrop="false" aria-hidden="true"
     style="background-color: rgba(0, 0, 0, 0.5)">
-    <div class="modal-dialog modal-lg rounded-0" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header bg-dual-gradient rounded-0">
-          <h3 class="modal-title fs-5 text-white">
+        <div class="modal-header">
+          <h3 class="modal-title">
             Actif : {{ data.titre }}
           </h3>
-          <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"
-            id="btnExitModal"></button>
+          <button type="button" class="btn-close text-white" @click="clearFields" data-bs-dismiss="modal"
+            aria-label="Close" id="btnExitModal"></button>
           <button id="detailShowBtn" class="d-none" data-bs-target="#actifDetails" data-bs-toggle="modal"></button>
         </div>
         <!-- end /.modal-header -->
@@ -18,8 +18,8 @@
             <div class="col-12">
               <p class="text-danger fs-5">Veuillez renseigner tous ces champs ci-bas !</p>
             </div>
-            <form name="formval2" @submit.prevent="submitData" class="form-horizontal loan-eligibility-form">
-              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" v-for="(field, index) in data.details"
+            <form name="formval2" ref="form" @submit.prevent="submitData" class="form-horizontal loan-eligibility-form">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" v-for="(field, index) in fields.details"
                 :key="index">
                 <!--Field is file-->
                 <div class="mb-2" v-if="field.reponse_type.includes('file')">
@@ -37,6 +37,9 @@
                   <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail }} <sup
                       class="text-danger">*</sup></label>
                   <div class="input-group">
+                    <input v-model="field.adresse_split.province" style="width: 150px" type="text"
+                      class="form-control border-light m-1 rounded" placeholder="Ville | province" required
+                      aria-required="Ville ou province !" />
                     <input v-model="field.adresse_split.avenue" style="width: 120px" type="text"
                       class="form-control border-light m-1 rounded" placeholder="avenue" required
                       aria-required="veuillez renseigner ce champs !" />
@@ -53,11 +56,12 @@
                       class="form-control border-light m-1 rounded" placeholder="commune" @change="
                         handleSplit(
                           field,
-                          'Avenue ' + field.adresse_split.avenue,
-                          ' Numéro ' + field.adresse_split.numero,
-                          'Quartier ' + field.adresse_split.quartier,
-                          ' Référence ' + field.adresse_split.reference,
-                          ' Commune ' + field.adresse_split.commune
+                          'Province : ' + field.adresse_split.province,
+                          'Avenue : ' + field.adresse_split.avenue,
+                          ' Numéro : ' + field.adresse_split.numero,
+                          'Quartier : ' + field.adresse_split.quartier,
+                          ' Référence : ' + field.adresse_split.reference,
+                          ' Commune : ' + field.adresse_split.commune
                         )
                       " required aria-required="veuillez renseigner ce champs !" />
                   </div>
@@ -159,6 +163,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      fields: this.data
     };
   },
   computed: {
@@ -166,8 +171,14 @@ export default {
       client: "getClient",
     }),
   },
+
+  mounted() {
+    this.clearFields();
+  },
+
   methods: {
-    addAnswer(field) /** Method pour ajouter une réponse */ {
+    /** Method pour ajouter une réponse */
+    addAnswer(field) {
       var reponse = { reponse: "" };
 
       field.reponses.push(reponse);
@@ -190,21 +201,8 @@ export default {
     },
 
     clearFields() {
-      for (let i = 0; i < this.data.details.length; i++) {
-        let detail = this.data.details[i];
-        if (detail.data !== "") {
-          detail.data = "";
-        }
-        if (detail.adresse_split !== undefined) {
-          detail.adresse_split.avenue = "";
-          detail.adresse_split.numero = "";
-          detail.adresse_split.quartier = "";
-          detail.adresse_split.reference = "";
-          detail.adresse_split.commune = "";
-        }
-      }
+      this.$refs.form.reset();
     },
-
     submitData(event) {
       /**
        * check detail input data if isn't empty
@@ -261,7 +259,6 @@ export default {
             };
             this.isLoading = false;
             this.clearFields();
-
             await this.$store.dispatch("viewDiligenceDetails", s);
             $("#btnExitModal").click();
             this.$emit("allowNext");
