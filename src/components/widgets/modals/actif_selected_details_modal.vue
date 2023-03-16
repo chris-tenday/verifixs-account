@@ -223,8 +223,6 @@ export default {
        * check detail input data if isn't empty
        **/
 
-
-
       for (let i = 0; i < this.data.details.length; i++) {
         let detail = this.data.details[i];
         if (detail.data === "" && detail.obligatoire === "oui") {

@@ -143,14 +143,15 @@
       </div>
     </loader>
 
-    <!-- modal pour voir actif enregistré !-->
-    <detail-modal :data="actif_details" :diligence="diligence" :diligenceId="diligenceId"></detail-modal>
+
 
     <!-- modal pour ajouter un nouvel actif !-->
-    <portal to='body'>
-      <actif-modal :data="selected_actif"></actif-modal>
-    </portal>
+    <!-- <portal to='body'>
+      <detail-modal :data="actif_details" :diligence="diligence" :diligenceId="diligenceId"></detail-modal>
+    </portal> -->
 
+    <!-- modal pour voir actif enregistré !-->
+    <actif-modal :data="actif_details"></actif-modal>
 
     <portal-target name="modal">
       <!--
@@ -198,10 +199,10 @@ export default {
     },
     onSelectedActif(actif) {
       this.selected_actif = actif;
-      console.log(JSON.stringify(actif));
       $("#actifDetailBtn").click();
     },
     onShowDetails(inputs) {
+      console.log(JSON.stringify(inputs));
       this.actif_details = inputs;
       $("#detailShowBtn").click();
     },

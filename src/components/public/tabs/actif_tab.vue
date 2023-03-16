@@ -44,7 +44,7 @@
               {{ actif.titre }}
             </h3>
 
-            <button @click.prevent="getSelectedActif(actif)
+            <button @click.prevent="onShowDetails(actif)
             " class="btn btn-sm btn-info mt-3 text-white fw-medium fs-6">
               <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="7px" viewBox="0 0 13 7"
@@ -71,7 +71,7 @@
           </div>
           <div class="card-body p-6">
             <h3 class="mb-2 text-white">{{ actif.titre }}</h3>
-            <button class="btn btn-sm btn-light mt-2 border-0" @click="onShowDetails(actif)">
+            <button class="btn btn-sm btn-light mt-2 border-0" @click="getSelectedActif(actif)">
               <i class="fa fa-plus mx-1"></i>Ajouter
             </button>
           </div>
@@ -79,7 +79,7 @@
       </div>
     </div>
 
-    <portal to="modal"><detail-modal :data="actif_details" @allowNext="allowNextTab = true" :diligence="diligence"
+    <portal to="modal"><detail-modal :data="inputs" @allowNext="allowNextTab = true" :diligence="diligence"
         :diligenceId="diligenceId"></detail-modal></portal>
   </div>
 </template>
@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       selected_actif: {},
-      actif_details: {},
+      inputs: {},
       isLoading: false,
       file: "",
       diligenceId: 0,
@@ -119,12 +119,7 @@ export default {
   },
 
   methods: {
-    onShowDetails(inputs) {
-      console.log("open modal");
-      console.log(JSON.stringify(inputs));
-      this.actif_details = inputs;
-      $("#detailShowBtn").click();
-    },
+
     goToTab(nextTab) {
       if (nextTab) {
         this.$emit("gotonexttab");
@@ -175,7 +170,12 @@ export default {
     },
 
     getSelectedActif(actif) {
+      this.inputs = actif;
       this.$emit("onSelectedActif", actif);
+    },
+
+    onShowDetails(actif) {
+      this.$emit('showDetails', actif);
     },
 
     toggleScrollerBottom() {
