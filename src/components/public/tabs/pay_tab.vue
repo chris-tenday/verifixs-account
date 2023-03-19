@@ -8,26 +8,14 @@
           <div class="card mb-2">
             <div class="p-3" id="faqOne">
               <h4 class="mb-0">
-                <a
-                  href="#!"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="false"
-                  aria-controls="collapseOne"
-                  class="collapsed"
-                >
+                <a href="#!" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
+                  aria-controls="collapseOne" class="collapsed">
                   <i class="fa fa-plus-circle me-1"></i>
                   Paiement
                 </a>
               </h4>
             </div>
-            <div
-              id="collapseOne"
-              class="collapse"
-              aria-labelledby="faqOne"
-              data-bs-parent="#Faqaccordionsone"
-              style=""
-            >
+            <div id="collapseOne" class="collapse" aria-labelledby="faqOne" data-bs-parent="#Faqaccordionsone" style="">
               <div class="card-body border-top">
                 <div class="row">
                   <div class="col-md-12">
@@ -45,48 +33,24 @@
 
                         <div class="row">
                           <div class="col-lg-4 col-md-4 mb-2 mb-lg-0">
-                            <a
-                              href="#!"
-                              class="card text-center smooth-shadow-sm"
-                              :class="
-                                payment.payWithMobile ? 'border-primary border-2' : ''
-                              "
-                              @click.prevent="togglePaymentMethod"
-                            >
-                              <div
-                                class="card-body p-4 px-4 d-flex align-content-center align-items-center"
-                              >
-                                <div
-                                  class="icon-shape bg-light-pink rounded-circle icon-xl"
-                                >
-                                  <img
-                                    src="assets/images/icon/icon-4.svg"
-                                    alt="document title"
-                                  />
+                            <a href="#!" class="card text-center smooth-shadow-sm" :class="
+                              payment.payWithMobile ? 'border-primary border-2' : ''
+                            " @click.prevent="togglePaymentMethod">
+                              <div class="card-body p-4 px-4 d-flex align-content-center align-items-center">
+                                <div class="icon-shape bg-light-pink rounded-circle icon-xl">
+                                  <img src="assets/images/icon/icon-4.svg" alt="document title" />
                                 </div>
                                 <h4 class="mb-0">Paiement mobile</h4>
                               </div>
                             </a>
                           </div>
                           <div class="col-lg-4 col-md-4 mb-2 mb-lg-0">
-                            <a
-                              href="#!"
-                              class="card text-center smooth-shadow-sm"
-                              :class="
-                                !payment.payWithMobile ? 'border-primary border-2' : ''
-                              "
-                              @click.prevent="togglePaymentMethod"
-                            >
-                              <div
-                                class="card-body p-4 px-4 d-flex align-content-center align-items-center"
-                              >
-                                <div
-                                  class="icon-shape bg-light-pink rounded-circle icon-xl"
-                                >
-                                  <img
-                                    src="assets/images/svg/credit-card.svg"
-                                    alt="document title"
-                                  />
+                            <a href="#!" class="card text-center smooth-shadow-sm" :class="
+                              !payment.payWithMobile ? 'border-primary border-2' : ''
+                            " @click.prevent="togglePaymentMethod">
+                              <div class="card-body p-4 px-4 d-flex align-content-center align-items-center">
+                                <div class="icon-shape bg-light-pink rounded-circle icon-xl">
+                                  <img src="assets/images/svg/credit-card.svg" alt="document title" />
                                 </div>
                                 <h4 class="mb-0">Paiement par carte</h4>
                               </div>
@@ -101,128 +65,59 @@
                   <div class="col-md-8">
                     <div v-if="payment.payWithMobile">
                       <div>
-                        <label for="card_number" class="form-label"
-                          >* Numéro de téléphone (Mpesa, Orange Money, Airtel Money,
-                          Afrimoney)</label
-                        >
-                        <input
-                          id="card_number"
-                          type="text"
-                          class="form-control"
-                          placeholder="Numéro de téléphone"
-                          v-model="payment.telephone"
-                        />
+                        <label for="card_number" class="form-label">* Numéro de téléphone (Mpesa, Orange Money, Airtel
+                          Money,
+                          Afrimoney)</label>
+                        <input id="card_number" type="text" class="form-control" placeholder="Numéro de téléphone"
+                          v-model="payment.telephone" />
                       </div>
-                      <button
-                        @click.prevent="pay"
-                        type="submit"
-                        class="btn btn-success btn-lg w-100 mt-3"
-                        :class="payLoading ? 'disabled' : ''"
-                      >
-                        <span
-                          v-if="payLoading"
-                          class="spinner-border spinner-border-sm"
-                        ></span>
+                      <button @click.prevent="pay" type="submit" class="btn btn-success btn-lg w-100 mt-3"
+                        :class="payLoading ? 'disabled' : ''">
+                        <span v-if="payLoading" class="spinner-border spinner-border-sm"></span>
                         <i v-else class="fa fa-lock"></i> Payer
                       </button>
                     </div>
                     <div v-else>
-                      <form
-                        action="https://beta-cardpayment.flexpay.cd/v1/pay"
-                        method="post"
-                        id="card_form"
-                      >
+                      <form action="https://beta-cardpayment.flexpay.cd/v1/pay" method="post" id="card_form">
                         <div class="mb-2 d-none">
-                          <input
-                            type="text"
-                            name="authorization"
-                            class="form-control"
-                            :value="cardTransaction.authorization"
-                          />
+                          <input type="text" name="authorization" class="form-control"
+                            :value="cardTransaction.authorization" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            type="text"
-                            name="merchant"
-                            class="form-control"
-                            :value="cardTransaction.merchant"
-                          />
+                          <input type="text" name="merchant" class="form-control" :value="cardTransaction.merchant" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            type="text"
-                            name="reference"
-                            class="form-control"
-                            :value="cardTransaction.reference"
-                          />
+                          <input type="text" name="reference" class="form-control" :value="cardTransaction.reference" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            type="text"
-                            name="amount"
-                            class="form-control"
-                            :value="cardTransaction.amount"
-                          />
+                          <input type="text" name="amount" class="form-control" :value="cardTransaction.amount" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="currency"
-                            :value="cardTransaction.currency"
-                          />
+                          <input class="form-control" type="text" name="currency" :value="cardTransaction.currency" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="description"
-                            :value="cardTransaction.description"
-                          />
+                          <input class="form-control" type="text" name="description"
+                            :value="cardTransaction.description" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="callback_url"
-                            :value="cardTransaction.callback_url"
-                          />
+                          <input class="form-control" type="text" name="callback_url"
+                            :value="cardTransaction.callback_url" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="approve_url"
-                            :value="cardTransaction.approve_url"
-                          />
+                          <input class="form-control" type="text" name="approve_url"
+                            :value="cardTransaction.approve_url" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="cancel_url"
-                            :value="cardTransaction.cancel_url"
-                          />
+                          <input class="form-control" type="text" name="cancel_url" :value="cardTransaction.cancel_url" />
                         </div>
                         <div class="mb-2 d-none">
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="decline_url"
-                            :value="cardTransaction.decline_url"
-                          />
+                          <input class="form-control" type="text" name="decline_url"
+                            :value="cardTransaction.decline_url" />
                         </div>
 
-                        <button
-                          @click.prevent="pay"
-                          type="submit"
-                          class="btn btn-success btn-lg w-100 mt-3"
-                          :class="payLoading ? 'disabled' : ''"
-                        >
-                          <span
-                            v-if="payLoading"
-                            class="spinner-border spinner-border-sm"
-                          ></span>
+                        <button @click.prevent="pay" type="submit" class="btn btn-success btn-lg w-100 mt-3"
+                          :class="payLoading ? 'disabled' : ''">
+                          <span v-if="payLoading" class="spinner-border spinner-border-sm"></span>
                           <i v-else class="fa fa-lock"></i> Payer
                         </button>
                       </form>
@@ -235,31 +130,18 @@
           <div class="card mb-2">
             <div class="p-3" id="faqTwo">
               <h4 class="mb-0">
-                <a
-                  href="#!"
-                  class="collapsed"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseTwo"
-                  aria-expanded="false"
-                  aria-controls="collapseTwo"
-                >
+                <a href="#!" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                  aria-expanded="false" aria-controls="collapseTwo">
                   <i class="fa fa-plus-circle me-1"></i>
                   Paiement en cours de traitement.
                 </a>
               </h4>
             </div>
-            <div
-              id="collapseTwo"
-              class="collapse"
-              aria-labelledby="faqTwo"
-              data-bs-parent="#Faqaccordionsone"
-            >
+            <div id="collapseTwo" class="collapse" aria-labelledby="faqTwo" data-bs-parent="#Faqaccordionsone">
               <div class="card-body border-top">
                 <div class="row">
-                  <div
-                    v-if="paiement !== undefined && paiement !== null"
-                    class="offset-xl-3 col-xl-6 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12"
-                  >
+                  <div v-if="paiement !== undefined && paiement !== null"
+                    class="offset-xl-3 col-xl-6 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
                     <div>
                       <h1 class="mb-2">Dernier paiement</h1>
                       <p class="text-center">
@@ -274,10 +156,7 @@
                     </div>
                   </div>
 
-                  <div
-                    v-else
-                    class="offset-xl-3 col-xl-6 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12"
-                  >
+                  <div v-else class="offset-xl-3 col-xl-6 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
                     <div class="mb-8 text-center">
                       <!-- section title-->
                       <h1 class="mb-2">Aucun paiement répertorié !</h1>
@@ -294,25 +173,14 @@
           <div class="card mb-2">
             <div class="p-3" id="faqThree">
               <h4 class="mb-0">
-                <a
-                  href="#!"
-                  class="collapsed"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree"
-                  aria-expanded="false"
-                  aria-controls="collapseThree"
-                >
+                <a href="#!" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                  aria-expanded="false" aria-controls="collapseThree">
                   <i class="fa fa-plus-circle me-1"></i>
                   Mon certificat
                 </a>
               </h4>
             </div>
-            <div
-              id="collapseThree"
-              class="collapse"
-              aria-labelledby="faqThree"
-              data-bs-parent="#Faqaccordionsone"
-            >
+            <div id="collapseThree" class="collapse" aria-labelledby="faqThree" data-bs-parent="#Faqaccordionsone">
               <div class="card-body border-top">
                 <div class="row">
                   <div class="row" v-if="certificat !== null">
@@ -325,20 +193,14 @@
                             bouton en bas pour le télécharger !
                           </p>
 
-                          <a
-                            :href="certificat.certificat_path"
-                            class="btn btn-primary btn-sm mt-3"
-                            >Télécharger mon certificat</a
-                          >
+                          <a :href="certificat.certificat_path" class="btn btn-primary btn-sm mt-3">Télécharger mon
+                            certificat</a>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div
-                    v-else
-                    class="offset-xl-3 col-xl-6 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12"
-                  >
+                  <div v-else class="offset-xl-3 col-xl-6 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
                     <div class="mb-8 text-center">
                       <!-- section title-->
                       <h1 class="mb-2">Aucun certificat !</h1>
@@ -419,6 +281,7 @@ export default {
        * Envoyer la requete vers le serveur.
        */
       this.$store.dispatch("payer", formData).then((res) => {
+
         this.payLoading = false;
         if (res.error !== undefined) {
           this.displayMsg(res.error);

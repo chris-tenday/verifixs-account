@@ -73,7 +73,7 @@
                   <label :for="`field${index}`" class="form-label text-dark fw-bold">{{
                     field.detail | capitalize
                   }} <sup class="text-danger">*</sup></label>
-                  <select v-if="!field.select.includes('autre')" class="form-select border-light" :id="`field${index}`"
+                  <select v-if="!field.data.includes('autre')" class="form-select border-light" :id="`field${index}`"
                     v-model="field.data" @change="onselectionchange(field)" aria-label="Select value" required
                     aria-required="veuillez renseigner ce champs !">
                     <option value="" selected>-------------</option>
@@ -82,12 +82,11 @@
                     </option>
                     <option value="autre" class="text-primary">Autre...</option>
                   </select>
-
-                  <div v-if="field.select.includes('autre')" class="input-group">
+                  <div v-else class="input-group">
                     <input v-model="field.data" :id="`field${index}`" type="text" class="form-control mt-2 border-light"
                       placeholder="Veuillez saisir autre choix..." required
                       aria-required="veuillez renseigner ce champs !" />
-                    <button class="btn btn-light-danger btn-sm mt-2" @click="field.select = ''" type="button"><i
+                    <button class="btn btn-light-danger btn-sm mt-2" type="button" @click="field.data = ''"><i
                         class="bi-arrows-collapse"></i>
                     </button>
                   </div>
@@ -164,6 +163,12 @@ export default {
   data() {
     return {
       isLoading: false,
+      other: {
+        index: '',
+        data: '',
+        selected: false
+      },
+
     };
   },
   computed: {
@@ -178,9 +183,10 @@ export default {
 
   methods: {
     onselectionchange(field) {
-      field.select = field.data;
-      field.data = "";
+      field.isSelected = true;
+      console.log(JSON.stringify(field));
     },
+
     /** Method pour ajouter une réponse */
     addAnswer(field) {
       var reponse = { reponse: "" };
@@ -226,7 +232,6 @@ export default {
       /**
        * check detail input data if isn't empty
        **/
-
       for (let i = 0; i < this.data.details.length; i++) {
         let detail = this.data.details[i];
         if (detail.data === "" && detail.obligatoire === "oui") {
