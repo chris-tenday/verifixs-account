@@ -4,8 +4,7 @@
     <form>
       <div class="row g-2">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup
-              class="text-danger">*</sup>
+          <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup v-if="question.obligatoire==='oui' " class="text-danger">*</sup>
           </label>
         </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"

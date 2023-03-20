@@ -31,6 +31,7 @@
                         diligenceType.type
                       }}
                     </h3>
+                    <p style="font-family: Corbel; font-size: 15px;">{{diligenceType.description}}</p>
                   </div>
                   <!-- <a tabindex="0" class="btn btn-link btn-sm" role="button" data-bs-toggle="popover"
                     data-bs-trigger="focus" title=""

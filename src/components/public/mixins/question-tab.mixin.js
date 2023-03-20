@@ -227,7 +227,7 @@ export default {
          * Si la réponse de la question en text.
          * */
 
-        if (this.question.reponses[0].reponse.length < 1) {
+        if (this.question.obligatoire==='oui' && this.question.reponses[0].reponse.length < 1) {
           this.displayMsg("Répondez à cette question d'abord !");
           return false;
         }
