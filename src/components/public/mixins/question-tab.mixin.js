@@ -63,7 +63,6 @@ export default {
     isQuestionnaireCompleted: function() {
       var questions = this.questionnaireCompletion.total_questions;
       var reponses = this.questionnaireCompletion.total_reponses;
-
       if (questions === reponses) {
         this.allowNextTab = true;
         this.index = 0;
@@ -227,7 +226,10 @@ export default {
          * Si la réponse de la question en text.
          * */
 
-        if (this.question.obligatoire==='oui' && this.question.reponses[0].reponse.length < 1) {
+        if (
+          this.question.obligatoire === "oui" &&
+          this.question.reponses[0].reponse.length < 1
+        ) {
           this.displayMsg("Répondez à cette question d'abord !");
           return false;
         }
@@ -311,7 +313,7 @@ export default {
           await this.$store
             .dispatch("repondreQuestion", formData)
             .then((res) => {
-              console.log("Res:"+res);
+              console.log("Res:" + res);
 
               if (
                 res.reponse === undefined ||
@@ -405,8 +407,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                        console.log("Old: "+oldQuestion.question);
-                                                                                                                                                        console.log("New:" +newQuestion.question);*/
+                                                                                                                                                              console.log("Old: "+oldQuestion.question);
+                                                                                                                                                              console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */
