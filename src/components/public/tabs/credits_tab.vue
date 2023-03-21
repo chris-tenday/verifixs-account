@@ -61,7 +61,7 @@
                 <td>{{ credit.dernier_paiement_date }}</td>
                 <td>{{ credit.solde }}</td>
                 <td>
-                  <button class="btn btn-info text-white p-2 me-1" @click="editCredit(credit)">
+                  <button style="display: none;" class="btn btn-info text-white p-2 me-1" @click="editCredit(credit)">
                     <span class="fa fa-edit fs-7"></span>
                   </button>
                   <button @click="deleteOneCredit(credit)" class="btn btn-danger p-2"

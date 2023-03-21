@@ -311,7 +311,7 @@ export default {
           await this.$store
             .dispatch("repondreQuestion", formData)
             .then((res) => {
-              //console.log(res);
+              console.log("Res:"+res);
 
               if (
                 res.reponse === undefined ||
