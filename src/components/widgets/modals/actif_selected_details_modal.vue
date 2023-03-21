@@ -183,14 +183,11 @@ export default {
 
   methods: {
     onselectionchange(field) {
-      field.isSelected = true;
       console.log(JSON.stringify(field));
     },
-
     /** Method pour ajouter une réponse */
     addAnswer(field) {
       var reponse = { reponse: "" };
-
       field.reponses.push(reponse);
     }
     ,
