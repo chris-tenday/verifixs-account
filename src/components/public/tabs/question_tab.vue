@@ -71,8 +71,19 @@
 
 
                 <!-- reponse type adresse !-->
-                <input v-if="reponse.reponse === ''" type="text" id="subj" class="form-control rounded m-1"
-                  style="width: 150px" placeholder="Ville|province" v-model="reponse.split.province" />
+
+                <select name="province" id="subj" class="form-control rounded m-1" style="width: 60px" v-model="reponse.split.province">
+                  <option disabled value="">Selectionner une province</option>
+                  <option :value='item' v-for="(item) in listProv" :key="item.id">{{item.title}}</option>
+                </select>
+                <select v-if="reponse.split.province != ''" name="ville" id="subj" class="form-control rounded m-1" style="width: 60px" v-model="ville">
+                  <option :value='item' v-for="(item) in reponse.split.province.ville" :key="item.id">{{item}}</option>
+                </select>
+                
+                <!-- <input v-if="reponse.reponse === ''" type="text" id="subj" class="form-control rounded m-1"
+                  style="width: 150px" placeholder="Province" v-model="reponse.split.province" /> -->
+
+
                 <input v-if="reponse.reponse === ''" type="text" id="subj" class="form-control rounded m-1"
                   style="width: 120px" placeholder="Avenue" v-model="reponse.split.avenue" />
                 <input v-if="reponse.reponse === ''" type="text" style="width: 60px" id="subj"
@@ -85,9 +96,10 @@
                   class="form-control rounded m-1" placeholder="Commune" @change="
                     handleSplit(
                       reponse,
-                      'Province : ' + reponse.split.province,
+                      'Province : ' + reponse.split.province.title,
+                      'Ville : ' + reponse.split.ville,
                       'Avenue : ' + reponse.split.avenue,
-                      ' Numéro : ' + reponse.split.numero,
+                      'Numéro : ' + reponse.split.numero,
                       'Quartier : ' + reponse.split.quartier,
                       ' Référence : ' + reponse.split.reference,
                       ' Commune : ' + reponse.split.commune
