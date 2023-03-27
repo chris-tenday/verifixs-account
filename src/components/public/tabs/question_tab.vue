@@ -1,7 +1,7 @@
 <template>
   <div data-aos="fade-up">
     <go_to_tab :allownexttab="allowNextTab" @gototab="goToTab" :previoustab="false"></go_to_tab>
-    <form>
+    <form @submit.prevent="nextQuestion">
       <div class="row g-2">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup
@@ -20,8 +20,8 @@
               <!-- reponse type text !-->
               <div class="mb-3" v-else>
                 <input v-for="reponse in question.reponses" :type="question.reponse_type" id="subj" class="form-control"
-                  placeholder="Entrez votre réponse !" v-model="reponse.reponse"
-                  :key="reponse.diligence_questionnaire_id" />
+                  placeholder="Entrez votre réponse !" v-model="reponse.reponse" :key="reponse.diligence_questionnaire_id"
+                  :required="question.obligatoire === 'oui'" />
               </div>
             </div>
 
@@ -36,8 +36,8 @@
               <!-- reponse type text !-->
               <div v-else>
                 <input v-for="reponse in question.reponses" :type="question.reponse_type" id="subj" class="form-control"
-                  placeholder="Entrez votre reponse !" v-model="reponse.reponse"
-                  :key="reponse.diligence_questionnaire_id" />
+                  placeholder="Entrez votre reponse !" v-model="reponse.reponse" :key="reponse.diligence_questionnaire_id"
+                  :required="question.obligatoire === 'oui'" />
               </div>
 
             </div>
@@ -46,7 +46,6 @@
               <i class="fa fa-plus me-2"></i>Ajouter
             </button>
           </div>
-
           <div v-else>
             <button class="btn btn-outline-primary btn-sm mb-2" @click.prevent="addAnswer"><i
                 class="bi bi-plus me-1"></i>Ajouter adresse</button>
@@ -55,20 +54,20 @@
                 <p class="fw-300 mb-2" v-if="reponse.reponse !== ''">
                   <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}
                 </p>
-
               </div>
               <div class="col-md-12">
                 <div v-if="reponse.reponse === ''" class="d-flex justify-content-between align-content-center">
                   <div>
                     <div class="form-check form-check-inline mb-2">
-                      <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type"
-                        checked />
+                      <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" checked
+                        :required="question.obligatoire === 'oui'" />
                       <label class="form-check-label" style="cursor: pointer" id="adresse_type" name="adresse_type">
                         Domiciliaire
                       </label>
                     </div>
                     <div class="form-check form-check-inline mb-2">
-                      <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" />
+                      <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type"
+                        :required="question.obligatoire === 'oui'" />
                       <label class="form-check-label" style="cursor: pointer" id="adresse_type">
                         Professionnelle
                       </label>
@@ -103,7 +102,7 @@
           <div class="mb-3">
             <form ref="formFile">
               <input type="file" ref="documentUploaded" id="documentUploaded" @change="uploadDocument"
-                class="form-control-file" />
+                class="form-control-file" :required="question.obligatoire === 'oui'" />
             </form>
           </div>
         </div>
@@ -120,7 +119,7 @@
           <nav>
             <ul class="pagination">
               <li class="page-item" :class="index == 0 ? 'disabled' : ''">
-                <a href="javascript:void(0)" @click.prevent="previousQuestion" class="page-link">Précédent</a>
+                <button @click.prevent="previousQuestion" class="page-link">Précédent</button>
               </li>
               <li class="page-item disabled">
                 <span class="fw-bold p-2 p-lg-2 bg-app page-link text-white">{{ index + 1 }} / {{ questionnaire.length
@@ -129,9 +128,9 @@
               <li :class="
                 index > questionnaire.length - 1 || isQuesttionLoading ? 'disabled' : ''
               " class="page-item">
-                <a class="page-link" href="javascript:void(0)" @click.prevent="nextQuestion">
+                <button class="page-link" type="submit">
                   <span class="spinner-border spinner-border-sm" v-if="isQuesttionLoading"></span>
-                  Suivant</a>
+                  Suivant</button>
               </li>
             </ul>
           </nav>

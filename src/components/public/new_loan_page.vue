@@ -8,7 +8,7 @@
               <!-- section title start-->
               <h1 class="mb-2">Bienvenu(e) {{ client.nom }}, veuillez choisir une diligence !</h1>
               <p class="lead px-lg-8 fs-6 text-danger">
-                Vous devrez suivre minutieusement toutes les étapes pour postuler!
+                Vous devrez suivre minutieusement toutes les étapes pour postuler à une nouvelle diligence !
               </p>
             </div>
             <!-- /.section title start-->
@@ -31,7 +31,8 @@
                         diligenceType.type
                       }}
                     </h3>
-                    <p style="font-family: Corbel; font-size: 15px;">{{diligenceType.description}}</p>
+                    <p style="font-family: Corbel; font-size: 15px;">{{ diligenceType.description | sortlength(60,
+                      "...") }}</p>
                   </div>
                   <!-- <a tabindex="0" class="btn btn-link btn-sm" role="button" data-bs-toggle="popover"
                     data-bs-trigger="focus" title=""
@@ -79,6 +80,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+            <p class="text-center">{{ choosenType.description }}</p>
             <div class="row">
               <p class='fw-bold'>{{choosenType.description}}</p>
               <form name="formval2" class="form-horizontal loan-eligibility-form" id="postulat-form">

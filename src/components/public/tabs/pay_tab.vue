@@ -5,7 +5,7 @@
     <div class="row mt-3">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="accordion" id="Faqaccordionsone">
-          <div class="card mb-2" v-if="paiement === undefined && paiement === null">
+          <div class="card mb-2" v-if="paiement === null">
             <div class="p-3" id="faqOne">
               <h4 class="mb-0">
                 <a href="#!" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
@@ -15,7 +15,8 @@
                 </a>
               </h4>
             </div>
-            <div id="collapseOne" class="collapse " aria-labelledby="faqOne" data-bs-parent="#Faqaccordionsone" style="">
+            <div id="collapseOne" class="collapse show" aria-labelledby="faqOne" data-bs-parent="#Faqaccordionsone"
+              style="">
               <div class="card-body border-top">
                 <div class="row">
                   <div class="col-md-12">
@@ -137,8 +138,8 @@
                 </a>
               </h4>
             </div>
-            <div id="collapseTwo" class="collapse" :class="paiement !== undefined && paiement !== null ? 'show' : ''"
-              aria-labelledby="faqTwo" data-bs-parent="#Faqaccordionsone">
+            <div id="collapseTwo" class="collapse" :class="paiement !== null ? 'show' : ''" aria-labelledby="faqTwo"
+              data-bs-parent="#Faqaccordionsone">
               <div class="card-body border-top">
                 <div class="row">
                   <div v-if="paiement !== undefined && paiement !== null"
