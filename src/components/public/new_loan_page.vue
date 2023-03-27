@@ -80,6 +80,7 @@
           </div>
           <div class="modal-body">
             <div class="row">
+              <p class='fw-bold'>{{choosenType.description}}</p>
               <form name="formval2" class="form-horizontal loan-eligibility-form" id="postulat-form">
                 <div class="mb-3">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -100,9 +101,9 @@
               <span class="spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
               Postuler maintenant
             </button>
-            <button type="reset" data-bs-dismiss="modal" class="btn btn-outline-danger">
+            <!-- <button type="reset" data-bs-dismiss="modal" class="btn btn-outline-danger">
               Fermer
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
@@ -111,6 +112,7 @@
 </template>
 
 <script>
+// import { truncate } from "fs";
 import $ from "jquery";
 import loader from "../loader";
 export default {
@@ -147,6 +149,7 @@ export default {
     setChoosenType(diligenceType) {
       //console.log(JSON.stringify(diligenceType));
       this.choosenType = diligenceType;
+      console.log(this.choosenType.description);
     },
     postuler() {
       console.log("submitted");
