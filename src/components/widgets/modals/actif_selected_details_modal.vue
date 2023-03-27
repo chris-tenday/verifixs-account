@@ -43,7 +43,7 @@
                         <label class="form-label mb-1" for="address_province">Province <sup class="text-danger">*</sup>
                         </label>
                         <select name="address_province" v-model="field.adresse_split.province" id="address_province"
-                          @change="handleSplit(field)" class="form-select" required>
+                          @change="handleSplit(field)" class="form-select border-light" required>
                           <option value="" selected>Sélectionner province...</option>
                           <option v-for="(prov, index) in provinces" :key="index" :value="prov">{{ prov.title }}</option>
                         </select>
@@ -55,7 +55,7 @@
                       <div class="form-group mb-2">
                         <label class="form-label mb-1" for="address_city">Ville <sup class="text-danger">*</sup> </label>
                         <select name="address_city" id="address_city" v-model="field.adresse_split.ville"
-                          class="form-select" @change="handleSplit(field)" required>
+                          class="form-select border-light" @change="handleSplit(field)" required>
                           <option selected value="">Sélectionner ville...</option>
                           <option v-for="v in field.adresse_split.province.villes" :key="v" :value="v">{{ v }}</option>
                         </select>
@@ -68,7 +68,8 @@
                         <label class="form-label mb-1" for="address_street">Commune <sup class="text-danger">*</sup>
                         </label>
                         <input id="address_c" name="address_c" type="text" v-model="field.adresse_split.commune"
-                          placeholder="Commune..." class="form-control " @change="handleSplit(field)" required>
+                          placeholder="Commune..." class="form-control border-light" @change="handleSplit(field)"
+                          required>
                       </div>
                     </div>
 
@@ -78,7 +79,8 @@
                         <label class="form-label mb-1" for="address_street">Quartier <sup class="text-danger">*</sup>
                         </label>
                         <input id="address_q" name="address_q" type="text" v-model="field.adresse_split.quartier"
-                          placeholder="Quartier..." class="form-control " @change="handleSplit(field)" required>
+                          placeholder="Quartier..." class="form-control border-light" @change="handleSplit(field)"
+                          required>
                       </div>
                     </div>
 
@@ -88,7 +90,7 @@
                         <label class="form-label mb-1" for="address_street">Avenue <sup class="text-danger">*</sup>
                         </label>
                         <input id="address_street" name="address_street" v-model="field.adresse_split.avenue" type="text"
-                          placeholder="Avenue..." class="form-control " @change="handleSplit(field)" required>
+                          placeholder="Avenue..." class="form-control border-light" @change="handleSplit(field)" required>
                       </div>
                     </div>
 
@@ -97,7 +99,7 @@
                       <div class="form-group mb-2">
                         <label class="form-label mb-1" for="address_num">Numéro <sup class="text-danger">*</sup> </label>
                         <input id="address_num" name="address_num" v-model="field.adresse_split.numero" type="text"
-                          placeholder="N°..." class="form-control " @change="handleSplit(field)" required>
+                          placeholder="N°..." class="form-control border-light" @change="handleSplit(field)" required>
                       </div>
                     </div>
 
@@ -107,7 +109,8 @@
                         <label class="form-label mb-1" for="address_ref">Réference <sup class="text-danger">*</sup>
                         </label>
                         <input id="address_ref" name="address_ref" v-model="field.adresse_split.reference" type="text"
-                          placeholder="Réference..." class="form-control " @change="handleSplit(field)" required>
+                          placeholder="Réference..." class="form-control border-light" @change="handleSplit(field)"
+                          required>
                       </div>
                     </div>
                   </div>
@@ -119,9 +122,9 @@
                   <label :for="`field${index}`" class="form-label text-dark fw-bold">{{
                     field.detail | capitalize
                   }} <sup class="text-danger">*</sup></label>
-                  <select v-if="!field.data.includes('autre')" class="form-select border-light" :id="`field${index}`"
-                    v-model="field.data" @change="onselectionchange(field)" aria-label="Select value" required
-                    aria-required="veuillez renseigner ce champs !">
+                  <select v-if="!field.autre_data.includes('autre')" class="form-select border-light"
+                    :id="`field${index}`" v-model="field.data" @change="onselectionchange(field)"
+                    aria-label="Select value" required aria-required="veuillez renseigner ce champs !">
                     <option value="" selected>-------------</option>
                     <option :value="option" v-for="option in field.options" :key="option">
                       {{ option }}
@@ -132,7 +135,7 @@
                     <input v-model="field.data" :id="`field${index}`" type="text" class="form-control mt-2 border-light"
                       placeholder="Veuillez saisir autre choix..." required
                       aria-required="veuillez renseigner ce champs !" />
-                    <button class="btn btn-light-danger btn-sm mt-2" type="button" @click="field.data = ''"><i
+                    <button class="btn btn-light-danger btn-sm mt-2" type="button" @click="field.autre_data = ''"><i
                         class="bi-arrows-collapse"></i>
                     </button>
                   </div>
@@ -233,7 +236,10 @@ export default {
 
   methods: {
     onselectionchange(field) {
-      console.log(JSON.stringify(field));
+      if (field.data.includes('autre')) {
+        field.autre_data = field.data;
+        field.data = "";
+      }
     },
     /** Method pour ajouter une réponse */
     addAnswer(field) {
@@ -241,8 +247,7 @@ export default {
       field.reponses.push(reponse);
     },
     handleSplit(field) {
-      let res = field;
-      let split = `PROVINCE :  ${res.split.province.title} | VILLE :  ${res.split.ville} |  COMMUNE :  ${res.split.commune} | QUARTIER :  ${res.split.quartier} | AVENUE :  ${res.split.avenue} | NUMERO :  ${res.split.numero} | REFERENCE :  ${res.split.reference}`;
+      let split = `PROVINCE :  ${field.adresse_split.province.title} | VILLE :  ${field.adresse_split.ville} |  COMMUNE :  ${field.adresse_split.commune} | QUARTIER :  ${field.adresse_split.quartier} | AVENUE :  ${field.adresse_split.avenue} | NUMERO :  ${field.adresse_split.numero} | REFERENCE :  ${field.adresse_split.reference}`;
       res.data = split.toString();
     },
     changeFile(event) {

@@ -126,7 +126,6 @@ export default {
     },
 
     deleteDoc(doc) {
-      console.clear();
       console.log(JSON.stringify(doc));
       this.$swal({
         text: "Etes-vous sûr de vouloir supprimer le document sélectionné ?",
@@ -136,7 +135,13 @@ export default {
         showCancelButton: true,
         cancelButtonText: "Non",
       }).then((value) => {
-
+        let formData = new FormData();
+        formData.append("client_id", this.client.client_id);
+        formData.append("diligence_upload_id", doc.diligence_upload_id)
+        this.$axios.post("/clients/diligences/deletedoc", formData).then((res) => {
+          console.log(JSON.stringify(res.data));
+          this.$emit('updateContent');
+        })
       });
     },
     openUploadModal(noEdit = false) {

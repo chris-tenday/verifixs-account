@@ -195,8 +195,8 @@ const actions = {
   },
 
   /*/
-                                   requete pour afficher les actifs
-                                   /*/
+                                       requete pour afficher les actifs
+                                       /*/
   viewActifs({ state, commit }) {
     axios.get(`${state.baseURL}/config/actifs`).then((result) => {
       var data = result.data.actifs;
