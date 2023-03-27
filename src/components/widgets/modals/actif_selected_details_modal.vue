@@ -36,34 +36,80 @@
                 <div class="mb-2" v-else-if="field.adresse_split !== undefined">
                   <label :for="`field${index}`" class="form-label text-dark fw-bold">{{ field.detail | capitalize }} <sup
                       class="text-danger">*</sup></label>
-                  <div class="input-group">
-                    <input v-model="field.adresse_split.province" style="width: 150px" type="text"
-                      class="form-control border-light m-1 rounded" placeholder="Ville | province" required
-                      aria-required="Ville ou province !" />
-                    <input v-model="field.adresse_split.avenue" style="width: 120px" type="text"
-                      class="form-control border-light m-1 rounded" placeholder="avenue" required
-                      aria-required="veuillez renseigner ce champs !" />
-                    <input v-model="field.adresse_split.numero" style="width: 60px" type="text"
-                      class="form-control border-light rounded m-1" placeholder="no." required
-                      aria-required="veuillez renseigner ce champs !" />
-                    <input v-model="field.adresse_split.quartier" style="width: 110px" type="text"
-                      class="form-control border-light rounded m-1" placeholder="quartier" required
-                      aria-required="veuillez renseigner ce champs !" />
-                    <input v-model="field.adresse_split.reference" style="width: 110px" type="text"
-                      class="form-control border-light rounded m-1" placeholder="référence" required
-                      aria-required="veuillez renseigner ce champs !" />
-                    <input v-model="field.adresse_split.commune" style="width: 110px" type="text"
-                      class="form-control border-light m-1 rounded" placeholder="commune" @change="
-                        handleSplit(
-                          field,
-                          'Province : ' + field.adresse_split.province,
-                          'Avenue : ' + field.adresse_split.avenue,
-                          ' Numéro : ' + field.adresse_split.numero,
-                          'Quartier : ' + field.adresse_split.quartier,
-                          ' Référence : ' + field.adresse_split.reference,
-                          ' Commune : ' + field.adresse_split.commune
-                        )
-                      " required aria-required="veuillez renseigner ce champs !" />
+                  <div class="row">
+                    <!-- Select Province -->
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
+                      <div class="form-group mb-2">
+                        <label class="form-label mb-1" for="address_province">Province <sup class="text-danger">*</sup>
+                        </label>
+                        <select name="address_province" v-model="field.adresse_split.province" id="address_province"
+                          @change="handleSplit(field)" class="form-select" required>
+                          <option value="" selected>Sélectionner province...</option>
+                          <option v-for="(prov, index) in provinces" :key="index" :value="prov">{{ prov.title }}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Select City -->
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
+                      <div class="form-group mb-2">
+                        <label class="form-label mb-1" for="address_city">Ville <sup class="text-danger">*</sup> </label>
+                        <select name="address_city" id="address_city" v-model="field.adresse_split.ville"
+                          class="form-select" @change="handleSplit(field)" required>
+                          <option selected value="">Sélectionner ville...</option>
+                          <option v-for="v in field.adresse_split.province.villes" :key="v" :value="v">{{ v }}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Text input Address Commune -->
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
+                      <div class="form-group mb-2">
+                        <label class="form-label mb-1" for="address_street">Commune <sup class="text-danger">*</sup>
+                        </label>
+                        <input id="address_c" name="address_c" type="text" v-model="field.adresse_split.commune"
+                          placeholder="Commune..." class="form-control " @change="handleSplit(field)" required>
+                      </div>
+                    </div>
+
+                    <!-- Text input Address Quartier -->
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
+                      <div class="form-group mb-2">
+                        <label class="form-label mb-1" for="address_street">Quartier <sup class="text-danger">*</sup>
+                        </label>
+                        <input id="address_q" name="address_q" type="text" v-model="field.adresse_split.quartier"
+                          placeholder="Quartier..." class="form-control " @change="handleSplit(field)" required>
+                      </div>
+                    </div>
+
+                    <!-- Text input Address Street -->
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-6">
+                      <div class="form-group mb-2">
+                        <label class="form-label mb-1" for="address_street">Avenue <sup class="text-danger">*</sup>
+                        </label>
+                        <input id="address_street" name="address_street" v-model="field.adresse_split.avenue" type="text"
+                          placeholder="Avenue..." class="form-control " @change="handleSplit(field)" required>
+                      </div>
+                    </div>
+
+                    <!-- Text input Address number -->
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-6">
+                      <div class="form-group mb-2">
+                        <label class="form-label mb-1" for="address_num">Numéro <sup class="text-danger">*</sup> </label>
+                        <input id="address_num" name="address_num" v-model="field.adresse_split.numero" type="text"
+                          placeholder="N°..." class="form-control " @change="handleSplit(field)" required>
+                      </div>
+                    </div>
+
+                    <!-- Text input Address Réf -->
+                    <div class="col-xl-8 col-lg-8 col-md-6 col-sm-6 col-6">
+                      <div class="form-group mb-2">
+                        <label class="form-label mb-1" for="address_ref">Réference <sup class="text-danger">*</sup>
+                        </label>
+                        <input id="address_ref" name="address_ref" v-model="field.adresse_split.reference" type="text"
+                          placeholder="Réference..." class="form-control " @change="handleSplit(field)" required>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!--end field adress location -->
@@ -142,7 +188,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import $ from "jquery";
 export default {
   name: "DetailModal",
@@ -175,6 +221,10 @@ export default {
     ...mapGetters({
       client: "getClient",
     }),
+
+    ...mapState({
+      provinces: "provinces"
+    })
   },
 
   mounted() {
@@ -189,10 +239,11 @@ export default {
     addAnswer(field) {
       var reponse = { reponse: "" };
       field.reponses.push(reponse);
-    }
-    ,
-    handleSplit(field, ...data) {
-      field.data = data.toString();
+    },
+    handleSplit(field) {
+      let res = field;
+      let split = `PROVINCE :  ${res.split.province.title} | VILLE :  ${res.split.ville} |  COMMUNE :  ${res.split.commune} | QUARTIER :  ${res.split.quartier} | AVENUE :  ${res.split.avenue} | NUMERO :  ${res.split.numero} | REFERENCE :  ${res.split.reference}`;
+      res.data = split.toString();
     },
     changeFile(event) {
       let file = event.target.files[0];

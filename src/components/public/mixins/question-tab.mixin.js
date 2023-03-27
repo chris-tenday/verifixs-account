@@ -6,6 +6,7 @@ export default {
       question: {},
       sousQuestions: [],
       diligenceId: 0,
+      errorTel: false,
       isQuesttionLoading: false,
       documentUploaded: null,
       mustUploadDocument: true,
@@ -45,6 +46,7 @@ export default {
             toast: true,
             showConfirmButton: false,
           });
+          this.errorTel = true;
           this.question.reponses[0].reponse = "";
           return;
         }
@@ -56,10 +58,16 @@ export default {
             toast: true,
             showConfirmButton: false,
           });
+          this.errorTel = true;
           this.question.reponses[0].reponse = "";
           return;
         }
+        if (value.nationalNumber.length < 9) {
+          this.errorTel = true;
+          return;
+        }
         this.question.reponses[0].reponse = value.e164;
+        this.errorTel = false;
       }
     },
     /** method pour checker si le questionnaire est complètement bien rempli */
@@ -97,10 +105,22 @@ export default {
       this.documentUploaded = null;
     },
     /** method pour passer à la question suivante */
-    async nextQuestion() {
+    async nextQuestion(event) {
       /* Checker les adresses vides */
 
       console.log(JSON.stringify(this.question));
+
+      if (this.errorTel) {
+        this.$swal({
+          title: "Numéro de téléphone invalide",
+          text: "Veuillez saisir à la limite un total de 9 chiffres !",
+          icon: "warning",
+          timer: 3000,
+          toast: true,
+          showConfirmButton: false,
+        });
+        return;
+      }
 
       if (this.question.split) {
         let obj = this.question.reponses[this.question.reponses.length - 1];
@@ -146,7 +166,8 @@ export default {
       /**
        * Envoyer la réponse de cette question au serveur.
        * */
-      var next = await this.sendReponseToServer();
+      var next = false;
+      next = await this.sendReponseToServer();
       if (!next) {
         /**
          * Si le serveur n'a pas pu traiter la question.
@@ -410,11 +431,15 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                  console.log("Old: "+oldQuestion.question);
-                                                                                                                                                                                                  console.log("New:" +newQuestion.question);*/
+                                                                                                                                                                                                                                                                       console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                                                          console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */
+    },
+
+    "question.reponses[0]"(old, val) {
+      console.log(old, val);
     },
   },
 };
