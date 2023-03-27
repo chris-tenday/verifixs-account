@@ -1,19 +1,23 @@
 <template>
   <div>
     <label for="loan" v-if="label" class="form-label">{{ label }}</label>
-    <div class="input-group">
-      <select @change="updated" v-model="day" class="form-select w-20" aria-label="Days">
-        <option value="" selected>-- Jour --</option>
-        <option v-for="d in days" :key="d" :value="d">{{ d }}</option>
-      </select>
-      <select @change="updated" v-model="month" class="form-select w-25" aria-label="Months">
-        <option value="" selected>-- Mois --</option>
-        <option v-for="m in months" :key="m.value" :value="m.value">{{ m.label }}</option>
-      </select>
-      <select @change="updated" v-model="year" class="form-select w-25" aria-label="Years">
-        <option value="" selected>-- Année --</option>
-        <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
-      </select>
+    <div class="row">
+      <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12 col-12">
+        <div class="input-group">
+          <select @change="updated" v-model="day" class="form-select w-20" aria-label="Days">
+            <option value="" selected>-- Jour --</option>
+            <option v-for="d in days" :key="d" :value="d">{{ d }}</option>
+          </select>
+          <select @change="updated" v-model="month" class="form-select w-25" aria-label="Months">
+            <option value="" selected>-- Mois --</option>
+            <option v-for="m in months" :key="m.value" :value="m.value">{{ m.label }}</option>
+          </select>
+          <select @change="updated" v-model="year" class="form-select w-25" aria-label="Years">
+            <option value="" selected>-- Année --</option>
+            <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
+          </select>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -69,6 +69,12 @@ Vue.component(
 /* Phone number input with country code */
 Vue.component("phoneInput", VuePhoneNumberInput);
 
+/*Address Field*/
+Vue.component(
+  "address-field",
+  require("@/components/widgets/address_field").default
+);
+
 //support vueSweetalert
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";

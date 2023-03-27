@@ -4,7 +4,8 @@
     <form>
       <div class="row g-2">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup v-if="question.obligatoire==='oui' " class="text-danger">*</sup>
+          <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup
+              v-if="question.obligatoire === 'oui'" class="text-danger">*</sup>
           </label>
         </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
@@ -47,77 +48,38 @@
           </div>
 
           <div v-else>
-            <div class="col-md-12" v-if="question.reponses[0].reponse.reponse === ''">
-              <div class="form-check form-check-inline mb-2">
-                <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" checked />
-                <label class="form-check-label" style="cursor: pointer" id="adresse_type" name="adresse_type">
-                  Domiciliaire
-                </label>
-              </div>
-              <div class="form-check form-check-inline mb-2">
-                <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" />
-                <label class="form-check-label" style="cursor: pointer" id="adresse_type">
-                  Professionnelle
-                </label>
-              </div>
-            </div>
-            <div v-for="(reponse, i) in question.reponses" :key="i">
+            <button class="btn btn-outline-primary btn-sm mb-2" @click.prevent="addAnswer"><i
+                class="bi bi-plus me-1"></i>Ajouter adresse</button>
+            <div v-for="(reponse, i) in question.reponses" :key="i" class="mb-2 border-1 border-bottom">
               <div class="d-flex align-items-center mb-2 justify-content-between">
                 <p class="fw-300 mb-2" v-if="reponse.reponse !== ''">
                   <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}
                 </p>
+
               </div>
-              <div class="input-group mb-2">
-
-
-                <!-- reponse type adresse !-->
-
-                <select name="province" id="subj" class="form-control rounded m-1" style="width: 60px" v-model="reponse.split.province">
-                  <option disabled value="">Selectionner une province</option>
-                  <option :value='item' v-for="(item) in listProv" :key="item.id">{{item.title}}</option>
-                </select>
-                <select v-if="reponse.split.province != ''" name="ville" id="subj" class="form-control rounded m-1" style="width: 60px" v-model="ville">
-                  <option :value='item' v-for="(item) in reponse.split.province.ville" :key="item.id">{{item}}</option>
-                </select>
-                
-                <!-- <input v-if="reponse.reponse === ''" type="text" id="subj" class="form-control rounded m-1"
-                  style="width: 150px" placeholder="Province" v-model="reponse.split.province" /> -->
-
-
-                <input v-if="reponse.reponse === ''" type="text" id="subj" class="form-control rounded m-1"
-                  style="width: 120px" placeholder="Avenue" v-model="reponse.split.avenue" />
-                <input v-if="reponse.reponse === ''" type="text" style="width: 60px" id="subj"
-                  class="form-control rounded m-1" placeholder="no." v-model="reponse.split.numero" />
-                <input v-if="reponse.reponse === ''" type="text" id="subj" class="form-control rounded m-1"
-                  style="width: 110px" placeholder="Quartier" v-model="reponse.split.quartier" />
-                <input v-if="reponse.reponse === ''" type="text" id="subj" style="width: 110px"
-                  class="form-control m-1 rounded" placeholder="Référence" v-model="reponse.split.reference" />
-                <input v-if="reponse.reponse === ''" type="text" style="width: 110px" id="subj"
-                  class="form-control rounded m-1" placeholder="Commune" @change="
-                    handleSplit(
-                      reponse,
-                      'Province : ' + reponse.split.province.title,
-                      'Ville : ' + reponse.split.ville,
-                      'Avenue : ' + reponse.split.avenue,
-                      'Numéro : ' + reponse.split.numero,
-                      'Quartier : ' + reponse.split.quartier,
-                      ' Référence : ' + reponse.split.reference,
-                      ' Commune : ' + reponse.split.commune
-                    )
-                  " v-model="reponse.split.commune" />
-                <div v-if="i === question.reponses.length - 1">
-                  <button v-if="reponse.reponse !== ''" class=" btn btn-dark-primary mt-1 rounded btn-sm"
-                    style="height: 48px" @click.prevent="addAnswer">
-                    Ajouter adresse
-                  </button>
-                  <div v-else style="display: flex; flex-direction: column; flex-shrink: 2;" class="mt-1 mb-1">
-                    <button @click="addAnswer" class="btn-increment bg-primary"><i class="bi-plus"></i></button>
-                    <button @click="question.reponses.splice(i, 1)" class="btn-increment bg-danger"><i
-                        class="bi-x"></i></button>
+              <div class="col-md-12">
+                <div v-if="reponse.reponse === ''" class="d-flex justify-content-between align-content-center">
+                  <div>
+                    <div class="form-check form-check-inline mb-2">
+                      <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type"
+                        checked />
+                      <label class="form-check-label" style="cursor: pointer" id="adresse_type" name="adresse_type">
+                        Domiciliaire
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline mb-2">
+                      <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" />
+                      <label class="form-check-label" style="cursor: pointer" id="adresse_type">
+                        Professionnelle
+                      </label>
+                    </div>
                   </div>
+                  <button v-if="question.reponses.length > 1" class="btn btn-outline-danger btn-sm"
+                    @click.prevent="question.reponses.splice(i, 1)"><i class="bi bi-x me-1"></i> Réduire</button>
                 </div>
-
               </div>
+
+              <address-field v-if="reponse.reponse === ''" :model="reponse"></address-field>
             </div>
           </div>
         </div>
