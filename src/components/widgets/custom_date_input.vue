@@ -2,7 +2,7 @@
   <div>
     <label for="loan" v-if="label" class="form-label">{{ label }}</label>
     <div class="row">
-      <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12 col-12">
+      <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
         <div class="input-group">
           <select @change="updated" v-model="day" class="form-select w-20" aria-label="Days">
             <option value="" selected>-- Jour --</option>

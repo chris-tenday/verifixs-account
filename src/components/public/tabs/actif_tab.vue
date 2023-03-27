@@ -35,8 +35,12 @@
       </div>
       <div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12" v-for="(actif, index) in diligenceActifs" :key="index">
         <div class="card mb-6 text-center border-0 bg-light-success">
-          <button class="btn btn-icon btn-danger position-absolute end-0 top-0" @click.prevent="deleteActif(actif)"> <i
-              class="bi bi-trash"></i></button>
+          <button :disabled="isActifDeletedLoading === actif.actif_id"
+            class="btn btn-icon btn-danger position-absolute end-0 top-0" @click.prevent="deleteActif(actif)">
+            <span v-if="isActifDeletedLoading === actif.actif_id" class="spinner-border spinner-border-sm">
+            </span>
+            <span v-else class="bi bi-trash"></span></button>
+
           <div class="card-body p-5">
             <div class="mb-3">
               <img src="assets/images/svg/mortgage.svg" alt="Borrow - Loan Company Website Template" class="icon-xxl" />
@@ -105,6 +109,7 @@ export default {
       file: "",
       diligenceId: 0,
       newActif: false,
+      isActifDeletedLoading: "",
       askCheckingPermission: true,
       checkingPermission: false,
       allowNextTab: false,
@@ -136,8 +141,14 @@ export default {
         showCancelButton: true,
         cancelButtonText: "Non",
       }).then((value) => {
-        this.$axios.post("/clients/diligences/actifs/supprimer", { client_id: this.client.client_id, diligence_actif_id: actif.diligence_actif_id }).then((res) => {
+        this.isActifDeletedLoading = actif.actif_id;
+        let formData = new FormData();
+        formData.append('client_id', this.client.client_id);
+        formData.append('diligence_actif_id', actif.diligence_actif_id);
+
+        this.$axios.post("/clients/diligences/actifs/supprimer", formData).then((res) => {
           this.$emit('updatecontent');
+          this.isActifDeletedLoading = "";
         })
       });
     },

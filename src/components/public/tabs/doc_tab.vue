@@ -43,7 +43,12 @@
                 }}</a>
 
               </h3>
-              <button class="btn btn-sm btn-light-danger" @click="deleteDoc(document)"><i class="bi-trash"></i></button>
+              <button :disabled="isDeletedDocLoading === document.diligence_upload_id" class="btn btn-sm btn-light-danger"
+                @click="deleteDoc(document)">
+                <span v-if="isDeletedDocLoading === document.diligence_upload_id"
+                  class="spinner-border spinner-border-sm">
+                </span>
+                <span v-else class="bi bi-trash"></span></button>
             </div>
           </div>
         </div>
@@ -105,6 +110,7 @@ export default {
       noEdit: false,
       fixedFiles: fixedFiles,
       uploadLoading: false,
+      isDeletedDocLoading: ''
     };
   },
   computed: {
@@ -138,9 +144,11 @@ export default {
         let formData = new FormData();
         formData.append("client_id", this.client.client_id);
         formData.append("diligence_upload_id", doc.diligence_upload_id)
+        this.isDeletedDocLoading = doc.diligence_upload_id;
         this.$axios.post("/clients/diligences/deletedoc", formData).then((res) => {
           console.log(JSON.stringify(res.data));
           this.$emit('updateContent');
+          this.isDeletedDocLoading = '';
         })
       });
     },
