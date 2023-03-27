@@ -78,7 +78,6 @@
                     @click.prevent="question.reponses.splice(i, 1)"><i class="bi bi-x me-1"></i> Réduire</button>
                 </div>
               </div>
-
               <address-field v-if="reponse.reponse === ''" :model="reponse"></address-field>
             </div>
           </div>

@@ -119,7 +119,6 @@ export default {
   },
 
   methods: {
-
     goToTab(nextTab) {
       if (nextTab) {
         this.$emit("gotonexttab");
