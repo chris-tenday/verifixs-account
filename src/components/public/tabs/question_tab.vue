@@ -14,8 +14,9 @@
             <div v-if="question.total_reponse !== 'multiple'">
               <!-- reponse type date !-->
               <div class="mb-3" v-if="question.reponse_type === 'date'">
-                <custom-date-input v-for="reponse in question.reponses" :key="reponse.diligence_questionnaire_id"
-                  :selected-value="reponse.reponse" @input="reponse.reponse = $event" />
+                <custom-date-input :required="question.obligatoire === 'oui'" v-for="reponse in question.reponses"
+                  :key="reponse.diligence_questionnaire_id" :selected-value="reponse.reponse"
+                  @input="reponse.reponse = $event" />
               </div>
               <!-- reponse type text !-->
               <div class="mb-3" v-else>
@@ -31,7 +32,7 @@
                 <phone-input id="inputPhone" v-for="reponse in question.reponses"
                   :key="reponse.diligence_questionnaire_id" v-model="reponse.reponse" size="lg"
                   :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
-                  @update="updateCountryCode" />
+                  @update="updateCountryCode" :required="question.obligatoire === 'oui'" />
               </div>
               <!-- reponse type text !-->
               <div v-else>
@@ -42,8 +43,8 @@
 
             </div>
             <button style="margin-top: 5px;" v-if="question.total_reponse === 'multiple'" @click.prevent="addAnswer"
-              class="btn btn-primary btn-sm mb-3">
-              <i class="fa fa-plus me-2"></i>Ajouter
+              class="btn btn-outline-primary btn-sm mb-3">
+              <i class="bi bi-plus me-2"></i>Ajouter
             </button>
           </div>
           <div v-else>
