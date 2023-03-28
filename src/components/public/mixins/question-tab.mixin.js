@@ -164,10 +164,20 @@ export default {
       }
 
       /**
-       * Envoyer la réponse de cette question au serveur.
+       * Envoyer la réponse de cette question au serveur au cas ôù l'utilisateur envoi
+       * une reponse differente que la reponse la précedente.
        * */
-      var next = false;
-      next = await this.sendReponseToServer();
+      let next = false;
+      console.log(this.questionnaire[this.index].reponses[0].reponse);
+      console.log(this.question.reponses[0].reponse);
+      if (
+        this.questionnaire[this.index].reponses[0].reponse ===
+        this.question.reponses[0].reponse
+      ) {
+        next = true;
+      } else {
+        next = await this.sendReponseToServer();
+      }
       if (!next) {
         /**
          * Si le serveur n'a pas pu traiter la question.
@@ -431,8 +441,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                                                                                       console.log("Old: "+oldQuestion.question);
-                                                                                                                                                                                                                                                                          console.log("New:" +newQuestion.question);*/
+                                                                                                                                                                                                                                                                                                                 console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                                                                                                    console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */
