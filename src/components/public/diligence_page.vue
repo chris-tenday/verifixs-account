@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card mb-2" data-aos="fade-down">
+            <div class="card mb-2">
               <div class="card-body p-3 d-flex align-items-start justify-content-between">
                 <div>
                   <h1 class="fw-bold text-dark-primary">
@@ -33,14 +33,14 @@
             <ul
               class="nav nav-pills nav-justified bg-white rounded border-top mb-2 flex-nowrap overflow-scroll overflow-md-hidden"
               id="myTab" role="tablist">
-              <li class="nav-item" data-aos="zoom-in">
+              <li class="nav-item">
                 <button class="nav-link active rounded-0 d-grid py-3" id="questionsTab" data-bs-toggle="pill"
                   href="#questionsTabView" role="tab" aria-controls="questionsTabView" aria-selected="true">
                   <i class="bi bi-question-circle-fill fs-3"></i>
                   <p class="mb-0 mt-1 fs-5">Questions</p>
                 </button>
               </li>
-              <li class="nav-item" v-if="canAccessTab('actifs') === true" data-aos="zoom-in">
+              <li class="nav-item" v-if="canAccessTab('actifs') === true">
                 <button class="nav-link rounded-0 d-grid py-3 border-start" style="pointer-events: none" id="actifTab"
                   data-bs-toggle="pill" href="#actifTabView" role="tab" aria-controls="actifTabView"
                   aria-selected="false">
@@ -48,7 +48,7 @@
                   <p class="mb-0 mt-1 fs-5">Actifs</p>
                 </button>
               </li>
-              <li class="nav-item" v-if="canAccessTab('credits') === true" data-aos="zoom-in">
+              <li class="nav-item" v-if="canAccessTab('credits') === true">
                 <button class="nav-link rounded-0 d-grid py-3 border-start" style="pointer-events: none" id="creditsTab"
                   data-bs-toggle="pill" href="#creditsTabView" role="tab" aria-controls="creditsTabView"
                   aria-selected="false">
@@ -56,14 +56,14 @@
                   <p class="mb-0 mt-1 fs-5">Credits</p>
                 </button>
               </li>
-              <li class="nav-item" data-aos="zoom-in">
+              <li class="nav-item">
                 <button class="nav-link rounded-0 d-grid py-3 border-start" style="pointer-events: none" id="docTab"
                   data-bs-toggle="pill" href="#docTabView" role="tab" aria-controls="docTabView" aria-selected="false">
                   <i class="bi bi-files-alt fs-3"></i>
                   <p class="mb-0 mt-1 fs-5">Documents</p>
                 </button>
               </li>
-              <li class="nav-item" data-aos="zoom-in">
+              <li class="nav-item">
                 <button class="nav-link rounded-0 d-grid py-3 border-start" id="certificatTab" data-bs-toggle="pill"
                   href="#certificatTabView" role="tab" aria-controls="certificatTabView" aria-selected="false">
                   <i class="bi bi-file-earmark-check-fill fs-3"></i>
@@ -84,10 +84,12 @@
                   @onSelectedActif="onSelectedActif($event)" @showDetails="onShowDetails($event)"
                   @gotoprevioustab="goToTab('actifs', false)"></actif-tab>
               </div>
+
               <div role="tabpanel" class="tab-pane fade" id="creditsTabView">
                 <credits-tab @alert="displayMsg" @updatecontent="updateContent" @gotonexttab="goToTab('credits')"
                   @gotoprevioustab="goToTab('credits', false)"></credits-tab>
               </div>
+
               <div role="tabpanel" class="tab-pane fade" id="docTabView">
                 <doc-tab @loading="displayLoader" @updatecontent="updateContent" @gotonexttab="goToTab('documents')"
                   @gotoprevioustab="goToTab('documents', false)"></doc-tab>

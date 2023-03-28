@@ -21,8 +21,8 @@
                         <span class="fw-semi-bold text-dark">{{ item.actif_detail }} :</span>
                       </div>
                       <div>
-                        <span><a :href="item.detail"><img :src="item.detail" class="img-fluid rounded h-40"
-                              alt="file" /></a></span>
+                        <span><a :href="item.detail"><span>{{ item.detail }}</span><br><img :src="item.detail"
+                              class="img-fluid rounded h-40" alt="file" /></a></span>
                       </div>
                     </div>
                     <div class="d-md-flex" v-else>

@@ -248,7 +248,7 @@ export default {
     },
     handleSplit(field) {
       let split = `PROVINCE :  ${field.adresse_split.province.title} | VILLE :  ${field.adresse_split.ville} |  COMMUNE :  ${field.adresse_split.commune} | QUARTIER :  ${field.adresse_split.quartier} | AVENUE :  ${field.adresse_split.avenue} | NUMERO :  ${field.adresse_split.numero} | REFERENCE :  ${field.adresse_split.reference}`;
-      res.data = split.toString();
+      field.data = split.toString();
     },
     changeFile(event) {
       let file = event.target.files[0];

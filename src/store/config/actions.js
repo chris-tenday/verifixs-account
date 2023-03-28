@@ -59,6 +59,12 @@ const actions = {
           }
           //console.clear(); console.log(diligences);
           //commit("setDiligences",diligences);
+          //**Copie des reponses precedentes  */
+          localStorage.setItem(
+            "last-response",
+            JSON.stringify(data.details.questionnaire)
+          );
+          /*End copie*/
           commit("setDiligenceDetails", data.details);
         });
     });
@@ -177,7 +183,7 @@ const actions = {
         .post(state.baseURL + "/clients/diligences/repondrequestion", data)
         .then(function(result) {
           var data = result.data;
-          //console.clear(); console.log(data);
+          console.log(data);
           resolve(data);
         });
     });
@@ -195,8 +201,8 @@ const actions = {
   },
 
   /*/
-                                       requete pour afficher les actifs
-                                       /*/
+                                                         requete pour afficher les actifs
+                                                         /*/
   viewActifs({ state, commit }) {
     axios.get(`${state.baseURL}/config/actifs`).then((result) => {
       var data = result.data.actifs;

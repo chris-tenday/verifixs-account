@@ -168,10 +168,10 @@ export default {
        * une reponse differente que la reponse la précedente.
        * */
       let next = false;
-      console.log(this.questionnaire[this.index].reponses[0].reponse);
-      console.log(this.question.reponses[0].reponse);
+      let lastCopiesResp = localStorage.getItem("last-response");
+      let lastQuestionResp = JSON.parse(lastCopiesResp);
       if (
-        this.questionnaire[this.index].reponses[0].reponse ===
+        lastQuestionResp.questions[this.index].reponses[0].reponse ===
         this.question.reponses[0].reponse
       ) {
         next = true;
@@ -441,8 +441,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                                                                                                                                 console.log("Old: "+oldQuestion.question);
-                                                                                                                                                                                                                                                                                                                    console.log("New:" +newQuestion.question);*/
+                                                                                                                                                                                                                                                                                                                                               console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                                                                                                                                  console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */
