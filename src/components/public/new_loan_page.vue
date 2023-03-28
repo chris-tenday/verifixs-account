@@ -82,7 +82,7 @@
           <div class="modal-body">
             <p class="text-center">{{ choosenType.description }}</p>
             <div class="row">
-              <p class='fw-bold'>{{choosenType.description}}</p>
+              <!-- <p class='fw-bold'>{{choosenType.description}}</p> -->
               <form name="formval2" class="form-horizontal loan-eligibility-form" id="postulat-form">
                 <div class="mb-3">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
