@@ -29,10 +29,20 @@
             <div v-if="question.total_reponse === 'multiple'">
               <!-- reponse type phone !-->
               <div v-if="question.reponse_type.includes('telephone')">
-                <phone-input id="inputPhone" v-for="reponse in question.reponses"
-                  :key="reponse.diligence_questionnaire_id" v-model="reponse.reponse" size="lg"
-                  :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
-                  @update="updateCountryCode" :required="question.obligatoire === 'oui'" />
+                <div class="input-group" v-for="(reponse, i) in question.reponses"
+                  :key="reponse.diligence_questionnaire_id">
+
+                  <phone-input id="inputPhone" v-model="reponse.reponse" size="lg" :translations="translations"
+                    default-country-code="CD" :no-example="true" color="#FF0000" @update="updateCountryCode"
+                    :required="question.obligatoire === 'oui'" style="width: 90%;" />
+
+                  <div class="input-group-append ms-2">
+                    <button class="btn btn-danger btn-md"
+                      @click.prevent="question.reponses = question.reponses.splice(i, 1)">
+                      <i class="bi bi-x me-1"></i></button>
+                  </div>
+                </div>
+
               </div>
               <!-- reponse type text !-->
               <div v-else>
@@ -51,13 +61,8 @@
             <button class="btn btn-outline-primary btn-sm mb-2" @click.prevent="addAnswer"><i
                 class="bi bi-plus me-1"></i>Ajouter adresse</button>
             <div v-for="(reponse, i) in question.reponses" :key="i" class="mb-2 border-1 border-bottom">
-              <div class="d-flex align-items-center mb-2 justify-content-between">
-                <p class="fw-300 mb-2" v-if="reponse.reponse !== ''">
-                  <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}
-                </p>
-              </div>
               <div class="col-md-12">
-                <div v-if="reponse.reponse === ''" class="d-flex justify-content-between align-content-center">
+                <div v-if="reponse.reponse === ''" class="d-flex justify-content-between">
                   <div>
                     <div class="form-check form-check-inline mb-2">
                       <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" checked
@@ -75,10 +80,51 @@
                     </div>
                   </div>
                   <button v-if="question.reponses.length > 1" class="btn btn-outline-danger btn-sm"
-                    @click.prevent="question.reponses.splice(i, 1)"><i class="bi bi-x me-1"></i> Réduire</button>
+                    @click.prevent="question.reponses.splice(i, 1)">
+                    <i class="bi bi-x me-1"></i>
+                    Réduire
+                  </button>
                 </div>
               </div>
               <address-field v-if="reponse.reponse === ''" :model="reponse"></address-field>
+
+              <div v-if="reponse.reponse !== ''">
+                <div v-if="edit == false" class="d-flex">
+                  <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}ee
+                  <button @click.prevent="changem(reponse.reponse)" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-pen text-dark m-1"></i>
+                  </button>
+                </div>
+                <div v-else class="fw-300 mb-2">
+                  <div v-if="setByName === reponse.reponse && edit == true">
+                    <address-field :model="edit_adress"></address-field>
+                    <div v-if="edit == true" class="d-flex justify-content-end">
+                      <button @click.prevent="edit = false" class="btn btn-outline-danger btn-sm m-1">
+                        <i class="bi bi-x m-1"></i>
+                      </button>
+                      <button v-if="edit_adress.reponse.length != undefined" @click.prevent="valid(reponse, edit_adress)"
+                        class="btn btn-outline-success btn-sm m-1">
+                        <i class="bi bi-x m-1"></i>
+                      </button>
+                    </div>
+
+                  </div>
+                  <p v-else class="d-flex">
+                    <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }} aaa
+                    <button @click.prevent="changem(reponse.reponse)" class="btn btn-outline-primary btn-sm m-2">
+                      <i class="bi bi-pen text-dark m-1"></i>
+                    </button>
+                  </p>
+                </div>
+
+                <!-- <div class="fw-300 mb-2 d-flex">
+
+                  
+                  <button v-else @click.prevent="changem(reponse.reponse)" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-pen text-dark m-1"></i>
+                  </button>
+                </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -148,8 +194,100 @@ import go_to_tab from "../go_to_tab";
 import camera from "@/components/widgets/camera";
 import QuestionTabMixin from "../mixins/question-tab.mixin";
 export default {
+  data() {
+    return {
+      edit: false,
+      edit_adress: {
+        split: {
+          province: "",
+          ville: "",
+          commune: "",
+          avenue: "",
+          quartier: "",
+          numero: "",
+          reference: ""
+        },
+        reponse: {}
+
+      },
+      setByName: null,
+    }
+  },
+
+  methods: {
+    valid(reponse, edit) {
+      if (edit.reponse.length != undefined) {
+        if (edit.reponse.includes('undefined')) {
+          this.$swal({
+            text: 'Veuiller complèter tous les champs !',
+            icon: "warning",
+            timer: 3000,
+            toast: true,
+            showConfirmButton: false,
+          });
+        } else {
+          console.log('Remplis');
+          if (edit.reponse != reponse) {
+            reponse.reponse = edit.reponse
+          } else {
+            console.log("Salut");
+          }
+        }
+
+      }
+      else {
+        console.log(edit.reponse.length);
+        console.log('Non Remplis');
+      }
+
+    },
+
+    changem(v) {
+
+      this.edit = true
+
+      this.setByName = this.setByName === v && this.setByName !== null ? v : v
+
+      let arrField;
+
+      if (v.includes('|')) {
+        arrField = v.split('|')
+      }
+      else if (v.includes(',')) {
+        arrField = v.split(',')
+      }
+
+      arrField.forEach((e) => {
+        e = e.toLowerCase();
+        if (e.toLowerCase().includes("province")) {
+          this.edit_adress.split.province = e.split(":")[1];
+        }
+        else if (e.toLowerCase().includes("ville")) {
+          this.edit_adress.split.ville = e.split(":")[1];
+        }
+        else if (e.toLowerCase().includes("commune")) {
+          this.edit_adress.split.commune = e.split(":")[1];
+        }
+        else if (e.toLowerCase().includes("avenue")) {
+          this.edit_adress.split.avenue = e.split(":")[1];
+        }
+        else if (e.toLowerCase().includes("quartier")) {
+          this.edit_adress.split.quartier = e.split(":")[1];
+        }
+        else if (e.toLowerCase().includes("numéro") || e.toLowerCase().includes("numero")) {
+          this.edit_adress.split.numero = e.split(":")[1];
+        }
+        else if (e.toLowerCase().includes("référence") || e.toLowerCase().includes("reference")) {
+          this.edit_adress.split.reference = e.split(":")[1];
+        }
+      })
+      // console.log(JSON.stringify(this.edit_adress) + 'kala');
+
+    }
+  },
   components: { camera, go_to_tab },
-  mixins: [QuestionTabMixin]
+  mixins: [QuestionTabMixin],
+
 };
 </script>
 <style>

@@ -4,9 +4,18 @@
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
             <div class="form-group mb-2">
                 <label class="form-label mb-1" for="address_province">Province <sup class="text-danger">*</sup> </label>
+                <!-- <select name="address_province" :class="border" v-model="model.split.province" id="address_province"
+                    @change="handleSplit" class="form-select" required>
+                    <option v-if="model.split.province" value="model.split.province" selected> {{model.split.province}}</option>
+                    <option v-else value="" selected>Sélectionner province...</option>
+                    <option v-for="(prov, index) in provinces" :key="index" :value="prov">{{ prov.title }}</option>
+                </select>
+                {{ model.split.province }} -->
                 <select name="address_province" :class="border" v-model="model.split.province" id="address_province"
                     @change="handleSplit" class="form-select" required>
-                    <option value="" selected>Sélectionner province...</option>
+                    <option :value="model.split.province.title" disabled>
+                        {{ model.split.province }}
+                    </option>
                     <option v-for="(prov, index) in provinces" :key="index" :value="prov">{{ prov.title }}</option>
                 </select>
             </div>
@@ -18,7 +27,9 @@
                 <label class="form-label mb-1" for="address_city">Ville <sup class="text-danger">*</sup> </label>
                 <select name="address_city" :class="border" id="address_city" v-model="model.split.ville"
                     class="form-select" @change="handleSplit" required>
-                    <option selected value="">Sélectionner ville...</option>
+                    <option :value="model.split.ville" disabled>
+                        {{ model.split.ville }}
+                    </option>
                     <option v-for="v in model.split.province.villes" :key="v" :value="v">{{ v }}</option>
                 </select>
             </div>
@@ -74,7 +85,10 @@
 <script>
 export default {
     name: "Address-field",
-
+    data() {
+        return {
+        }
+    },
     props: {
         model: {
             type: Object,
@@ -83,7 +97,11 @@ export default {
         border: {
             type: String,
             default: ''
-        }
+        },
+        // edit: {
+        //     type: Boolean,
+        //     default: false
+        // }
     },
 
     computed: {
@@ -95,9 +113,10 @@ export default {
     methods: {
         handleSplit(event) {
             let res = this.model;
+            console.log(JSON.stringify(this.model));
             let split = `PROVINCE :  ${res.split.province.title} | VILLE :  ${res.split.ville} |  COMMUNE :  ${res.split.commune} | QUARTIER :  ${res.split.quartier} | AVENUE :  ${res.split.avenue} | NUMERO :  ${res.split.numero} | REFERENCE :  ${res.split.reference}`;
             if (res.reponse !== undefined) {
-                if (res.split.province.title !== '' && res.split.ville !== '' && res.split.commune !== '' && res.split.quartier && res.split.quartier !== '' && res.split.avenue !== '' && res.split.numero !== '' && (res.split.reference !== '')) {
+                if (res.split.province.title !== '' && res.split.ville !== '' && res.split.commune !== '' && res.split.quartier && res.split.quartier !== '' && res.split.avenue !== '' && res.split.numero !== '' && res.split.reference !== '') {
                     res.reponse = split.toString();
                 }
             }

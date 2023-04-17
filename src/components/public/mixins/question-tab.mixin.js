@@ -47,7 +47,7 @@ export default {
             showConfirmButton: false,
           });
           this.errorTel = true;
-          this.question.reponses[0].reponse = "";
+          this.question.reponses.reponse = "";
           return;
         }
         if (value.nationalNumber.length > 9) {
@@ -59,17 +59,19 @@ export default {
             showConfirmButton: false,
           });
           this.errorTel = true;
-          this.question.reponses[0].reponse = "";
+          this.question.reponses.reponse = "";
           return;
         }
         if (value.nationalNumber.length < 9) {
           this.errorTel = true;
           return;
         }
-        this.question.reponses[0].reponse = value.e164;
+        this.question.reponses.reponse = value.e164;
         this.errorTel = false;
+        console.log(this.question.reponses);
       }
     },
+    
     /** method pour checker si le questionnaire est complètement bien rempli */
     isQuestionnaireCompleted: function() {
       var questions = this.questionnaireCompletion.total_questions;
@@ -123,7 +125,9 @@ export default {
       }
 
       if (this.question.split) {
+        // console.log(JSON.stringify(this.question.reponses));
         let obj = this.question.reponses[this.question.reponses.length - 1];
+        // console.log(JSON.stringify(obj) + ' 1');
         for (let i in obj) {
           let address = `${obj[i]}`.trim();
           if (address === "") {
@@ -177,6 +181,7 @@ export default {
         next = true;
       } else {
         next = await this.sendReponseToServer();
+        
       }
       if (!next) {
         /**
@@ -278,17 +283,17 @@ export default {
       if (this.question.question_id === undefined || this.question === null) {
         /**
          * S'agissant d'une sous question.(question additionelle)
-         * */
+         **/
         formData.append("sous_question_id", this.question.sous_question_id);
       } else {
         /**
          * S'agissant d'une question.
-         * */
+         **/
         formData.append("question_id", this.question.question_id);
       }
       /**
        * s'il s'agit d'une question simple n'exigant pas l'attachement d'un document.
-       * */
+       **/
       if (this.documentUploaded === null) {
         for (var i = 0; i < this.question.reponses.length; i++) {
           if (
@@ -304,6 +309,7 @@ export default {
             formData.delete("diligence_questionnaire_id");
           }
           formData.append("reponse", this.question.reponses[i].reponse);
+          console.log("Envoi effectuer " + this.question.reponses[i].reponse);
           this.isQuesttionLoading = true;
 
           await this.$store
@@ -407,10 +413,11 @@ export default {
          * */
         reponse.split = {
           province: "",
+          ville:"",
           avenue: "",
           numero: "",
           quartier: "",
-          thiserence: "",
+          reference: "",
           commune: "",
         };
       }
@@ -441,7 +448,7 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                                                                                                                                                               console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                        console.log("Old: "+oldQuestion.question);
                                                                                                                                                                                                                                                                                                                                                   console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
