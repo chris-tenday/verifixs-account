@@ -11,7 +11,6 @@
               </a>
             </div>
             <loader :data-loaded="loader" height="200">
-              {{ diligences.length }}
               <div class="row" v-if=" diligences.length > 0 && sort.length > 0">
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in sort"
                   :key="diligence.diligence_id">
@@ -54,7 +53,6 @@
                 </div>
               </div>
               <div v-else-if=" diligences.length > 0 && sort.length == 0">
-                {{ diligences }}
                 <div class="col-md-12 text-center">
                   <img src="assets/images/folder_1.png" style="width: 100px; height: 100px" />
                   <div class="not_found">
@@ -105,6 +103,7 @@
 import loader from "../loader";
 import $ from "jquery";
 import { type } from "os";
+import { log } from "console";
 export default {
   components: { loader },
   data() {
@@ -136,6 +135,7 @@ export default {
   },
   methods: {
     tri(state) {
+      console.log(state);
       // const aliase = this.$store.state.diligences
       this.sort = this.$store.state.diligences;
       for (let e = 0; e <= this.$store.state.diligences.length; e++) {
