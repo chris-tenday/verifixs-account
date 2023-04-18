@@ -11,7 +11,6 @@
               </a>
             </div>
             <loader :data-loaded="loader" height="200">
-<<<<<<< HEAD
               <div class="portfolioFilter" v-show="diligences.length > 0 || filterWord !== ''">
                 <ul class="nav justify-content-center nav-pills-gray mb-4" data-aos="fade-up">
                   <li class="nav-item" v-for="(filter, index) in filters" :key="index">
@@ -27,10 +26,6 @@
 
               <div class="row" v-if="diligences.length > 0">
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in diligences"
-=======
-              <div class="row" v-if=" diligences.length > 0 && sort.length > 0">
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in sort"
->>>>>>> d68e36d41280b10b51266fdc72bf5f4211324e30
                   :key="diligence.diligence_id">
                   <div class="card mb-6 text-center border-0 smooth-shadow-sm" data-aos="zoom-in">
                     <span style="top: 5px; right: 5px;"
@@ -70,20 +65,7 @@
                   </div>
                 </div>
               </div>
-<<<<<<< HEAD
               <div class="row" v-show="filterWord === '' && diligences.length === 0" v-else>
-=======
-              <div v-else-if=" diligences.length > 0 && sort.length == 0">
-                <div class="col-md-12 text-center">
-                  <img src="assets/images/folder_1.png" style="width: 100px; height: 100px" />
-                  <div class="not_found">
-                    <a href="#" class="btn btn-danger btn-lg p-3 btn-shadow">
-                      <i class="lnr lnr-plus-circle mr-2"></i> Aucune diligence </a>
-                  </div>
-                </div>
-              </div>
-              <div class="row" v-else>
->>>>>>> d68e36d41280b10b51266fdc72bf5f4211324e30
                 <div class="col-md-12 text-center" data-aos="fade-down">
                   <img src="assets/images/folder_1.png" style="width: 100px; height: 100px" />
                   <div class="not_found">
@@ -124,14 +106,11 @@
 <script>
 import loader from "../loader";
 import $ from "jquery";
-import { type } from "os";
-import { log } from "console";
 export default {
   components: { loader },
   data() {
     return {
       loader: false,
-<<<<<<< HEAD
       filters: [
         { id: 1, label: 'Tous' },
         { id: 2, label: 'Actif' },
@@ -140,11 +119,6 @@ export default {
       ],
       filterWord: '',
       selectedFilterId: 1,
-=======
-      status: ['all', 'actif', 'clos', 'en cours',],
-      sort: [],
-      // alias: localStorage.getItem('diligences') 
->>>>>>> d68e36d41280b10b51266fdc72bf5f4211324e30
     };
   },
   computed: {
