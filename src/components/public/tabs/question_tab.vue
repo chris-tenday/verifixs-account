@@ -3,7 +3,6 @@
     <go_to_tab :allownexttab="allowNextTab" @gototab="goToTab" :previoustab="false"></go_to_tab>
     <form @submit.prevent="nextQuestion">
       <div class="row g-2">
-
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup
               v-if="question.obligatoire === 'oui'" class="text-danger">*</sup>

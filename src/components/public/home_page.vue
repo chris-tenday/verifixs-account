@@ -5,7 +5,13 @@
       <div class="row">
         <div class="col-md-12">
           <div class="mt-n6 mb-10">
+            <div class="d-flex justify-content-center mb-4">
+              <a v-for="(state, i) in status" :key="i" href="#" class="btn btn-primary m-1" @click="tri(state)">
+                {{ state }}
+              </a>
+            </div>
             <loader :data-loaded="loader" height="200">
+<<<<<<< HEAD
               <div class="portfolioFilter" v-show="diligences.length > 0 || filterWord !== ''">
                 <ul class="nav justify-content-center nav-pills-gray mb-4" data-aos="fade-up">
                   <li class="nav-item" v-for="(filter, index) in filters" :key="index">
@@ -21,11 +27,16 @@
 
               <div class="row" v-if="diligences.length > 0">
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in diligences"
+=======
+              <div class="row" v-if=" diligences.length > 0 && sort.length > 0">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in sort"
+>>>>>>> d68e36d41280b10b51266fdc72bf5f4211324e30
                   :key="diligence.diligence_id">
                   <div class="card mb-6 text-center border-0 smooth-shadow-sm" data-aos="zoom-in">
                     <span style="top: 5px; right: 5px;"
-                      class="badge bg-danger p-2 position-absolute text-center fs-5 fw-semi-bold"> {{
-                        diligence.diligence_status }}</span>
+                      class="badge bg-danger p-2 position-absolute text-center fs-5 fw-semi-bold">
+                      {{ diligence.diligence_status }}
+                    </span>
                     <div class="card-body p-5">
                       <div class="mb-6 mt-3">
                         <img src="assets/images/icon/icon-2.svg" alt="Icon" class="icon-xxl" />
@@ -59,7 +70,20 @@
                   </div>
                 </div>
               </div>
+<<<<<<< HEAD
               <div class="row" v-show="filterWord === '' && diligences.length === 0" v-else>
+=======
+              <div v-else-if=" diligences.length > 0 && sort.length == 0">
+                <div class="col-md-12 text-center">
+                  <img src="assets/images/folder_1.png" style="width: 100px; height: 100px" />
+                  <div class="not_found">
+                    <a href="#" class="btn btn-danger btn-lg p-3 btn-shadow">
+                      <i class="lnr lnr-plus-circle mr-2"></i> Aucune diligence </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row" v-else>
+>>>>>>> d68e36d41280b10b51266fdc72bf5f4211324e30
                 <div class="col-md-12 text-center" data-aos="fade-down">
                   <img src="assets/images/folder_1.png" style="width: 100px; height: 100px" />
                   <div class="not_found">
@@ -100,11 +124,14 @@
 <script>
 import loader from "../loader";
 import $ from "jquery";
+import { type } from "os";
+import { log } from "console";
 export default {
   components: { loader },
   data() {
     return {
       loader: false,
+<<<<<<< HEAD
       filters: [
         { id: 1, label: 'Tous' },
         { id: 2, label: 'Actif' },
@@ -113,6 +140,11 @@ export default {
       ],
       filterWord: '',
       selectedFilterId: 1,
+=======
+      status: ['all', 'actif', 'clos', 'en cours',],
+      sort: [],
+      // alias: localStorage.getItem('diligences') 
+>>>>>>> d68e36d41280b10b51266fdc72bf5f4211324e30
     };
   },
   computed: {
@@ -128,6 +160,10 @@ export default {
     client() {
       return this.$store.getters.getClient;
     },
+    // trie(){
+    //   console.log(state);
+    //   return tri(state)
+    // },
   },
   mounted() {
     var formData = new FormData();
@@ -137,6 +173,32 @@ export default {
     });
   },
   methods: {
+    tri(state) {
+      console.log(state);
+      // const aliase = this.$store.state.diligences
+      this.sort = this.$store.state.diligences;
+      for (let e = 0; e <= this.$store.state.diligences.length; e++) {
+        if (this.$store.state.diligences[e].diligence_status === state) {
+          this.sort.push(this.$store.state.diligences[e])
+        }
+      }
+      if (this.sort.length > 0) {
+        return this.sort;
+      }
+      else if (this.sort.length == 0) {
+        if (state == 'en cours' || state == 'clos') {
+          console.log(this.sort, 'all');
+          return this.sort;
+        }
+        console.log(this.sort, 'all');
+        this.sort = this.$store.state.diligences
+        return this.sort;
+      }
+      else {
+        this.sort = this.$store.state.diligences
+        return this.sort
+      }
+    },
     viewConditions() {
       /**
        * Afficher et faire accepter les termes & conditions.
