@@ -40,10 +40,6 @@
                       diligenceType.description }}<a href="javascript:void(0)" class="fw-bold"
                         @click.prevent="toggleSeeMore(diligenceType.diligence_type_id)">réduire</a></p>
                   </div>
-                  <!-- <a tabindex="0" class="btn btn-link btn-sm" role="button" data-bs-toggle="popover"
-                    data-bs-trigger="focus" title=""
-                    data-bs-content="And here's some amazing content. It's very engaging. Right?"
-                    data-bs-original-title="Dismissible popover">read more...</a> -->
                   <div class="d-grid mt-5">
                     <button data-bs-target="#myModal1" data-bs-toggle="modal" class="btn btn-primary btn-sm"
                       @click="setChoosenType(diligenceType)">
