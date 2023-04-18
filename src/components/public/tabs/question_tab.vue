@@ -1,13 +1,15 @@
 <template>
-  <div data-aos="fade-up">
+  <div>
     <go_to_tab :allownexttab="allowNextTab" @gototab="goToTab" :previoustab="false"></go_to_tab>
     <form @submit.prevent="nextQuestion">
       <div class="row g-2">
+
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup
               v-if="question.obligatoire === 'oui'" class="text-danger">*</sup>
           </label>
         </div>
+
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
           v-if="question.reponse_type === 'text' || question.reponse_type === 'telephone' || question.reponse_type === 'date'">
           <div v-if="question.split === undefined">
@@ -29,10 +31,13 @@
             <div v-if="question.total_reponse === 'multiple'">
               <!-- reponse type phone !-->
               <div v-if="question.reponse_type.includes('telephone')">
-                <phone-input id="inputPhone" v-for="reponse in question.reponses"
-                  :key="reponse.diligence_questionnaire_id" v-model="reponse.reponse" size="lg"
-                  :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
-                  @update="updateCountryCode" :required="question.obligatoire === 'oui'" />
+                <div class="input-group mb-2" v-for="(reponse, index) in question.reponses" :key="index">
+                  <phone-input class="form-control m-0 p-0" v-model="reponse.reponse" size="lg"
+                    :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
+                    @update="updateCountryCode($event, index)" :required="question.obligatoire === 'oui'" />
+                  <button class="btn btn-danger" @click.prevent="deleteResponse(question.reponses, index)"><i
+                      class="bi bi-trash"></i></button>
+                </div>
               </div>
               <!-- reponse type text !-->
               <div v-else>
@@ -44,7 +49,7 @@
             </div>
             <button style="margin-top: 5px;" v-if="question.total_reponse === 'multiple'" @click.prevent="addAnswer"
               class="btn btn-outline-primary btn-sm mb-3">
-              <i class="bi bi-plus me-2"></i>Ajouter
+              <i class="bi bi-plus me-2"></i> Ajouter champs
             </button>
           </div>
           <div v-else>
@@ -54,6 +59,8 @@
               <div class="d-flex align-items-center mb-2 justify-content-between">
                 <p class="fw-300 mb-2" v-if="reponse.reponse !== ''">
                   <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}
+                  <button type="button" class="btn btn-outline-danger me-2 btn-sm"
+                    @click.prevent="deleteResponse(question.reponses, i)"><i class="bi bi-trash"></i></button>
                 </p>
               </div>
               <div class="col-md-12">
@@ -78,7 +85,8 @@
                     @click.prevent="question.reponses.splice(i, 1)"><i class="bi bi-x me-1"></i> Réduire</button>
                 </div>
               </div>
-              <address-field v-if="reponse.reponse === ''" :model="reponse"></address-field>
+              <address-field v-if="reponse.reponse === ''" :model="reponse"
+                :required="question.obligatoire === 'oui'"></address-field>
             </div>
           </div>
         </div>
@@ -96,15 +104,26 @@
         </div>
 
         <!-- reponse type file !-->
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" v-if="question.reponse_type === 'attachment'">
-          <a :href="question.reponses[0].media" target="_blank"><img v-if="!mustUploadDocument"
-              :src="question.reponses[0].media" id="documentUploadedPreview"
-              class="img-fluid w-lg-30 w-sm-100 mb-3 img-thumbnail rounded shadow-sm" alt="Show Document preview" /></a>
-          <div class="mb-3">
-            <form ref="formFile">
-              <input type="file" ref="documentUploaded" id="documentUploaded" @change="uploadDocument"
-                class="form-control-file" :required="question.obligatoire === 'oui'" />
-            </form>
+        <div class="row m-0 p-0" v-if="question.reponse_type === 'attachment'">
+
+          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+            <div class="card mb-4 mb-lg-0" v-if="!mustUploadDocument">
+              <button class="btn btn-danger btn-sm position-absolute" style="top:5px; right: 5px"><i
+                  class="bi bi-trash"></i></button>
+              <div>
+                <a class="imghover" :href="question.reponses[0].media" target="_blank">
+                  <img class="img-fluid" :src="question.reponses[0].media" alt="Image Preview">
+                </a>
+              </div>
+              <div class="card-body py-1">
+                <h3><a :href="question.reponses[0].media" target="_blank" class="text-inherit">Document attaché</a>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3 mt-2">
+            <input type="file" ref="documentUploaded" id="documentUploaded" @change="uploadDocument" class="form-control"
+              :required="mustUploadDocument" />
           </div>
         </div>
 
@@ -149,12 +168,38 @@ import camera from "@/components/widgets/camera";
 import QuestionTabMixin from "../mixins/question-tab.mixin";
 export default {
   components: { camera, go_to_tab },
-  mixins: [QuestionTabMixin]
+  mixins: [QuestionTabMixin],
+
+  methods: {
+    deleteResponse(arr, index) {
+      if (arr[index].diligence_questionnaire_id === undefined) {
+        arr.splice(index, 1)
+      }
+      else {
+        this.$swal.fire({
+          title: 'Etes-vous sûr ?',
+          text: "Voulez vous vraiment supprimer cette reponse ?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Oui',
+          cancelButtonText: "Non",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            console.log('Deleted permission granted !');
+          }
+        });
+      }
+
+    }
+  }
 };
 </script>
 <style>
 #inputPhone {
   margin-bottom: 10px;
+  min-width: 100%;
 }
 
 .btn-increment {

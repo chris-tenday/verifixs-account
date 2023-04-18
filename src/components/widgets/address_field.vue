@@ -5,7 +5,7 @@
             <div class="form-group mb-2">
                 <label class="form-label mb-1" for="address_province">Province <sup class="text-danger">*</sup> </label>
                 <select name="address_province" :class="border" v-model="model.split.province" id="address_province"
-                    @change="handleSplit" class="form-select" required>
+                    @change="handleSplit" class="form-select" :required="required">
                     <option value="" selected>Sélectionner province...</option>
                     <option v-for="(prov, index) in provinces" :key="index" :value="prov">{{ prov.title }}</option>
                 </select>
@@ -17,7 +17,7 @@
             <div class="form-group mb-2">
                 <label class="form-label mb-1" for="address_city">Ville <sup class="text-danger">*</sup> </label>
                 <select name="address_city" :class="border" id="address_city" v-model="model.split.ville"
-                    class="form-select" @change="handleSplit" required>
+                    class="form-select" @change="handleSplit" :required="required">
                     <option selected value="">Sélectionner ville...</option>
                     <option v-for="v in model.split.province.villes" :key="v" :value="v">{{ v }}</option>
                 </select>
@@ -29,7 +29,7 @@
             <div class="form-group mb-2">
                 <label class="form-label mb-1" for="address_street">Commune <sup class="text-danger">*</sup> </label>
                 <input id="address_c" :class="border" name="address_c" type="text" v-model="model.split.commune"
-                    placeholder="Commune..." class="form-control " @change="handleSplit" required>
+                    placeholder="Commune..." class="form-control " @change="handleSplit" :required="required">
             </div>
         </div>
 
@@ -38,7 +38,7 @@
             <div class="form-group mb-2">
                 <label class="form-label mb-1" for="address_street">Quartier <sup class="text-danger">*</sup> </label>
                 <input id="address_q" :class="border" name="address_q" type="text" v-model="model.split.quartier"
-                    placeholder="Quartier..." class="form-control " @change="handleSplit" required>
+                    placeholder="Quartier..." class="form-control " @change="handleSplit" :required="required">
             </div>
         </div>
 
@@ -47,7 +47,7 @@
             <div class="form-group mb-2">
                 <label class="form-label mb-1" for="address_street">Avenue <sup class="text-danger">*</sup> </label>
                 <input id="address_street" :class="border" name="address_street" v-model="model.split.avenue" type="text"
-                    placeholder="Avenue..." class="form-control " @change="handleSplit" required>
+                    placeholder="Avenue..." class="form-control " @change="handleSplit" :required="required">
             </div>
         </div>
 
@@ -56,7 +56,7 @@
             <div class="form-group mb-2">
                 <label class="form-label mb-1" for="address_num">Numéro <sup class="text-danger">*</sup> </label>
                 <input id="address_num" :class="border" name="address_num" v-model="model.split.numero" type="text"
-                    placeholder="N°..." class="form-control " @change="handleSplit" required>
+                    placeholder="N°..." class="form-control " @change="handleSplit" :required="required">
             </div>
         </div>
 
@@ -65,7 +65,7 @@
             <div class="form-group mb-2">
                 <label class="form-label mb-1" for="address_ref">Réference <sup class="text-danger">*</sup> </label>
                 <input id="address_ref" :class="border" name="address_ref" v-model="model.split.reference" type="text"
-                    placeholder="Réference..." class="form-control " @change="handleSplit" required>
+                    placeholder="Réference..." class="form-control " @change="handleSplit" :required="required">
             </div>
         </div>
     </div>
@@ -83,6 +83,10 @@ export default {
         border: {
             type: String,
             default: ''
+        },
+        required: {
+            type: Boolean,
+            default: true,
         }
     },
 

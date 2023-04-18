@@ -3,18 +3,21 @@
     <div class="col-md-4 mx-auto">
       <div class="card">
         <div v-if="media === ''" class="btn-clear" data-aos="zoom-in" @click.prevent="onDelete">
-          <i class="bi bi-trash"></i>
+          <i class="bi bi-x"></i>
         </div>
         <!-- <div v-else class="btn-clear bg-info" data-aos="zoom-in" @click.prevent="onDelete">
           <i class="bi bi-pen text-white"></i>
         </div> -->
         <div class="card-body">
+
+          <button @click.prevent="onDelete" v-if="media !== ''" class="btn btn-sm btn-danger position-absolute z-5"
+            style="top:10px; right: 10px; opacity: .8;"><i class="bi bi-trash"></i></button>
           <img data-aos="zoom-in" v-if="media !== ''" :src="media" class="img-fluid rounded">
-          <video data-aos="zoom-in" v-else-if="img === null && media === ''" ref="video" class="img-fluid rounded"
+          <video data-aos="zoom-in" v-show="img === null && media === ''" ref="video" class="img-fluid rounded"
             @canplay="initCapture()">
             Stream unvailable
           </video>
-          <img data-aos="zoom-in" v-else :src="img" class="img-fluid rounded">
+          <img data-aos="zoom-in" v-show="img" :src="img" class="img-fluid rounded">
         </div>
         <div class="card-footer d-flex" v-if="media === ''">
           <button class="btn btn-success btn-lg me-2 flex-fill rounded" @click.prevent="takePicture()">
@@ -114,14 +117,9 @@ export default {
       this.video.pause();
     },
     onDelete() {
-      this.$nextTick(() => {
-        this.media = '';
-        setTimeout(() => {
-          this.$emit('onDelete');
-        }, 100);
-        this.startCamera();
-      })
-      console.log("image", this.dataImg);
+      this.media = ''
+      this.startCamera();
+      this.$emit('onDelete');
     },
 
     startCamera() {

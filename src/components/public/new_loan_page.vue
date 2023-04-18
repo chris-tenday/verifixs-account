@@ -7,7 +7,7 @@
             <div class="mb-10 text-center">
               <!-- section title start-->
               <h1 class="mb-2">Bienvenu(e) {{ client.nom }}, veuillez choisir une diligence !</h1>
-              <p class="lead px-lg-8 fs-6 text-danger">
+              <p class="lead px-lg-8 fs-5 text-danger">
                 Vous devrez suivre minutieusement toutes les étapes pour postuler à une nouvelle diligence !
               </p>
             </div>
@@ -26,13 +26,19 @@
                   </div>
 
                   <div class="lh-1 mb-2">
+
                     <h3 class="mb-2">
                       {{
                         diligenceType.type
                       }}
                     </h3>
-                    <p style="font-family: Corbel; font-size: 15px;">{{ diligenceType.description | sortlength(60,
-                      "...") }}</p>
+                    <p v-if="seeMore !== diligenceType.diligence_type_id" style="font-size: 15px;">{{
+                      diligenceType.description | sortlength(65,
+                        "...") }}<a class="fw-bold" href="javascript:void(0)"
+                        @click.prevent="toggleSeeMore(diligenceType.diligence_type_id)">lire la suite</a></p>
+                    <p v-else style="font-size: 15px; text-align: justify; color:#000000">{{
+                      diligenceType.description }}<a href="javascript:void(0)" class="fw-bold"
+                        @click.prevent="toggleSeeMore(diligenceType.diligence_type_id)">réduire</a></p>
                   </div>
                   <!-- <a tabindex="0" class="btn btn-link btn-sm" role="button" data-bs-toggle="popover"
                     data-bs-trigger="focus" title=""
@@ -80,7 +86,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p class="text-center">{{ choosenType.description }}</p>
+            <p>{{ choosenType.description }}</p>
             <div class="row">
               <!-- <p class='fw-bold'>{{choosenType.description}}</p> -->
               <form name="formval2" class="form-horizontal loan-eligibility-form" id="postulat-form">
@@ -136,6 +142,7 @@ export default {
       objet: "",
       isLoading: false,
       dataLoaded: false,
+      seeMore: '',
       privacyAccepted: false,
     };
   },
@@ -152,6 +159,14 @@ export default {
       //console.log(JSON.stringify(diligenceType));
       this.choosenType = diligenceType;
       console.log(this.choosenType.description);
+    },
+    toggleSeeMore(id) {
+      if (this.seeMore === "") {
+        this.seeMore = id;
+      }
+      else {
+        this.seeMore = "";
+      }
     },
     postuler() {
       console.log("submitted");

@@ -36,7 +36,7 @@ export default {
     },
   },
   methods: {
-    updateCountryCode(value) {
+    updateCountryCode(value, index) {
       if (value.formatNational !== undefined) {
         if (value.nationalNumber[0] === "0") {
           this.$swal({
@@ -47,7 +47,7 @@ export default {
             showConfirmButton: false,
           });
           this.errorTel = true;
-          this.question.reponses[0].reponse = "";
+          this.question.reponses[index].reponse = "";
           return;
         }
         if (value.nationalNumber.length > 9) {
@@ -59,30 +59,32 @@ export default {
             showConfirmButton: false,
           });
           this.errorTel = true;
-          this.question.reponses[0].reponse = "";
+          this.question.reponses[index].reponse = "";
           return;
         }
         if (value.nationalNumber.length < 9) {
           this.errorTel = true;
           return;
         }
-        this.question.reponses[0].reponse = value.e164;
+        this.question.reponses[index].reponse = value.e164;
         this.errorTel = false;
       }
     },
     /** method pour checker si le questionnaire est complètement bien rempli */
-    isQuestionnaireCompleted: function() {
+    isQuestionnaireCompleted() {
       var questions = this.questionnaireCompletion.total_questions;
       var reponses = this.questionnaireCompletion.total_reponses;
       if (questions === reponses) {
         this.allowNextTab = true;
         this.index = 0;
+        this.$emit("updateContent");
         return true;
       } else {
         this.allowNextTab = false;
         return false;
       }
     },
+
     goToTab(nextTab) {
       if (nextTab) {
         this.$emit("gotonexttab");
@@ -90,25 +92,28 @@ export default {
         this.$emit("gotoprevioustab");
       }
     },
+
     goToNextTab() {
       /**
        * Throw event pour passer au Tab de actifs.
        */
       this.$emit("gotonexttab");
     },
+
     cameraCapture(data) {
+      console.log(data);
       this.documentUploaded = data;
       this.question.reponses[0].reponse = data;
+      console.log(JSON.stringify(this.question));
     },
     /** method pour supprimer une capture */
     deleteCapture() {
       this.documentUploaded = null;
+      this.question.reponses[0].reponse = "";
     },
     /** method pour passer à la question suivante */
     async nextQuestion(event) {
       /* Checker les adresses vides */
-
-      console.log(JSON.stringify(this.question));
 
       if (this.errorTel) {
         this.$swal({
@@ -170,9 +175,16 @@ export default {
       let next = false;
       let lastCopiesResp = localStorage.getItem("last-response");
       let lastQuestionResp = JSON.parse(lastCopiesResp);
+
       if (
+        this.question.reponses.length >
+        lastQuestionResp.questions[this.index].reponses.length
+      ) {
+        next = await this.sendReponseToServer();
+      } else if (
         lastQuestionResp.questions[this.index].reponses[0].reponse ===
-        this.question.reponses[0].reponse
+          this.question.reponses[0].reponse &&
+        this.question.reponses[0].reponse !== ""
       ) {
         next = true;
       } else {
@@ -286,6 +298,7 @@ export default {
          * */
         formData.append("question_id", this.question.question_id);
       }
+
       /**
        * s'il s'agit d'une question simple n'exigant pas l'attachement d'un document.
        * */
@@ -334,7 +347,6 @@ export default {
          * */
         formData.append("fichier", this.documentUploaded);
         formData.append("designation", this.question.question);
-
         /**
          * Server request.
          * */
@@ -378,7 +390,7 @@ export default {
       formData.append("client_id", this.client.client_id);
       this.$store.dispatch("viewDiligenceDetails", formData).then((_) => {
         if (this.question.reponse_type === "attachment") {
-          this.$refs.formFile.reset();
+          this.$refs.documentUploaded.value = null;
         }
       });
       if (answerSent) {
@@ -419,11 +431,7 @@ export default {
 
     uploadDocument(event) {
       let file = event.target.files[0];
-      //console.log(file);
       this.documentUploaded = file;
-      console.clear();
-      console.log(JSON.stringify(this.question));
-      console.log(this.documentUploaded);
       /* document.getElementById("documentUploadedPreview").src = URL.createObjectURL(file); */
     },
     handleSplit(reponse, ...data) {
@@ -441,8 +449,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                                                                                                                                                               console.log("Old: "+oldQuestion.question);
-                                                                                                                                                                                                                                                                                                                                                  console.log("New:" +newQuestion.question);*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */
