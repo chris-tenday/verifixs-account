@@ -11,7 +11,8 @@
               </a>
             </div>
             <loader :data-loaded="loader" height="200">
-              <div class="portfolioFilter" v-show="diligences.length > 0 || filterWord !== ''">
+              <div class="portfolioFilter" style="overflow-x: auto; overflow-y: hidden;"
+                v-show="diligences.length > 0 || filterWord !== ''">
                 <ul class="nav justify-content-center nav-pills-gray mb-4" data-aos="fade-up">
                   <li class="nav-item" v-for="(filter, index) in filters" :key="index">
                     <a class="mb-1 nav-link rounded-2" @click.prevent="toggleShowFiltered(filter)"
