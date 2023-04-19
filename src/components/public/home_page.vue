@@ -42,7 +42,7 @@
                           diligence.diligence_type
                         }}</a>
                       </h3>
-                      <span>{{ diligence.objet | sortlength(35, "...") }}</span><br />
+                      <span>{{ diligence.objet | sortlength(30, "...") }}</span><br />
                       <span style="font-size: 10px; font-weight: 600">
                         <span class="me-2">
                           <i class="fas fa-calendar text-success me-1"></i>{{ diligence.date_enregistrement.split("|")[0]
