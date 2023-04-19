@@ -34,6 +34,9 @@ export default {
     questionnaireCompletion() {
       return this.$store.getters.getQuestionsCompletion;
     },
+    paiement() {
+      return this.$store.state.diligenceDetails.paiement;
+    },
   },
   methods: {
     updateCountryCode(value, index) {
@@ -175,20 +178,31 @@ export default {
       let next = false;
       let lastCopiesResp = localStorage.getItem("last-response");
       let lastQuestionResp = JSON.parse(lastCopiesResp);
-
       if (
         this.question.reponses.length >
         lastQuestionResp.questions[this.index].reponses.length
       ) {
         next = await this.sendReponseToServer();
-      } else if (
-        lastQuestionResp.questions[this.index].reponses[0].reponse ===
-          this.question.reponses[0].reponse &&
-        this.question.reponses[0].reponse !== ""
-      ) {
-        next = true;
       } else {
-        next = await this.sendReponseToServer();
+        for (let i = 0; i < this.question.reponses.length; i++) {
+          for (
+            let k = 0;
+            k < lastQuestionResp.questions[this.index].reponses.length;
+            k++
+          ) {
+            if (
+              lastQuestionResp.questions[this.index].reponses[k].reponse ===
+                this.question.reponses[i].reponse &&
+              this.question.reponses[i].reponse !== ""
+            ) {
+              next = true;
+              break;
+            } else {
+              next = await this.sendReponseToServer();
+              break;
+            }
+          }
+        }
       }
       if (!next) {
         /**
@@ -335,6 +349,7 @@ export default {
               this.question.reponses[i].diligence_questionnaire_id =
                 res.reponse.diligence_questionnaire_id;
               this.isQuesttionLoading = false;
+              this.$emit("updatecontent");
             });
         }
       } else {
@@ -390,7 +405,7 @@ export default {
       formData.append("client_id", this.client.client_id);
       this.$store.dispatch("viewDiligenceDetails", formData).then((_) => {
         if (this.question.reponse_type === "attachment") {
-          this.$refs.documentUploaded.value = null;
+          this.$refs.questionForm.reset();
         }
       });
       if (answerSent) {
@@ -449,8 +464,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         console.log("Old: "+oldQuestion.question);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            console.log("New:" +newQuestion.question);*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */

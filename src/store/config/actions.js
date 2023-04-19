@@ -50,6 +50,7 @@ const actions = {
         .post(state.baseURL + "/clients/diligences/view", data_sent)
         .then(function(result) {
           var data = result.data;
+          localStorage.removeItem("last-response");
           resolve(data);
           var diligences = state.diligences;
           for (var i = 0; i < diligences; i++) {
@@ -201,8 +202,8 @@ const actions = {
   },
 
   /*/
-                                                         requete pour afficher les actifs
-                                                         /*/
+                                                               requete pour afficher les actifs
+                                                               /*/
   viewActifs({ state, commit }) {
     axios.get(`${state.baseURL}/config/actifs`).then((result) => {
       var data = result.data.actifs;

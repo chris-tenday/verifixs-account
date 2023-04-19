@@ -1,7 +1,7 @@
 <template>
   <div>
     <go_to_tab :allownexttab="allowNextTab" @gototab="goToTab" :previoustab="false"></go_to_tab>
-    <form @submit.prevent="nextQuestion">
+    <form @submit.prevent="nextQuestion" ref="questionForm">
       <div class="row g-2">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup
@@ -15,15 +15,15 @@
             <div v-if="question.total_reponse !== 'multiple'">
               <!-- reponse type date !-->
               <div class="mb-3" v-if="question.reponse_type === 'date'">
-                <custom-date-input :required="question.obligatoire === 'oui'" v-for="reponse in question.reponses"
-                  :key="reponse.diligence_questionnaire_id" :selected-value="reponse.reponse"
-                  @input="reponse.reponse = $event" />
+                <custom-date-input :disabled="paiement !== null" :required="question.obligatoire === 'oui'"
+                  v-for="reponse in question.reponses" :key="reponse.diligence_questionnaire_id"
+                  :selected-value="reponse.reponse" @input="reponse.reponse = $event" />
               </div>
               <!-- reponse type text !-->
               <div class="mb-3" v-else>
-                <input v-for="reponse in question.reponses" :type="question.reponse_type" id="subj" class="form-control"
-                  placeholder="Entrez votre réponse !" v-model="reponse.reponse" :key="reponse.diligence_questionnaire_id"
-                  :required="question.obligatoire === 'oui'" />
+                <input v-for="reponse in question.reponses" :disabled="paiement !== null" :type="question.reponse_type"
+                  id="subj" class="form-control" placeholder="Entrez votre réponse !" v-model="reponse.reponse"
+                  :key="reponse.diligence_questionnaire_id" :required="question.obligatoire === 'oui'" />
               </div>
             </div>
 
@@ -31,8 +31,8 @@
               <!-- reponse type phone !-->
               <div v-if="question.reponse_type.includes('telephone')">
                 <div class="input-group mb-2" v-for="(reponse, index) in question.reponses" :key="index">
-                  <phone-input class="form-control m-0 p-0" v-model="reponse.reponse" size="lg"
-                    :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
+                  <phone-input class="form-control m-0 p-0" :disabled="paiement !== null" v-model="reponse.reponse"
+                    size="lg" :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
                     @update="updateCountryCode($event, index)" :required="question.obligatoire === 'oui'" />
                   <button class="btn btn-danger" @click.prevent="deleteResponse(question.reponses, index)"><i
                       class="bi bi-trash"></i></button>
@@ -40,25 +40,25 @@
               </div>
               <!-- reponse type text !-->
               <div v-else>
-                <input v-for="reponse in question.reponses" :type="question.reponse_type" id="subj" class="form-control"
-                  placeholder="Entrez votre reponse !" v-model="reponse.reponse" :key="reponse.diligence_questionnaire_id"
-                  :required="question.obligatoire === 'oui'" />
+                <input :disabled="paiement !== null" v-for="reponse in question.reponses" :type="question.reponse_type"
+                  id="subj" class="form-control" placeholder="Entrez votre reponse !" v-model="reponse.reponse"
+                  :key="reponse.diligence_questionnaire_id" :required="question.obligatoire === 'oui'" />
               </div>
 
             </div>
-            <button style="margin-top: 5px;" v-if="question.total_reponse === 'multiple'" @click.prevent="addAnswer"
-              class="btn btn-outline-primary btn-sm mb-3">
+            <button :disabled="paiement !== null" style="margin-top: 5px;" v-if="question.total_reponse === 'multiple'"
+              @click.prevent="addAnswer" class="btn btn-outline-primary btn-sm mb-3">
               <i class="bi bi-plus me-2"></i> Ajouter champs
             </button>
           </div>
           <div v-else>
-            <button class="btn btn-outline-primary btn-sm mb-2" @click.prevent="addAnswer"><i
-                class="bi bi-plus me-1"></i>Ajouter adresse</button>
+            <button :disabled="paiement !== null" class="btn btn-outline-primary btn-sm mb-2"
+              @click.prevent="addAnswer"><i class="bi bi-plus me-1"></i>Ajouter adresse</button>
             <div v-for="(reponse, i) in question.reponses" :key="i" class="mb-2 border-1 border-bottom">
               <div class="d-flex align-items-center mb-2 justify-content-between">
                 <p class="fw-300 mb-2" v-if="reponse.reponse !== ''">
                   <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}
-                  <button type="button" class="btn btn-outline-danger me-2 btn-sm"
+                  <button :disabled="paiement !== null" type="button" class="btn btn-outline-danger me-2 btn-sm"
                     @click.prevent="deleteResponse(question.reponses, i)"><i class="bi bi-trash"></i></button>
                 </p>
               </div>
@@ -66,22 +66,23 @@
                 <div v-if="reponse.reponse === ''" class="d-flex justify-content-between align-content-center">
                   <div>
                     <div class="form-check form-check-inline mb-2">
-                      <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type" checked
-                        :required="question.obligatoire === 'oui'" />
+                      <input class="form-check-input" :disabled="paiement !== null" value="" type="radio"
+                        id="adresse_type" name="adresse_type" checked :required="question.obligatoire === 'oui'" />
                       <label class="form-check-label" style="cursor: pointer" id="adresse_type" name="adresse_type">
                         Domiciliaire
                       </label>
                     </div>
                     <div class="form-check form-check-inline mb-2">
-                      <input class="form-check-input" value="" type="radio" id="adresse_type" name="adresse_type"
-                        :required="question.obligatoire === 'oui'" />
+                      <input class="form-check-input" :disabled="paiement !== null" value="" type="radio"
+                        id="adresse_type" name="adresse_type" :required="question.obligatoire === 'oui'" />
                       <label class="form-check-label" style="cursor: pointer" id="adresse_type">
                         Professionnelle
                       </label>
                     </div>
                   </div>
-                  <button v-if="question.reponses.length > 1" class="btn btn-outline-danger btn-sm"
-                    @click.prevent="question.reponses.splice(i, 1)"><i class="bi bi-x me-1"></i> Réduire</button>
+                  <button v-if="question.reponses.length > 1" :disabled="paiement !== null"
+                    class="btn btn-outline-danger btn-sm" @click.prevent="question.reponses.splice(i, 1)"><i
+                      class="bi bi-x me-1"></i> Réduire</button>
                 </div>
               </div>
               <address-field v-if="reponse.reponse === ''" :model="reponse"
@@ -94,8 +95,8 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" v-if="question.reponse_type === 'fixe'">
           <div class="form-check form-check-inline mb-2" v-for="reponse_fixe in question.reponse_fixes"
             :key="reponse_fixe.reponse_fixe_id">
-            <input class="form-check-input" :value="reponse_fixe.reponse" v-model="question.reponses[0].reponse"
-              type="radio" :id="'label' + reponse_fixe.reponse_fixe_id" />
+            <input :disabled="paiement !== null" class="form-check-input" :value="reponse_fixe.reponse"
+              v-model="question.reponses[0].reponse" type="radio" :id="'label' + reponse_fixe.reponse_fixe_id" />
             <label class="form-check-label" style="cursor: pointer" :for="'label' + reponse_fixe.reponse_fixe_id">
               {{ reponse_fixe.reponse }}
             </label>
@@ -107,8 +108,8 @@
 
           <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
             <div class="card mb-4 mb-lg-0" v-if="!mustUploadDocument">
-              <button class="btn btn-danger btn-sm position-absolute" style="top:5px; right: 5px"><i
-                  class="bi bi-trash"></i></button>
+              <button class="btn btn-danger btn-sm position-absolute" :disabled="paiement !== null"
+                style="top:5px; right: 5px"><i class="bi bi-trash"></i></button>
               <div>
                 <a class="imghover" :href="question.reponses[0].media" target="_blank">
                   <img class="img-fluid" :src="question.reponses[0].media" alt="Image Preview">
@@ -121,8 +122,8 @@
             </div>
           </div>
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3 mt-2">
-            <input type="file" ref="documentUploaded" id="documentUploaded" @change="uploadDocument" class="form-control"
-              :required="mustUploadDocument" />
+            <input :disabled="paiement !== null" type="file" ref="documentUploaded" id="documentUploaded"
+              @change="uploadDocument" class="form-control" :required="mustUploadDocument" />
           </div>
         </div>
 

@@ -4,15 +4,18 @@
     <div class="row">
       <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
         <div class="input-group">
-          <select @change="updated" v-model="day" class="form-select w-20" aria-label="Days" :required="required">
+          <select @change="updated" v-model="day" class="form-select w-20" :disabled="disabled" aria-label="Days"
+            :required="required">
             <option value="" selected>-- Jour --</option>
             <option v-for="d in days" :key="d" :value="d">{{ d }}</option>
           </select>
-          <select @change="updated" v-model="month" class="form-select w-25" aria-label="Months" :required="required">
+          <select @change="updated" v-model="month" class="form-select w-25" :disabled="disabled" aria-label="Months"
+            :required="required">
             <option value="" selected>-- Mois --</option>
             <option v-for="m in months" :key="m.value" :value="m.value">{{ m.label }}</option>
           </select>
-          <select @change="updated" v-model="year" class="form-select w-25" aria-label="Years" :required="required">
+          <select @change="updated" v-model="year" class="form-select w-25" :disabled="disabled" aria-label="Years"
+            :required="required">
             <option value="" selected>-- Année --</option>
             <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
           </select>
@@ -38,6 +41,11 @@ export default {
     required: {
       type: Boolean,
       default: false
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false,
     }
   },
 
@@ -119,5 +127,4 @@ export default {
 <style>
 select {
   font-family: Inter, "sans-serif"
-}
-</style>
+}</style>

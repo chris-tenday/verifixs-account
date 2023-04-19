@@ -2,16 +2,18 @@
   <div class="row">
     <div class="col-md-4 mx-auto">
       <div class="card">
-        <div v-if="media === ''" class="btn-clear" data-aos="zoom-in" @click.prevent="onDelete">
-          <i class="bi bi-x"></i>
-        </div>
+
+        <button :disabled="paiement !== null" @click.prevent="onDelete" v-if="media === ''"
+          class="btn btn-sm btn-danger position-absolute z-5" style="top:10px; right: 10px; opacity: .8;"><i
+            class="bi bi-x"></i></button>
         <!-- <div v-else class="btn-clear bg-info" data-aos="zoom-in" @click.prevent="onDelete">
           <i class="bi bi-pen text-white"></i>
         </div> -->
         <div class="card-body">
 
-          <button @click.prevent="onDelete" v-if="media !== ''" class="btn btn-sm btn-danger position-absolute z-5"
-            style="top:10px; right: 10px; opacity: .8;"><i class="bi bi-trash"></i></button>
+          <button @click.prevent="onDelete" :disabled="paiement !== null" v-if="media !== ''"
+            class="btn btn-sm btn-danger position-absolute z-5" style="top:10px; right: 10px; opacity: .8;"><i
+              class="bi bi-pencil-square"></i></button>
           <img data-aos="zoom-in" v-if="media !== ''" :src="media" class="img-fluid rounded">
           <video data-aos="zoom-in" v-show="img === null && media === ''" ref="video" class="img-fluid rounded"
             @canplay="initCapture()">
@@ -20,13 +22,14 @@
           <img data-aos="zoom-in" v-show="img" :src="img" class="img-fluid rounded">
         </div>
         <div class="card-footer d-flex" v-if="media === ''">
-          <button class="btn btn-success btn-lg me-2 flex-fill rounded" @click.prevent="takePicture()">
+          <button :disabled="paiement !== null" class="btn btn-success btn-lg me-2 flex-fill rounded"
+            @click.prevent="takePicture()">
             <i class="bi-camera-fill"></i>
           </button>
           <label for="uploader" class="btn btn-lg btn-primary flex-fill rounded">
             <i class="bi bi-upload"></i>
           </label>
-          <input type="file" class="d-none" id="uploader" @change="uploadImage">
+          <input :disabled="paiement !== null" type="file" class="d-none" id="uploader" @change="uploadImage">
         </div>
       </div>
     </div>
@@ -109,6 +112,8 @@ export default {
       this.canvas.setAttribute("height", this.video.videoHeight);
     },
 
+
+
     takePicture() {
       let context = this.canvas.getContext("2d");
       context.drawImage(this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
@@ -131,6 +136,11 @@ export default {
       }, 200)
       this.$forceUpdate();
     }
+  },
+  computed: {
+    paiement() {
+      return this.$store.state.diligenceDetails.paiement;
+    },
   },
   watch: {
     captured(val) {
@@ -190,5 +200,4 @@ export default {
 
 .btn-clear:hover {
   background-color: rgba(247, 146, 146, 0.765);
-}
-</style>
+}</style>
