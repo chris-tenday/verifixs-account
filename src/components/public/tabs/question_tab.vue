@@ -90,7 +90,7 @@
 
               <div v-if="reponse.reponse !== ''">
                 <div v-if="edit == false" class="d-flex">
-                  <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}ee
+                  <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}
                   <button @click.prevent="changem(reponse.reponse)" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-pen text-dark m-1"></i>
                   </button>
@@ -104,13 +104,13 @@
                       </button>
                       <button v-if="edit_adress.reponse.length != undefined" @click.prevent="valid(reponse, edit_adress)"
                         class="btn btn-outline-success btn-sm m-1">
-                        <i class="bi bi-x m-1"></i>
+                        <i class="bi bi-check-lg m-1"></i>
                       </button>
                     </div>
 
                   </div>
                   <p v-else class="d-flex">
-                    <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }} aaa
+                    <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }} 
                     <button @click.prevent="changem(reponse.reponse)" class="btn btn-outline-primary btn-sm m-2">
                       <i class="bi bi-pen text-dark m-1"></i>
                     </button>

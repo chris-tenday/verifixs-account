@@ -6,13 +6,13 @@
         <div class="col-md-12">
           <div class="mt-n6 mb-10">
             <div class="d-flex justify-content-center mb-4">
-              <a v-for="(state, i) in status" :key="i" href="#" class="btn btn-primary m-1" @click="tri(state)">
+              <a v-for="(state, i) in status" :key="i" href="#" class="btn btn-primary m-1" :class="[stateButton === state && 'btn-danger']" @click="stateButton = state">
                 {{ state }}
               </a>
             </div>
             <loader :data-loaded="loader" height="200">
-              <div class="row" v-if=" diligences.length > 0 && sort.length > 0">
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in sort"
+              <div class="row" v-if="diligences.length > 0 && sorting.length > 0 ">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" v-for="diligence in sorting"
                   :key="diligence.diligence_id">
                   <div class="card mb-6 text-center border-0 smooth-shadow-sm">
                     <span style="top: 5px; right: 5px;"
@@ -52,7 +52,7 @@
                   </div>
                 </div>
               </div>
-              <div v-else-if=" diligences.length > 0 && sort.length == 0">
+              <div v-else-if=" sorting.length == 0 ">
                 <div class="col-md-12 text-center">
                   <img src="assets/images/folder_1.png" style="width: 100px; height: 100px" />
                   <div class="not_found">
@@ -102,16 +102,15 @@
 <script>
 import loader from "../loader";
 import $ from "jquery";
-import { type } from "os";
-import { log } from "console";
+// import { type } from "os";
+// import { log } from "console";
 export default {
   components: { loader },
   data() {
     return {
       loader: false,
       status: ['all', 'actif', 'clos', 'en cours',],
-      sort: [],
-      // alias: localStorage.getItem('diligences') 
+      stateButton: 'all',
     };
   },
   computed: {
@@ -121,10 +120,12 @@ export default {
     client() {
       return this.$store.getters.getClient;
     },
-    // trie(){
-    //   console.log(state);
-    //   return tri(state)
-    // },
+    sorting() {
+      if(this.stateButton == 'all'){
+        return this.$store.state.diligences
+      }
+      return this.$store.state.diligences.filter(dili => dili.diligence_status == this.stateButton )
+    },
   },
   mounted() {
     var formData = new FormData();
@@ -134,32 +135,6 @@ export default {
     });
   },
   methods: {
-    tri(state) {
-      console.log(state);
-      // const aliase = this.$store.state.diligences
-      this.sort = this.$store.state.diligences;
-      for (let e = 0; e <= this.$store.state.diligences.length; e++) {
-        if (this.$store.state.diligences[e].diligence_status === state) {
-          this.sort.push(this.$store.state.diligences[e])
-        }
-      }
-      if (this.sort.length > 0) {
-        return this.sort;
-      }
-      else if (this.sort.length == 0) {
-        if (state == 'en cours' || state == 'clos') {
-          console.log(this.sort, 'all');
-          return this.sort;
-        }
-        console.log(this.sort, 'all');
-        this.sort = this.$store.state.diligences
-        return this.sort;
-      }
-      else {
-        this.sort = this.$store.state.diligences
-        return this.sort
-      }
-    },
     viewConditions() {
       /**
        * Afficher et faire accepter les termes & conditions.
