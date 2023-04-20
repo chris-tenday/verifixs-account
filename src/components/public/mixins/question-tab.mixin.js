@@ -188,22 +188,16 @@ export default {
           next = await this.sendReponseToServer();
         } else {
           for (let i = 0; i < this.question.reponses.length; i++) {
-            for (
-              let k = 0;
-              k < lastQuestionResp.questions[this.index].reponses.length;
-              k++
+            if (
+              lastQuestionResp.questions[this.index].reponses[i].reponse ===
+                this.question.reponses[i].reponse &&
+              this.question.reponses[i].reponse !== ""
             ) {
-              if (
-                lastQuestionResp.questions[this.index].reponses[k].reponse ===
-                  this.question.reponses[i].reponse &&
-                this.question.reponses[i].reponse !== ""
-              ) {
-                next = true;
-                break;
-              } else {
-                next = await this.sendReponseToServer();
-                break;
-              }
+              next = true;
+              break;
+            } else {
+              next = await this.sendReponseToServer();
+              break;
             }
           }
         }
@@ -468,8 +462,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   console.log("Old: "+oldQuestion.question);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      console.log("New:" +newQuestion.question);*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */

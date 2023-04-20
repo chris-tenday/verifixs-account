@@ -3,7 +3,7 @@
     <go_to_tab :allownexttab="allowNextTab" @gototab="goToTab" :previoustab="false"></go_to_tab>
     <form @submit.prevent="nextQuestion" ref="questionForm">
       <div class="row g-2">
-
+        <p>{{ paiement }}</p>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
           <label class="form-label text-dark fw-bold"> {{ question.question | capitalize }} <sup
               v-if="question.obligatoire === 'oui'" class="text-danger">*</sup>
@@ -35,8 +35,8 @@
                   <phone-input class="form-control m-0 p-0" :disabled="paiement !== null" v-model="reponse.reponse"
                     size="lg" :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
                     @update="updateCountryCode($event, index)" :required="question.obligatoire === 'oui'" />
-                  <button class="btn btn-danger" @click.prevent="deleteResponse(question.reponses, index)"><i
-                      class="bi bi-trash"></i></button>
+                  <button class="btn btn-danger" :disabled="paiement !== null"
+                    @click.prevent="deleteResponse(question.reponses, index)"><i class="bi bi-trash"></i></button>
                 </div>
               </div>
               <!-- reponse type text !-->
