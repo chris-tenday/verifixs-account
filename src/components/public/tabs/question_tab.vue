@@ -31,6 +31,7 @@
             <div v-if="question.total_reponse === 'multiple'">
               <!-- reponse type phone !-->
               <div v-if="question.reponse_type.includes('telephone')">
+
                 <div class="input-group mb-2" v-for="(reponse, index) in question.reponses" :key="index">
                   <phone-input class="form-control m-0 p-0" :disabled="paiement !== null" v-model="reponse.reponse"
                     size="lg" :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
@@ -86,6 +87,7 @@
                       class="bi bi-x me-1"></i> Réduire</button>
                 </div>
               </div>
+
               <address-field v-if="reponse.reponse === ''" :model="reponse"
                 :required="question.obligatoire === 'oui'"></address-field>
             </div>
@@ -146,9 +148,8 @@
                 <span class="fw-bold p-2 p-lg-2 bg-app page-link text-white">{{ index + 1 }} / {{ questionnaire.length
                 }}</span>
               </li>
-              <li :class="
-                index > questionnaire.length - 1 || isQuesttionLoading ? 'disabled' : ''
-              " class="page-item">
+              <li :class="index > questionnaire.length - 1 || isQuesttionLoading ? 'disabled' : ''
+                " class="page-item">
                 <button class="page-link" type="submit">
                   <span class="spinner-border spinner-border-sm" v-if="isQuesttionLoading"></span>
                   Suivant</button>

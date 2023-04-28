@@ -135,8 +135,24 @@ export default {
       this.$store.dispatch("activateAccount", form).then((res) => {
         if (res.reponse.status === "success") {
           this.$otpModal("hide");
+          this.$swal({
+            title: `Bienvenu(e) ${client.nom}`,
+            text: 'Votre compte verifixs a été activé avec succès !',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 3000,
+            icon: "success",
+          });
         } else {
-          alert("Code invalide");
+          this.$swal({
+            text: "code d'activation erroné !",
+            toast: true,
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 3000,
+            icon: "success",
+          });
+
         }
       });
     },

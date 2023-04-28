@@ -148,32 +148,6 @@ export default {
     });
   },
   methods: {
-    tri(state) {
-      console.log(state);
-      // const aliase = this.$store.state.diligences
-      this.sort = this.$store.state.diligences;
-      for (let e = 0; e <= this.$store.state.diligences.length; e++) {
-        if (this.$store.state.diligences[e].diligence_status === state) {
-          this.sort.push(this.$store.state.diligences[e])
-        }
-      }
-      if (this.sort.length > 0) {
-        return this.sort;
-      }
-      else if (this.sort.length == 0) {
-        if (state == 'en cours' || state == 'clos') {
-          console.log(this.sort, 'all');
-          return this.sort;
-        }
-        console.log(this.sort, 'all');
-        this.sort = this.$store.state.diligences
-        return this.sort;
-      }
-      else {
-        this.sort = this.$store.state.diligences
-        return this.sort
-      }
-    },
     viewConditions() {
       /**
        * Afficher et faire accepter les termes & conditions.
