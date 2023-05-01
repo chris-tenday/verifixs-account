@@ -77,152 +77,156 @@
       </div>
     </div>
 
-    <div class="modal fade" id="modalCredit" tabindex="-1" aria-labelledby="modalCreditLabel" aria-hidden="true"
-      data-bs-backdrop="static" data-bs-keyboard="false">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title" id="modalCreditLabel">{{ !credit.hasEdited ? 'Rengistrement de votre crédit' :
-              'Modification du crédit sélectionné' }}</h2>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-              @click.prevent="toggleNewCredit(false)"></button>
-            <button type="button" id="btn-trigger-modal" class="d-none" data-bs-toggle="modal"
-              data-bs-target="#modalCredit"></button>
-          </div>
-          <div class="modal-body">
-            <p class="text-danger fs-5">
-              <span class="bi-info"></span> Veuillez renseigner votre crédit s'il vous plait
-            </p>
-            <form id="creditForm" @submit.prevent="enregistrerCredit">
-              <div class="row">
-                <div class="col-md-6 col-lg-6">
-                  <div class="form-group">
-                    <label class="mb-2 mt-2 form-label">Banque <sup class="text-danger">*</sup></label>
-                    <select v-if="selectBanque" name="" id="" @change="toggleSelectBanque" v-model="credit.banque"
-                      class="form-control" required>
-                      <option value="">--------</option>
-                      <option value="EquityBCDC">EquityBCDC</option>
-                      <option value="Rawbank">Rawbank</option>
-                      <option value="UBA">UBA</option>
-                      <option value="FBNBank">FBNBank</option>
-                      <option value="SofiBank">SofiBank</option>
-                      <option value="AccessBank">AccessBank</option>
-                      <option value="EcoBank">EcoBank</option>
-                      <option value="Afriland First Bank">Afriland First Bank</option>
-                      <option value="BGFI Bank">BGFI Bank</option>
-                      <option value="BOA Bank">BOA Bank</option>
-                      <option value="Autre">Autre banque...</option>
-                    </select>
-                    <div v-else class="input-group">
-                      <input type="text" class="text_field form-control" placeholder="Saisissez la banque.."
-                        v-model="credit.banque" aria-label="Text input with dropdown button" required />
-                      <button class="btn btn-outline-secondary" @click="selectBanque = true" type="button"
-                        id="button-addon2"><i class="bi-arrows-collapse"></i></button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                  <div class="form-group">
-                    <label class="mb-2 mt-2">Motif du crédit <sup class="text-danger">*</sup></label>
-                    <select v-if="selectMofif" name="" id="" @change="toggleSelectMotif" class="form-control"
-                      v-model="credit.motif" required>
-                      <option value="">-----------</option>
-                      <option value="Scolaire">Scolaire</option>
-                      <option value="Business">Business</option>
-                      <option value="Achat parcelle">Achat parcelle</option>
-                      <option value="Autre">Autre motif...</option>
-                    </select>
-                    <div v-else class="input-group">
-                      <input type="text" class="text_field form-control" placeholder="Saisissez le motif.."
-                        v-model="credit.motif" aria-label="Text input with dropdown button" required />
-                      <button class="btn btn-outline-secondary" @click="selectMofif = true" type="button"
-                        id="button-addon2"><i class="bi-arrows-collapse"></i></button>
-                    </div>
 
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                  <div>
-                    <label class="mb-2 mt-2">Montant <span v-if="devise === 'USD'">(USD)</span><span
-                        v-else-if="devise === 'CDF'">(CDF)</span> <sup class="text-danger">*</sup></label>
-                  </div>
-                  <div class="input-group form-group">
-                    <input type="number" class="text_field form-control" placeholder="Montant.." v-model="credit.montant"
-                      aria-label="Text input with dropdown button" required />
-
-                    <div class="input-group-append">
-                      <select v-model="devise" class="form-control btn btn-primary" required>
-                        <option value="USD">USD</option>
-                        <OPtion value="CDF">CDF</OPtion>
+    <portal to="modal">
+      <div class="modal fade" id="modalCredit" tabindex="-1" aria-labelledby="modalCreditLabel" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title" id="modalCreditLabel">{{ !credit.hasEdited ? 'Rengistrement de votre crédit' :
+                'Modification du crédit sélectionné' }}</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                @click.prevent="toggleNewCredit(false)"></button>
+              <button type="button" id="btn-trigger-modal" class="d-none" data-bs-toggle="modal"
+                data-bs-target="#modalCredit"></button>
+            </div>
+            <div class="modal-body">
+              <p class="text-danger fs-5">
+                <span class="bi-info"></span> Veuillez renseigner votre crédit s'il vous plait
+              </p>
+              <form id="creditForm" @submit.prevent="enregistrerCredit">
+                <div class="row">
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="mb-2 mt-2 form-label">Banque <sup class="text-danger">*</sup></label>
+                      <select v-if="selectBanque" name="" id="" @change="toggleSelectBanque" v-model="credit.banque"
+                        class="form-control" required>
+                        <option value="">--------</option>
+                        <option value="EquityBCDC">EquityBCDC</option>
+                        <option value="Rawbank">Rawbank</option>
+                        <option value="UBA">UBA</option>
+                        <option value="FBNBank">FBNBank</option>
+                        <option value="SofiBank">SofiBank</option>
+                        <option value="AccessBank">AccessBank</option>
+                        <option value="EcoBank">EcoBank</option>
+                        <option value="Afriland First Bank">Afriland First Bank</option>
+                        <option value="BGFI Bank">BGFI Bank</option>
+                        <option value="BOA Bank">BOA Bank</option>
+                        <option value="Autre">Autre banque...</option>
                       </select>
+                      <div v-else class="input-group">
+                        <input type="text" class="text_field form-control" placeholder="Saisissez la banque.."
+                          v-model="credit.banque" aria-label="Text input with dropdown button" required />
+                        <button class="btn btn-outline-secondary" @click="selectBanque = true" type="button"
+                          id="button-addon2"><i class="bi-arrows-collapse"></i></button>
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div class="col-md-6 col-lg-6">
-                  <div class="form-group">
-                    <label class="mb-2 mt-2">Date de souscription <sup class="text-danger">*</sup></label>
-                    <input type="date" class="text_field form-control" v-model="credit.date_credit" required />
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                  <div>
-                    <label class="mb-2 mt-2">Durée <sup class="text-danger">*</sup></label>
-                  </div>
-                  <div class="input-group form-group">
-                    <input type="number" class="text_field form-control" placeholder="Durée" v-model="credit.duree_credit"
-                      aria-label="Text input with dropdown button" required />
-
-                    <div class="input-group-append">
-                      <select v-model="credit.duree_mois_annee" class="form-control btn btn-primary" required>
-                        <option value="Mois">Mois</option>
-                        <option value="Annee">Année</option>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="mb-2 mt-2">Motif du crédit <sup class="text-danger">*</sup></label>
+                      <select v-if="selectMofif" name="" id="" @change="toggleSelectMotif" class="form-control"
+                        v-model="credit.motif" required>
+                        <option value="">-----------</option>
+                        <option value="Scolaire">Scolaire</option>
+                        <option value="Business">Business</option>
+                        <option value="Achat parcelle">Achat parcelle</option>
+                        <option value="Autre">Autre motif...</option>
                       </select>
+                      <div v-else class="input-group">
+                        <input type="text" class="text_field form-control" placeholder="Saisissez le motif.."
+                          v-model="credit.motif" aria-label="Text input with dropdown button" required />
+                        <button class="btn btn-outline-secondary" @click="selectMofif = true" type="button"
+                          id="button-addon2"><i class="bi-arrows-collapse"></i></button>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div>
+                      <label class="mb-2 mt-2">Montant <span v-if="devise === 'USD'">(USD)</span><span
+                          v-else-if="devise === 'CDF'">(CDF)</span> <sup class="text-danger">*</sup></label>
+                    </div>
+                    <div class="input-group form-group">
+                      <input type="number" class="text_field form-control" placeholder="Montant.."
+                        v-model="credit.montant" aria-label="Text input with dropdown button" required />
+
+                      <div class="input-group-append">
+                        <select v-model="devise" class="form-control btn btn-primary" required>
+                          <option value="USD">USD</option>
+                          <option value="CDF">CDF</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="mb-2 mt-2">Date de souscription <sup class="text-danger">*</sup></label>
+                      <input type="date" class="text_field form-control" v-model="credit.date_credit" required />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div>
+                      <label class="mb-2 mt-2">Durée <sup class="text-danger">*</sup></label>
+                    </div>
+                    <div class="input-group form-group">
+                      <input type="number" class="text_field form-control" placeholder="Durée"
+                        v-model="credit.duree_credit" aria-label="Text input with dropdown button" required />
+
+                      <div class="input-group-append">
+                        <select v-model="credit.duree_mois_annee" class="form-control btn btn-primary" required>
+                          <option value="Mois">Mois</option>
+                          <option value="Annee">Année</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="mb-2 mt-2">Echéance du remboursement <sup class="text-danger">*</sup></label>
+                      <input type="text" class="text_field form-control" placeholder="Echéance.."
+                        v-model="credit.echeance_remboursement" required />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="mb-2 mt-2">Date du dernier paiement <sup class="text-danger">*</sup></label>
+                      <input type="date" class="text_field form-control" v-model="credit.date_dernier_paiement"
+                        required />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="mb-2 mt-2">Solde <span v-if="devise === 'USD'">(USD)</span><span
+                          v-else-if="devise === 'CDF'">(CDF)</span> <sup class="text-danger">*</sup></label>
+                      <input type="text" class="text_field form-control" placeholder="Solde.." v-model="credit.solde"
+                        required />
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-6">
-                  <div class="form-group">
-                    <label class="mb-2 mt-2">Echéance du remboursement <sup class="text-danger">*</sup></label>
-                    <input type="text" class="text_field form-control" placeholder="Echéance.."
-                      v-model="credit.echeance_remboursement" required />
-                  </div>
+                <div class="mt-3">
+                  <button v-if="!credit.hasEdited" class="btn btn-success me-2" :class="isLoading ? 'disabled' : ''"
+                    type="submit">
+                    <span class="spinner spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
+                    <i class="fa fa-plus" v-else></i> Sauvegarder
+                  </button>
+                  <button v-else class="btn btn-info me-2 text-white" :class="isLoading ? 'disabled' : ''" type="submit">
+                    <span class="spinner spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
+                    <i class="fa fa-pen" v-else></i> Sauvegarder les modifications
+                  </button>
+                  <button class="btn me-2 btn-danger" data-bs-dismiss="modal" aria-label="Close"
+                    @click.prevent="toggleNewCredit(false)">
+                    <i class="mr-2 fa fa-close"></i>Annuler
+                  </button>
                 </div>
-                <div class="col-md-6 col-lg-6">
-                  <div class="form-group">
-                    <label class="mb-2 mt-2">Date du dernier paiement <sup class="text-danger">*</sup></label>
-                    <input type="date" class="text_field form-control" v-model="credit.date_dernier_paiement" required />
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                  <div class="form-group">
-                    <label class="mb-2 mt-2">Solde <span v-if="devise === 'USD'">(USD)</span><span
-                        v-else-if="devise === 'CDF'">(CDF)</span> <sup class="text-danger">*</sup></label>
-                    <input type="text" class="text_field form-control" placeholder="Solde.." v-model="credit.solde"
-                      required />
-                  </div>
-                </div>
-              </div>
-              <div class="mt-3">
-                <button v-if="!credit.hasEdited" class="btn btn-success me-2" :class="isLoading ? 'disabled' : ''"
-                  type="submit">
-                  <span class="spinner spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
-                  <i class="fa fa-plus" v-else></i> Sauvegarder
-                </button>
-                <button v-else class="btn btn-info me-2 text-white" :class="isLoading ? 'disabled' : ''" type="submit">
-                  <span class="spinner spinner-border spinner-border-sm me-2" v-if="isLoading"></span>
-                  <i class="fa fa-pen" v-else></i> Sauvegarder les modifications
-                </button>
-                <button class="btn me-2 btn-danger" data-bs-dismiss="modal" aria-label="Close"
-                  @click.prevent="toggleNewCredit(false)">
-                  <i class="mr-2 fa fa-close"></i>Annuler
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </portal>
   </div>
 </template>
 

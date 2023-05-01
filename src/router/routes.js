@@ -35,6 +35,12 @@ const routes = [
     name: "register",
   },
   {
+    path: "/motdepasse+reset",
+    component: () => import("@/components/auth/reset_page"),
+    name: "reset",
+  },
+
+  {
     path: "/home",
     component: MainScreen,
     name: "main",

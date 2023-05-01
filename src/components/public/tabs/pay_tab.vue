@@ -5,7 +5,7 @@
     <div class="row mt-3">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="accordion" id="Faqaccordionsone">
-          <div class="card mb-2" v-if="paiement === null">
+          <div class="card mb-2" v-if="paiement === null || paiement.transaction_status === 'pending'">
             <div class="p-3" id="faqOne">
               <h4 class="mb-0">
                 <a href="#!" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
@@ -15,8 +15,8 @@
                 </a>
               </h4>
             </div>
-            <div id="collapseOne" class="collapse show" aria-labelledby="faqOne" data-bs-parent="#Faqaccordionsone"
-              style="">
+            <div id="collapseOne" class="collapse" :class="paiement === null ? 'show' : ''" aria-labelledby="faqOne"
+              data-bs-parent="#Faqaccordionsone" style="">
               <div class="card-body border-top">
                 <div class="row">
                   <div class="col-md-12">
@@ -34,9 +34,8 @@
 
                         <div class="row">
                           <div class="col-lg-4 col-md-4 mb-2 mb-lg-0">
-                            <a href="#!" class="card text-center smooth-shadow-sm" :class="
-                              payment.payWithMobile ? 'border-primary border-2' : ''
-                            " @click.prevent="togglePaymentMethod">
+                            <a href="#!" class="card text-center smooth-shadow-sm" :class="payment.payWithMobile ? 'border-primary border-2' : ''
+                              " @click.prevent="togglePaymentMethod">
                               <div class="card-body p-4 px-4 d-flex align-content-center align-items-center">
                                 <div class="icon-shape bg-light-pink rounded-circle icon-xl">
                                   <img src="assets/images/icon/icon-4.svg" alt="document title" />
@@ -46,9 +45,8 @@
                             </a>
                           </div>
                           <div class="col-lg-4 col-md-4 mb-2 mb-lg-0">
-                            <a href="#!" class="card text-center smooth-shadow-sm" :class="
-                              !payment.payWithMobile ? 'border-primary border-2' : ''
-                            " @click.prevent="togglePaymentMethod">
+                            <a href="#!" class="card text-center smooth-shadow-sm" :class="!payment.payWithMobile ? 'border-primary border-2' : ''
+                              " @click.prevent="togglePaymentMethod">
                               <div class="card-body p-4 px-4 d-flex align-content-center align-items-center">
                                 <div class="icon-shape bg-light-pink rounded-circle icon-xl">
                                   <img src="assets/images/svg/credit-card.svg" alt="document title" />

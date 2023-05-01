@@ -3,17 +3,17 @@
     <div class="col-md-4 mx-auto">
       <div class="card">
 
-        <button :disabled="paiement !== null" @click.prevent="onDelete" v-if="media === ''"
-          class="btn btn-sm btn-danger position-absolute z-5" style="top:10px; right: 10px; opacity: .8;"><i
-            class="bi bi-x"></i></button>
+        <button :disabled="paiement !== null && paiement.transaction_status !== 'pending'" @click.prevent="onDelete"
+          v-if="media === ''" class="btn btn-sm btn-danger position-absolute z-5"
+          style="top:10px; right: 10px; opacity: .8;"><i class="bi bi-x"></i></button>
         <!-- <div v-else class="btn-clear bg-info" data-aos="zoom-in" @click.prevent="onDelete">
           <i class="bi bi-pen text-white"></i>
         </div> -->
         <div class="card-body">
 
-          <button @click.prevent="onDelete" :disabled="paiement !== null" v-if="media !== ''"
-            class="btn btn-sm btn-danger position-absolute z-5" style="top:10px; right: 10px; opacity: .8;"><i
-              class="bi bi-pencil-square"></i></button>
+          <button @click.prevent="onDelete" :disabled="paiement !== null && paiement.transaction_status !== 'pending'"
+            v-if="media !== ''" class="btn btn-sm btn-danger position-absolute z-5"
+            style="top:10px; right: 10px; opacity: .8;"><i class="bi bi-pencil-square"></i></button>
           <img data-aos="zoom-in" v-if="media !== ''" :src="media" class="img-fluid rounded">
           <video data-aos="zoom-in" v-show="img === null && media === ''" ref="video" class="img-fluid rounded"
             @canplay="initCapture()">
@@ -200,4 +200,5 @@ export default {
 
 .btn-clear:hover {
   background-color: rgba(247, 146, 146, 0.765);
-}</style>
+}
+</style>

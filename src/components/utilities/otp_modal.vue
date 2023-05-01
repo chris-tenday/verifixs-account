@@ -23,8 +23,9 @@
             @on-change="handleOnChange" @on-complete="handleOnComplete" />
 
           <div class="d-flex mt-2 align-center justify-content-center align-items-center">
-            <p>Vous n'avez reussi le code ? <a href="javascript:void(0)" class="link-dark-info"
-                @click="resendOtp">Renvoyez le code </a></p>
+            <p>Vous n'avez reussi le code ? <a href="javascript:void(0)" :disabled="otpSendLoading" class="link-dark-info"
+                @click="resendOtp">Renvoyez le code <i v-if="otpSendLoading" class="mx-2 fa fa-spinner fa-spin"></i> </a>
+            </p>
           </div>
         </div>
         <!-- end /.modal-body -->
@@ -42,7 +43,8 @@ export default {
   data() {
     return {
       user: {},
-      time: 60
+      time: 60,
+      otpSendLoading: false,
     }
   },
   created() {
@@ -74,8 +76,9 @@ export default {
       let formData = new FormData();
       console.log(this.user.telephone);
       formData.append('telephone', this.user.telephone);
-      console.log("loading");
+      this.otpSendLoading = true;
       this.$store.dispatch('resendOtp', formData).then((res) => {
+        this.otpSendLoading = false;
         this.time = 60;
         console.log(JSON.stringify(res));
       });
@@ -85,8 +88,11 @@ export default {
     /* Cette methode permet d'effectuer une action après
     * l'insertion complete de données reçues par email par ex.
     **/
-    handleOnComplete(value) {
-      this.$emit("onSubmitted", value);
+    async handleOnComplete(value) {
+      this.otpSendLoading = true;
+
+      await this.$emit("onSubmitted", value);
+      this.otpSendLoading = false
       //$(".exit").click();
     },
     /**

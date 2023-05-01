@@ -20,6 +20,8 @@
     <privacy-modal pdfSrc="assets/privacy-policy.pdf" @onAccepted="conditionAccepted(true)"
       @onRefused="conditionAccepted(false)" />
 
+
+
     <!--Button trigger show privacy modal-->
     <button id="btn-privacy" data-bs-toggle="modal" data-bs-target="#privacyModal" class="d-none"></button>
   </div>
@@ -105,7 +107,6 @@ export default {
         });
         return false;
       }
-
       /**
        * Afficher et faire accepter les termes & conditions.
        */
@@ -127,22 +128,22 @@ export default {
       }
     },
     activateAccount(otp) /** method pour activer un compte */ {
-      console.log("dsdaad:" + otp);
+      console.log("user otp ###:" + otp);
       var form = new FormData();
       form.append("client_id", this.client.client_id);
       form.append("otp", otp);
 
       this.$store.dispatch("activateAccount", form).then((res) => {
         if (res.reponse.status === "success") {
-          this.$otpModal("hide");
           this.$swal({
-            title: `Bienvenu(e) ${client.nom}`,
+            title: `Bienvenu(e) ${this.client.nom}`,
             text: 'Votre compte verifixs a été activé avec succès !',
             showConfirmButton: false,
             showCancelButton: false,
             timer: 3000,
             icon: "success",
           });
+          this.$otpModal("hide");
         } else {
           this.$swal({
             text: "code d'activation erroné !",
@@ -150,9 +151,8 @@ export default {
             showConfirmButton: false,
             showCancelButton: false,
             timer: 3000,
-            icon: "success",
+            icon: "warning",
           });
-
         }
       });
     },

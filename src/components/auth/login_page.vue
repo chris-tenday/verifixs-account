@@ -33,10 +33,14 @@
                     <i class="fas fa-unlock me-1" v-else></i> Connecter
                   </button>
                 </div>
-                <p class="text-center">
+                <p class="text-center p-0">
                   Vous n'avez pas un compte ?
                   <a class="link-success" href="javascript:void(0)"
                     @click.prevent="$router.replace({ name: 'register' })">créez un compte !</a>
+                </p>
+                <p class="text-center p-0">
+                  <a class="link-success" href="javascript:void(0)" @click.prevent="$router.push({ name: 'reset' })">Mot
+                    de passe oublié !</a>
                 </p>
               </form>
             </div>
@@ -90,6 +94,9 @@ export default {
           this.$store.dispatch("loginAccount", formData).then((res) => {
             this.isLoading = false;
             console.log(res);
+            if (res === false) {
+              return
+            }
             if (res.reponse !== undefined && res.reponse.status === "success") {
               this.$router.go(this.$router.push({ name: "home" }));
               this.isLoading = true;

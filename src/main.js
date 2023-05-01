@@ -9,10 +9,6 @@ import "vue-phone-number-input/dist/vue-phone-number-input.css";
 
 Vue.config.productionTip = false;
 
-/*Setup vue popover */
-import Popover from "vue-js-popover";
-Vue.use(Popover);
-
 import PortalVue from "portal-vue";
 Vue.use(PortalVue);
 Vue.filter("sortlength", function(text, length, suffix) {

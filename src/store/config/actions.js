@@ -4,6 +4,11 @@ import axios from "axios";
 const actions = {
   login({ state }, data) /** method pour le login */ {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/utilisateurs/connexion/login", data)
         .then(function(result) {
@@ -24,6 +29,11 @@ const actions = {
   },
   viewDiligences({ state, commit }, data) {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.!");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/clients/dashboard", data)
         .then(function(result) {
@@ -34,6 +44,11 @@ const actions = {
     });
   },
   newDiligence({ state, commit }, data) {
+    if (!navigator.onLine) {
+      alert("Vous êtes actuellement hors ligne.");
+      resolve(false);
+      return;
+    }
     return new Promise(function(resolve) {
       axios
         .post(state.baseURL + "/clients/diligences/postuler", data)
@@ -46,6 +61,11 @@ const actions = {
   },
   viewDiligenceDetails({ state, commit }, data_sent) {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/clients/diligences/view", data_sent)
         .then(function(result) {
@@ -72,6 +92,11 @@ const actions = {
   },
   uploadDocument({ state }, data) {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/clients/diligences/uploader", data)
         .then(function(result) {
@@ -83,6 +108,11 @@ const actions = {
   },
   async registerAccount({ state, commit }, data) {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/connexion/clients/registeraccount", data)
         .then(function(result) {
@@ -114,6 +144,11 @@ const actions = {
 
   resendOtp({ commit, state }, data) {
     return new Promise((resolve, reject) => {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/connexion/clients/otp", data)
         .then((res) => {
@@ -125,6 +160,11 @@ const actions = {
 
   deleteCredit({ commit, state }, data) {
     return new Promise((resolve, reject) => {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/clients/diligences/credits/supprimer", {
           client_id: data.client_id,
@@ -138,6 +178,11 @@ const actions = {
   },
   loginAccount({ state, commit }, data) {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/connexion/clients/login", data)
         .then(function(result) {
@@ -154,6 +199,11 @@ const actions = {
     commit("setClient", {});
   },
   postulerDiligence({ state }, data) {
+    if (!navigator.onLine) {
+      alert("Vous êtes actuellement hors ligne.");
+      resolve(false);
+      return;
+    }
     return new Promise(function(resolve) {
       axios
         .post(state.baseURL + "/clients/diligences/postuler", data)
@@ -165,6 +215,11 @@ const actions = {
     });
   },
   getDiligenceTypes({ state, commit }) {
+    if (!navigator.onLine) {
+      alert("Vous êtes actuellement hors ligne.");
+      resolve(false);
+      return;
+    }
     return new Promise(function(resolve) {
       axios.get(state.baseURL + "/config/clients").then(function(result) {
         var data = result.data;
@@ -180,6 +235,12 @@ const actions = {
     data
   ) /** method pour envoyer la réponse d'une question au serveur */ {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
+
       axios
         .post(state.baseURL + "/clients/diligences/repondrequestion", data)
         .then(function(result) {
@@ -191,6 +252,11 @@ const actions = {
   },
   payer({ state }, data) /** method pour payer le frais d'une diligence */ {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/clients/diligences/paiements/payer", data)
         .then(function(result) {
@@ -202,9 +268,14 @@ const actions = {
   },
 
   /*/
-                                                               requete pour afficher les actifs
-                                                               /*/
+                                                                         requete pour afficher les actifs
+                                                                         /*/
   viewActifs({ state, commit }) {
+    if (!navigator.onLine) {
+      alert("Vous êtes actuellement hors ligne.");
+      resolve(false);
+      return;
+    }
     axios.get(`${state.baseURL}/config/actifs`).then((result) => {
       var data = result.data.actifs;
 
@@ -224,6 +295,11 @@ const actions = {
   },
   enregistrerCredit({ state }, data) /** method pour enregistrer un crédit */ {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/clients/diligences/credits", data)
         .then(function(result) {
@@ -238,13 +314,16 @@ const actions = {
     data
   ) /** method pour activier un compte */ {
     return new Promise(function(resolve) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
       axios
         .post(state.baseURL + "/clients/account", data)
         .then(function(result) {
           var data = result.data;
-
-          console.clear();
-          console.log(data);
+          console.log(JSON.stringify(data));
           if (data.reponse.status === "success") {
             /**
              * Update client dans le store.
