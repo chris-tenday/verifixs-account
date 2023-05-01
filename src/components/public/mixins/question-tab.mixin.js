@@ -348,6 +348,9 @@ export default {
                 res.reponse.diligence_questionnaire_id;
               this.isQuesttionLoading = false;
               this.$emit("updatecontent");
+            })
+            .catch((e) => {
+              this.isQuesttionLoading = false;
             });
         }
       } else {
@@ -386,6 +389,9 @@ export default {
                 answerSent = true;
                 this.isQuesttionLoading = false;
               }
+            })
+            .catch((e) => {
+              this.isQuesttionLoading = false;
             });
         } else {
           answerSent = true;
@@ -462,8 +468,8 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               console.log("Old: "+oldQuestion.question);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  console.log("New:" +newQuestion.question);*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */

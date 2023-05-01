@@ -8,7 +8,6 @@
               v-if="question.obligatoire === 'oui'" class="text-danger">*</sup>
           </label>
         </div>
-
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
           v-if="question.reponse_type === 'text' || question.reponse_type === 'telephone' || question.reponse_type === 'date'">
           <div v-if="question.split === undefined">
@@ -39,18 +38,21 @@
                     size="lg" :translations="translations" default-country-code="CD" :no-example="true" color="#FF0000"
                     @update="updateCountryCode($event, index)" :required="question.obligatoire === 'oui'" />
                   <button class="btn btn-danger"
-                    :disabled="paiement !== null && paiement.transaction_status !== 'pending'"
-                    @click.prevent="deleteResponse(question.reponses, index)"><i class="bi bi-trash"></i></button>
+                    :disabled="(paiement !== null && paiement.transaction_status !== 'pending') || deleteLoading === reponse.diligence_questionnaire_id"
+                    @click.prevent="deleteResponse(question.reponses, index)">
+                    <i v-if="deleteLoading === reponse.diligence_questionnaire_id" class="fa fa-spinner fa-spin"></i>
+                    <i class="bi bi-trash" v-else></i>
+
+                  </button>
                 </div>
               </div>
               <!-- reponse type text !-->
               <div v-else>
                 <input :disabled="paiement !== null && paiement.transaction_status !== 'pending'"
-                  v-for="reponse in question.reponses" :type="question.reponse_type" id="subj" class="form-control"
+                  v-for="reponse in question.reponses" type="text" id="subj" class="form-control"
                   placeholder="Entrez votre reponse !" v-model="reponse.reponse" :key="reponse.diligence_questionnaire_id"
                   :required="question.obligatoire === 'oui'" />
               </div>
-
             </div>
             <button :disabled="paiement !== null && paiement.transaction_status !== 'pending'" style="margin-top: 5px;"
               v-if="question.total_reponse === 'multiple'" @click.prevent="addAnswer"
@@ -66,9 +68,13 @@
               <div class="d-flex align-items-center mb-2 justify-content-between">
                 <p class="fw-300 mb-2" v-if="reponse.reponse !== ''">
                   <i class="bi-signpost-2-fill me-2 text-primary"></i> {{ reponse.reponse }}
-                  <button :disabled="paiement !== null && paiement.transaction_status !== 'pending'" type="button"
-                    class="btn btn-outline-danger me-2 btn-sm" @click.prevent="deleteResponse(question.reponses, i)"><i
-                      class="bi bi-trash"></i></button>
+                  <button
+                    :disabled="(paiement !== null && paiement.transaction_status !== 'pending') || deleteLoading === reponse.diligence_questionnaire_id"
+                    type="button" class="btn btn-outline-danger me-2 btn-sm"
+                    @click.prevent="deleteResponse(question.reponses, i)">
+                    <i v-if="deleteLoading === reponse.diligence_questionnaire_id" class="fa fa-spinner fa-spin"></i>
+                    <i class="bi bi-trash" v-else></i>
+                  </button>
                 </p>
               </div>
               <div class="col-md-12">
@@ -184,6 +190,11 @@ import QuestionTabMixin from "../mixins/question-tab.mixin";
 export default {
   components: { camera, go_to_tab },
   mixins: [QuestionTabMixin],
+  data() {
+    return {
+      deleteLoading: ''
+    }
+  },
 
   methods: {
     deleteResponse(arr, index) {
@@ -202,7 +213,13 @@ export default {
           cancelButtonText: "Non",
         }).then((result) => {
           if (result.isConfirmed) {
-            console.log('Deleted permission granted !');
+            this.deleteLoading = arr[index].diligence_questionnaire_id;
+            this.$store.dispatch("supprimerReponse", arr[index].diligence_questionnaire_id).then((data) => {
+              this.deleteLoading = ''
+              this.$emit('updatecontent');
+            }).catch((err) => {
+              this.deleteLoading = ''
+            })
           }
         });
       }

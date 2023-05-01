@@ -208,6 +208,8 @@ export default {
                 showConfirmButton: false,
               });
             }
+          }).catch((_) => {
+            this.isLoading = false
           });
         }
       });

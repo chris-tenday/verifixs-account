@@ -3,7 +3,7 @@ import axios from "axios";
 
 const actions = {
   login({ state }, data) /** method pour le login */ {
-    return new Promise(function(resolve) {
+    return new Promise(function(resolve, reject) {
       if (!navigator.onLine) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
@@ -107,7 +107,7 @@ const actions = {
     });
   },
   async registerAccount({ state, commit }, data) {
-    return new Promise(function(resolve) {
+    return new Promise(function(resolve, reject) {
       if (!navigator.onLine) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
@@ -138,6 +138,9 @@ const actions = {
               commit("setClient", data.reponse.data);
             }
           }
+        })
+        .then((e) => {
+          reject(e);
         });
     });
   },
@@ -177,7 +180,7 @@ const actions = {
     });
   },
   loginAccount({ state, commit }, data) {
-    return new Promise(function(resolve) {
+    return new Promise(function(resolve, reject) {
       if (!navigator.onLine) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
@@ -192,6 +195,9 @@ const actions = {
           if (data.reponse !== undefined && data.reponse.status === "success") {
             commit("setClient", data.reponse.data);
           }
+        })
+        .catch((e) => {
+          reject(e);
         });
     });
   },
@@ -234,7 +240,7 @@ const actions = {
     { state },
     data
   ) /** method pour envoyer la réponse d'une question au serveur */ {
-    return new Promise(function(resolve) {
+    return new Promise(function(resolve, reject) {
       if (!navigator.onLine) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
@@ -247,6 +253,9 @@ const actions = {
           var data = result.data;
           console.log(data);
           resolve(data);
+        })
+        .catch((e) => {
+          reject(e);
         });
     });
   },
@@ -268,8 +277,8 @@ const actions = {
   },
 
   /*/
-                                                                         requete pour afficher les actifs
-                                                                         /*/
+                                                                                                   requete pour afficher les actifs
+                                                                                                   /*/
   viewActifs({ state, commit }) {
     if (!navigator.onLine) {
       alert("Vous êtes actuellement hors ligne.");
@@ -331,6 +340,38 @@ const actions = {
             commit("setClient", data.reponse.data);
           }
           resolve(data);
+        });
+    });
+  },
+
+  supprimerReponse(
+    { state, getters },
+    payload
+  ) /** method pour activier un compte */ {
+    console.log(payload);
+    let client = getters.getClient;
+
+    console.log(JSON.stringify(client));
+    return new Promise(function(resolve, reject) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
+      let formData = new FormData();
+      formData.append("client_id", client.client_id);
+      formData.append("diligence_questionnaire_id", payload);
+      axios
+        .post(
+          state.baseURL + "/clients/diligences/supprimerquestionnairediligence",
+          formData
+        )
+        .then(function({ data }) {
+          resolve(data);
+        })
+        .catch((e) => {
+          console.log(e);
+          reject(false);
         });
     });
   },
