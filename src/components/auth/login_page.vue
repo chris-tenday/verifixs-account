@@ -35,11 +35,12 @@
                 </div>
                 <p class="text-center p-0">
                   Vous n'avez pas un compte ?
-                  <a class="link-success" href="javascript:void(0)"
+                  <a class="link-primary fw-bold" href="javascript:void(0)"
                     @click.prevent="$router.replace({ name: 'register' })">créez un compte !</a>
                 </p>
                 <p class="text-center p-0">
-                  <a class="link-success" href="javascript:void(0)" @click.prevent="$router.push({ name: 'reset' })">Mot
+                  <a class="link-primary fw-bold" href="javascript:void(0)"
+                    @click.prevent="$router.push({ name: 'reset' })">Mot
                     de passe oublié !</a>
                 </p>
               </form>
