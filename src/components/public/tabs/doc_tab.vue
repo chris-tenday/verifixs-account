@@ -147,7 +147,7 @@ export default {
         this.isDeletedDocLoading = doc.diligence_upload_id;
         this.$axios.post("/clients/diligences/deletedoc", formData).then((res) => {
           console.log(JSON.stringify(res.data));
-          this.$emit('updateContent');
+          this.$emit('updatecontent');
           this.isDeletedDocLoading = '';
         })
       });

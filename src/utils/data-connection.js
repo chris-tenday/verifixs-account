@@ -1,3 +1,4 @@
 export default async function checkConnection() {
-    return navigator.onLine;
+    return true; //TODO:To be removed
+    //return navigator.onLine; //TODO: To be uncommented.
 }

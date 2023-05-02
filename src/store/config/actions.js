@@ -1,10 +1,12 @@
 import axios from "axios";
+import checkConnection from "../../utils/data-connection"
 //import { scroller } from "vue-scrollto/src/scrollTo";
 
 const actions = {
   login({ state }, data) /** method pour le login */ {
     return new Promise(function(resolve, reject) {
-      if (!navigator.onLine) {
+
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -29,7 +31,7 @@ const actions = {
   },
   viewDiligences({ state, commit }, data) {
     return new Promise(function(resolve) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.!");
         resolve(false);
         return;
@@ -44,7 +46,7 @@ const actions = {
     });
   },
   newDiligence({ state, commit }, data) {
-    if (!navigator.onLine) {
+    if (!checkConnection()) {
       alert("Vous êtes actuellement hors ligne.");
       resolve(false);
       return;
@@ -61,7 +63,7 @@ const actions = {
   },
   viewDiligenceDetails({ state, commit }, data_sent) {
     return new Promise(function(resolve) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -92,7 +94,7 @@ const actions = {
   },
   uploadDocument({ state }, data) {
     return new Promise(function(resolve) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -108,7 +110,7 @@ const actions = {
   },
   async registerAccount({ state, commit }, data) {
     return new Promise(function(resolve, reject) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -147,7 +149,7 @@ const actions = {
 
   resendOtp({ commit, state }, data) {
     return new Promise((resolve, reject) => {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -163,7 +165,7 @@ const actions = {
 
   deleteCredit({ commit, state }, data) {
     return new Promise((resolve, reject) => {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -181,7 +183,7 @@ const actions = {
   },
   loginAccount({ state, commit }, data) {
     return new Promise(function(resolve, reject) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -205,7 +207,7 @@ const actions = {
     commit("setClient", {});
   },
   postulerDiligence({ state }, data) {
-    if (!navigator.onLine) {
+    if (!checkConnection()) {
       alert("Vous êtes actuellement hors ligne.");
       resolve(false);
       return;
@@ -221,7 +223,7 @@ const actions = {
     });
   },
   getDiligenceTypes({ state, commit }) {
-    if (!navigator.onLine) {
+    if (!checkConnection()) {
       alert("Vous êtes actuellement hors ligne.");
       resolve(false);
       return;
@@ -241,7 +243,7 @@ const actions = {
     data
   ) /** method pour envoyer la réponse d'une question au serveur */ {
     return new Promise(function(resolve, reject) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -261,7 +263,7 @@ const actions = {
   },
   payer({ state }, data) /** method pour payer le frais d'une diligence */ {
     return new Promise(function(resolve) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -280,7 +282,7 @@ const actions = {
                                                                                                    requete pour afficher les actifs
                                                                                                    /*/
   viewActifs({ state, commit }) {
-    if (!navigator.onLine) {
+    if (!checkConnection()) {
       alert("Vous êtes actuellement hors ligne.");
       resolve(false);
       return;
@@ -304,7 +306,7 @@ const actions = {
   },
   enregistrerCredit({ state }, data) /** method pour enregistrer un crédit */ {
     return new Promise(function(resolve) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -323,7 +325,7 @@ const actions = {
     data
   ) /** method pour activier un compte */ {
     return new Promise(function(resolve) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -353,7 +355,7 @@ const actions = {
 
     console.log(JSON.stringify(client));
     return new Promise(function(resolve, reject) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
