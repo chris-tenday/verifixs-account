@@ -283,6 +283,7 @@ export default {
     },
     /** method pour mettre à jour le contenu affiché */
     async updateContent() {
+      console.log("updatecontent called..");
       var formData = new FormData();
       formData.append("diligence_id", this.diligenceId);
       formData.append("client_id", this.client.client_id);
