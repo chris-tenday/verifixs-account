@@ -277,8 +277,8 @@ const actions = {
   },
 
   /*/
-                                                                                                   requete pour afficher les actifs
-                                                                                                   /*/
+                                                                                                                                       requete pour afficher les actifs
+                                                                                                                                       /*/
   viewActifs({ state, commit }) {
     if (!navigator.onLine) {
       alert("Vous êtes actuellement hors ligne.");
@@ -372,6 +372,72 @@ const actions = {
         .catch((e) => {
           console.log(e);
           reject(false);
+        });
+    });
+  },
+
+  resetPassSendOtp({ state }, phone) {
+    return new Promise(function(resolve, reject) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
+      let formData = new FormData();
+      formData.append("telephone", phone);
+      axios
+        .post(state.baseURL + "/connexion/passwordreset", formData)
+        .then(function({ data }) {
+          resolve(data);
+        })
+        .catch((e) => {
+          console.log(e);
+          reject(e);
+        });
+    });
+  },
+
+  resetPassCheckOtp({ state }, payload) {
+    return new Promise(function(resolve, reject) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
+      let formData = new FormData();
+      formData.append("telephone", payload.phone);
+      formData.append("otp", payload.otp);
+      axios
+        .post(state.baseURL + "/connexion/checkotp", formData)
+        .then(function({ data }) {
+          resolve(data);
+        })
+        .catch((e) => {
+          console.log(e);
+          reject(e);
+        });
+    });
+  },
+
+  resetPass({ state }, payload) {
+    return new Promise(function(resolve, reject) {
+      if (!navigator.onLine) {
+        alert("Vous êtes actuellement hors ligne.");
+        resolve(false);
+        return;
+      }
+      let formData = new FormData();
+      formData.append("client_id", payload.client_id);
+      formData.append("pass", payload.pass);
+      formData.append("telephone", payload.phone);
+      axios
+        .post(state.baseURL + "/clients/passwordreset", formData)
+        .then(function({ data }) {
+          resolve(data);
+        })
+        .catch((e) => {
+          console.log(e);
+          reject(e);
         });
     });
   },

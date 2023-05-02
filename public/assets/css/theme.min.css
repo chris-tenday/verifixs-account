@@ -4005,7 +4005,7 @@ textarea.form-control-lg {
 }
 
 .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-    margin-left: -1px;
+    margin-left: 0px !important;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0
 }
@@ -4103,7 +4103,7 @@ textarea.form-control.is-valid {
 }
 
 .form-check-inline .form-check-input~.valid-feedback {
-    margin-left: .5em
+    margin-left: Opx
 }
 
 .input-group .form-control.is-valid,
@@ -4124,6 +4124,7 @@ textarea.form-control.is-valid {
     display: none;
     width: 100%;
     margin-top: .25rem;
+    margin-left: 0px !important;
     font-size: .875em;
     color: #dc3545
 }
@@ -4213,7 +4214,7 @@ textarea.form-control.is-invalid {
 }
 
 .form-check-inline .form-check-input~.invalid-feedback {
-    margin-left: .5em
+    margin-left: 0px !important;
 }
 
 .input-group .form-control.is-invalid,
