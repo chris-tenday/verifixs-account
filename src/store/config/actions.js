@@ -1,11 +1,10 @@
 import axios from "axios";
-import checkConnection from "../../utils/data-connection"
+import checkConnection from "../../utils/data-connection";
 //import { scroller } from "vue-scrollto/src/scrollTo";
 
 const actions = {
   login({ state }, data) /** method pour le login */ {
     return new Promise(function(resolve, reject) {
-
       if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
@@ -279,8 +278,8 @@ const actions = {
   },
 
   /*/
-                                                                                                                                       requete pour afficher les actifs
-                                                                                                                                       /*/
+                                                                                                                                         requete pour afficher les actifs
+                                                                                                                                         /*/
   viewActifs({ state, commit }) {
     if (!checkConnection()) {
       alert("Vous êtes actuellement hors ligne.");
@@ -400,8 +399,13 @@ const actions = {
   },
 
   resetPassCheckOtp({ state }, payload) {
+    if (!checkConnection()) {
+      alert("Vous êtes actuellement hors ligne.");
+      resolve(false);
+      return;
+    }
     return new Promise(function(resolve, reject) {
-      if (!navigator.onLine) {
+      if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
         resolve(false);
         return;
@@ -422,6 +426,11 @@ const actions = {
   },
 
   resetPass({ state }, payload) {
+    if (!checkConnection()) {
+      alert("Vous êtes actuellement hors ligne.");
+      resolve(false);
+      return;
+    }
     return new Promise(function(resolve, reject) {
       if (!navigator.onLine) {
         alert("Vous êtes actuellement hors ligne.");
