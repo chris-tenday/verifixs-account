@@ -49,12 +49,11 @@
                           }}</span>
                         <span class="me-2"><i class="fas fa-clock text-success me-1"></i>{{
                           diligence.date_enregistrement.split("|")[1] }}</span></span><br />
-                      <button @click.prevent="
-                        $router.push({
-                          name: 'loan-view',
-                          params: { id: diligence.diligence_id },
-                        })
-                      " class="btn btn-sm btn-info mt-3 text-white fw-medium fs-6">
+                      <button @click.prevent="$router.push({
+                        name: 'loan-view',
+                        params: { id: diligence.diligence_id },
+                      })
+                        " class="btn btn-sm btn-info mt-3 text-white fw-medium fs-6">
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                           xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="7px"
                           viewBox="0 0 13 7" enable-background="new 0 0 13 7" xml:space="preserve">
@@ -114,9 +113,9 @@ export default {
       loader: false,
       filters: [
         { id: 1, label: 'Tous' },
-        { id: 2, label: 'Actif' },
-        { id: 3, label: 'En cours' },
-        { id: 4, label: 'Cloturée' },
+        { id: 2, label: 'Actifs', key: 'actif' },
+        { id: 3, label: 'En cours', key: 'pending' },
+        { id: 4, label: 'Cloturées', key: 'cloture' },
       ],
       filterWord: '',
       selectedFilterId: 1,
@@ -164,7 +163,7 @@ export default {
         this.filterWord = "";
       }
       else {
-        this.filterWord = filter.label
+        this.filterWord = filter.key
       }
     },
     conditionAccepted(accepted = false) {
