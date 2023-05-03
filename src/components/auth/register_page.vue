@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center justify-content-center auth-box"
+  <div class="d-flex align-items-center justify-content-center auth-box" data-aos="fade-up"
     style="overflow: auto; height: 100%; width: 100%">
     <div class="container">
       <div class="row d-flex align-items-center justify-content-center">

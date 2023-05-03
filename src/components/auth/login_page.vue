@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center justify-content-center auth-box"
+  <div class="d-flex align-items-center justify-content-center auth-box" data-aos="zoom-in"
     style="overflow: hidden; height: 100vh; width: 100%">
     <div class="container">
       <div class="row d-flex align-items-center justify-content-center">
@@ -55,18 +55,23 @@
 <script>
 export default {
   destroyed() {
-    this.$router.go();
+    if (this.loggedIn) {
+      this.$router.go();
+
+    }
   },
   data() {
     var login = {
       identifiant: "",
       pass: "",
+
     };
 
     return {
       login: login,
       isLoading: false,
       date: "",
+      loggedIn: false
     };
   },
   methods: {
@@ -99,7 +104,8 @@ export default {
               return
             }
             if (res.reponse !== undefined && res.reponse.status === "success") {
-              this.$router.go(this.$router.push({ name: "home" }));
+              this.loggedIn = true;
+              this.$router.push({ name: "home" })
               this.isLoading = true;
             } else {
               this.$swal({

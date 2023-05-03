@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex align-items-center justify-content-center auth-box"
+    <div class="d-flex align-items-center justify-content-center auth-box" data-aos="zoom-in"
         style="overflow: hidden; height: 100vh; width: 100%">
         <div class="container">
             <div class="row d-flex align-items-center justify-content-center">
@@ -9,6 +9,7 @@
                             <img src="assets/images/logos/logo_color.svg" class="mb-3" style="width: 180px" title="logo" />
 
                             <div v-if="reset">
+                                <p class="text-center">Veuillez réinitialiser votre mot de passe !</p>
                                 <form id="form-reset" data-aos="fade-right" @submit.prevent="resetPass" novalidate>
                                     <!-- Text input-->
                                     <div class="mb-3">
@@ -18,7 +19,7 @@
                                             required />
                                         <span class="invalid-feedback text-start">Entrer votre nouveau mot de passe !
                                         </span>
-                                        <div class="text-danger" v-if="pwdError">
+                                        <div class="text-danger small" v-if="pwdError">
                                             <!-- <ul :v-if='invalid'> -->
                                             {{ pwdError }}
                                             <!-- </ul> -->
@@ -33,7 +34,7 @@
                                             required />
                                         <span class="invalid-feedback text-start">confirmer nouveau mot de passe !
                                         </span>
-                                        <div class="text-danger" v-if="isDifferent">
+                                        <div class="text-danger small" v-if="isDifferent">
                                             Le mot de passe saisi ne correspond pas !
                                         </div>
                                     </div>
@@ -47,17 +48,18 @@
                                 </form>
                             </div>
                             <div v-else>
-                                <div v-if="isOtp" data-aos="fade-right">
-                                    <p class="text-center">Entrer le code reussi à votre numéro de téléphone <strong
-                                            class="text-primary">{{ form.phone.substring(0, 6) }}<small>°°°°°°°°°</small>{{
-                                                form.phone.slice(-2) }}</strong> !</p>
+                                <div v-if="isOtp" data-aos="fade-up">
+                                    <p class="text-center">Entrer le code reussi à votre numéro de
+                                        téléphone <strong class="text-primary">{{ form.phone.substring(0, 6)
+                                        }}<small>°°°°°°°°°</small>{{
+    form.phone.slice(-2) }}</strong> !</p>
                                     <otp-input ref="otpInput1" :num-inputs="6" :should-auto-focus="true" separator="-"
                                         input-type="number" @on-change="emptyField" @on-complete="checkOtp" />
 
                                     <div class="d-flex mt-2 align-center justify-content-center align-items-center">
                                         <p>Vous n'avez reussi le code ? <a href="javascript:void(0)" :disabled="isLoading"
-                                                class="link-dark-info" @click="sendOtp">Renvoyez le code <i v-if="isLoading"
-                                                    class="mx-2 fa fa-spinner fa-spin"></i></a>
+                                                class="link-dark-info fw-semi-bold" @click="sendOtp">Renvoyez le code <i
+                                                    v-if="isLoading" class="mx-2 fa fa-spinner fa-spin"></i></a>
                                         </p>
                                     </div>
                                 </div>
@@ -161,8 +163,19 @@ export default {
             }
             this.isLoading = true;
             this.$store.dispatch('resetPassCheckOtp', payload).then((res) => {
-                console.log(JSON.stringify(res));
                 this.isLoading = false;
+                if (res.error !== undefined) {
+                    this.$swal({
+                        icon: 'warning',
+                        title: 'Echec !',
+                        text: 'Utilisateur ou code invalide !',
+                        timer: 3000,
+                        showConfirmButton: false,
+
+                    });
+                    this.isOtp = false;
+                    return;
+                }
                 let client = res.client;
                 if (client !== undefined) {
                     this.reset = true;
