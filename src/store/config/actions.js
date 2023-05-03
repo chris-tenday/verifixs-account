@@ -440,9 +440,8 @@ const actions = {
       let formData = new FormData();
       formData.append("client_id", payload.client_id);
       formData.append("pass", payload.pass);
-      formData.append("telephone", payload.phone);
       axios
-        .post(state.baseURL + "/clients/passwordreset", formData)
+        .post(state.baseURL + "/clients/account/passwordreset", formData)
         .then(function({ data }) {
           resolve(data);
         })

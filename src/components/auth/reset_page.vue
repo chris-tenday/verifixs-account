@@ -202,8 +202,7 @@ export default {
                     this.isLoading = true;
                     let data = {
                         client_id: this.form.clientId,
-                        pass: this.form.newPass,
-                        phone: this.form.phone,
+                        pass: this.form.newPass
                     }
                     this.$store.dispatch('resetPass', data).then((res) => {
                         this.isLoading = false;
