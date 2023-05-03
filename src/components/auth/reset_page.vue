@@ -206,7 +206,28 @@ export default {
                     }
                     this.$store.dispatch('resetPass', data).then((res) => {
                         this.isLoading = false;
-                        console.log(JSON.stringify(res));
+                        let result = res.reponse;
+                        if (result.status === 'success') {
+                            this.$swal({
+                                title: "Réinitialisation effectuée",
+                                text: `Le mot de passe du compte de ${result.client.nom} a été mis à jour  !\nveuillez utiliser votre nouveau mot de passe pour vous connecter à votre compte!`,
+                                timer: 4000,
+                                showConfirmButton: false,
+                            }).then((_) => {
+                                this.$router.go(-1);
+                            })
+                        }
+                        else {
+                            this.$swal({
+                                title: "Echec de Réinitialisation",
+                                text: 'Vos tentatives de réinitialisation du mot de passe ont échouées',
+                                timer: 4000,
+                                showConfirmButton: false,
+                            }).then((_) => {
+                                this.reset = false;
+                                this.isOtp = false;
+                            })
+                        }
                     }).catch((err) => this.isLoading = false);
                 }
             });
