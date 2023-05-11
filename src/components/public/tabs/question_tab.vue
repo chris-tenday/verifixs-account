@@ -198,6 +198,7 @@ export default {
 
   methods: {
     deleteResponse(arr, index) {
+
       if (arr[index].diligence_questionnaire_id === undefined) {
         arr.splice(index, 1)
       }
@@ -214,8 +215,14 @@ export default {
         }).then((result) => {
           if (result.isConfirmed) {
             this.deleteLoading = arr[index].diligence_questionnaire_id;
+
             this.$store.dispatch("supprimerReponse", arr[index].diligence_questionnaire_id).then((data) => {
-              this.deleteLoading = ''
+              console.clear();
+              console.log("deleting..");
+              console.log(data);
+              this.deleteLoading = '';
+              arr[index].reponse="";
+              arr.splice(index, 1)
               this.$emit('updatecontent');
             }).catch((err) => {
               this.deleteLoading = ''

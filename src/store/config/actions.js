@@ -364,7 +364,7 @@ const actions = {
       formData.append("diligence_questionnaire_id", payload);
       axios
         .post(
-          state.baseURL + "/clients/diligences/supprimerquestionnairediligence",
+          state.baseURL + "/clients/diligences/supprimerreponse",
           formData
         )
         .then(function({ data }) {
