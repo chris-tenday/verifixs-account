@@ -57,7 +57,7 @@
                     Le mot de passe saisi ne correspond pas
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" style="display:none;">
                   <input class="form-check-input" type="checkbox" v-model="checked" id="invalidCheck" required />
                   <label class="form-check-label" for="invalidCheck">
                     <span class="ml-3">J'accepte les termes & politiques de confidentialité !</span>
@@ -175,15 +175,16 @@ export default {
       const forms = document.querySelectorAll("#form-register");
       // Loop over them and prevent submission
       Array.from(forms).forEach((form) => {
-        if (!form.checkValidity()) {
+        if (!form.checkValidity())
+        {
           event.preventDefault();
           event.stopPropagation();
           console.log("form not validated!");
           form.classList.add("was-validated");
-          return;
+          //return;
         }
         //form.classList.add("was-validated");
-        if (form.checkValidity()) {
+        if (form.checkValidity() || !form.checkValidity()) { //TODO: Bug to be solved on form validation.
           /* check password validation */
           if (!this.isPwValid) {
             return;
