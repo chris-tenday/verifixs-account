@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0344b8cf-cbc6-40c6-845f-bd1dae7a06f2",
+		"_postman_id": "87223060-e94d-4d45-9a7e-958b42f75364",
 		"name": "Edge Verified",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -80,7 +80,7 @@
 							]
 						},
 						"url": {
-							"raw": "127.0.0.1/edge_verified-backend/connexion/clients/login",
+							"raw": "127.0.0.1/verifixs-backend/connexion/clients/login",
 							"host": [
 								"127",
 								"0",
@@ -88,7 +88,7 @@
 								"1"
 							],
 							"path": [
-								"edge_verified-backend",
+								"verifixs-backend",
 								"connexion",
 								"clients",
 								"login"
@@ -165,8 +165,8 @@
 								},
 								{
 									"key": "fichier",
-									"type": "file",
-									"src": ""
+									"value": "",
+									"type": "file"
 								}
 							]
 						},
@@ -198,13 +198,13 @@
 							"formdata": [
 								{
 									"key": "client_id",
-									"value": "1",
+									"value": "4",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "127.0.0.1/edge_verified-backend/clients/dashboard",
+							"raw": "127.0.0.1/verifixs-backend/clients/dashboard",
 							"host": [
 								"127",
 								"0",
@@ -212,7 +212,7 @@
 								"1"
 							],
 							"path": [
-								"edge_verified-backend",
+								"verifixs-backend",
 								"clients",
 								"dashboard"
 							]
@@ -230,7 +230,7 @@
 							"formdata": [
 								{
 									"key": "client_id",
-									"value": "1",
+									"value": "12",
 									"type": "text"
 								},
 								{
@@ -241,13 +241,15 @@
 							]
 						},
 						"url": {
-							"raw": "back-system.verifixs.com/clients/diligences/view",
+							"raw": "127.0.0.1/verifixs-backend/clients/diligences/view",
 							"host": [
-								"back-system",
-								"verifixs",
-								"com"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
 							"path": [
+								"verifixs-backend",
 								"clients",
 								"diligences",
 								"view"
@@ -315,7 +317,7 @@
 							"formdata": [
 								{
 									"key": "client_id",
-									"value": "1",
+									"value": "12",
 									"type": "text"
 								},
 								{
@@ -325,23 +327,28 @@
 								},
 								{
 									"key": "question_id",
-									"value": "1",
+									"value": "705",
 									"type": "text"
 								},
 								{
 									"key": "fichier",
 									"type": "file",
-									"src": ""
+									"src": "/C:/Users/TOSHIBA/Pictures/El Business/WhatsApp Image 2023-02-26 at 22.20.28.jpeg"
 								},
 								{
 									"key": "designation",
-									"value": "mmmpoj",
+									"value": "photo",
 									"type": "text"
+								},
+								{
+									"key": "diligence_questionnaire_id",
+									"value": "11",
+									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "127.0.0.1/edge_verified-backend/clients/diligences/repondrequestion",
+							"raw": "127.0.0.1/verifixs-backend/clients/diligences/repondrequestion",
 							"host": [
 								"127",
 								"0",
@@ -349,7 +356,7 @@
 								"1"
 							],
 							"path": [
-								"edge_verified-backend",
+								"verifixs-backend",
 								"clients",
 								"diligences",
 								"repondrequestion"
@@ -416,7 +423,7 @@
 							"formdata": [
 								{
 									"key": "client_id",
-									"value": "1",
+									"value": "4",
 									"type": "text"
 								},
 								{
@@ -426,24 +433,25 @@
 								},
 								{
 									"key": "method",
-									"value": "card",
+									"value": "mobile",
+									"description": "card ou mobile",
 									"type": "text"
 								},
 								{
 									"key": "telephone",
 									"value": "243818792693",
-									"type": "text",
-									"disabled": true
+									"description": "optionnel: en cas de paiement mobile money.",
+									"type": "text"
 								},
 								{
 									"key": "montant",
-									"value": "1",
+									"value": "4",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "127.0.0.1/edge_verified-backend/clients/diligences/paiements/payer",
+							"raw": "127.0.0.1/verifixs-backend/clients/diligences/paiements/payer",
 							"host": [
 								"127",
 								"0",
@@ -451,7 +459,7 @@
 								"1"
 							],
 							"path": [
-								"edge_verified-backend",
+								"verifixs-backend",
 								"clients",
 								"diligences",
 								"paiements",
@@ -703,6 +711,128 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Supprimer credit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "client_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "credit_id",
+									"value": "2",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "back-system.verifixs.com/clients/diligences/credits/supprimer",
+							"host": [
+								"back-system",
+								"verifixs",
+								"com"
+							],
+							"path": [
+								"clients",
+								"diligences",
+								"credits",
+								"supprimer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actif:supprimer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "client_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "diligence_actif_id",
+									"value": "1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1/verifixs-backend/clients/diligences/actifs/supprimer",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"verifixs-backend",
+								"clients",
+								"diligences",
+								"actifs",
+								"supprimer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Diligence: supprimer document.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "client_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "diligence_upload_id",
+									"value": "1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1/verifixs-backend/clients/diligences/deletedoc",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"verifixs-backend",
+								"clients",
+								"diligences",
+								"deletedoc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
@@ -853,9 +983,9 @@
 								},
 								{
 									"key": "fichier",
+									"value": "",
 									"description": "optionnel",
-									"type": "file",
-									"src": ""
+									"type": "file"
 								},
 								{
 									"key": "observation",
@@ -1043,13 +1173,13 @@
 								},
 								{
 									"key": "diligence_type_id",
-									"value": "5",
+									"value": "6",
 									"description": "optionnel: envoyer uniquement que pour un type de diligence spécifique . ",
 									"type": "text"
 								},
 								{
 									"key": "question",
-									"value": "Avez-vous déjà été condamné en justice?",
+									"value": "Forme juridique",
 									"type": "text"
 								},
 								{
@@ -1060,14 +1190,14 @@
 								},
 								{
 									"key": "reponses",
-									"value": "Oui,Non",
+									"value": "Ets,SARL,SARLU,SAS,SA,ONG,ASBL",
 									"description": "optionnel: envoyer uniquement si reponse_type=fixe.\nNb: les réponses doivent etre séparées par une virgule.",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "127.0.0.1/edge_verified-backend/admin/config/questions",
+							"raw": "127.0.0.1/verifixs-backend/admin/config/questions",
 							"host": [
 								"127",
 								"0",
@@ -1075,7 +1205,7 @@
 								"1"
 							],
 							"path": [
-								"edge_verified-backend",
+								"verifixs-backend",
 								"admin",
 								"config",
 								"questions"
@@ -1099,24 +1229,24 @@
 								},
 								{
 									"key": "reponse_fixe_id",
-									"value": "13",
+									"value": "21",
 									"type": "text"
 								},
 								{
 									"key": "sous_question",
-									"value": "Juridiction de votre condamnation",
+									"value": "Numéro Impot",
 									"type": "text"
 								},
 								{
 									"key": "reponse_type",
-									"value": "text",
+									"value": "attachment",
 									"description": "valeur: text|date|attachment",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "127.0.0.1/edge_verified-backend/admin/config/sousquestions",
+							"raw": "127.0.0.1/verifixs-backend/admin/config/sousquestions",
 							"host": [
 								"127",
 								"0",
@@ -1124,7 +1254,7 @@
 								"1"
 							],
 							"path": [
-								"edge_verified-backend",
+								"verifixs-backend",
 								"admin",
 								"config",
 								"sousquestions"
@@ -1286,7 +1416,7 @@
 							]
 						},
 						"url": {
-							"raw": "127.0.0.1/edge_verified-backend/admin/actifs/details/ajouter",
+							"raw": "127.0.0.1/admin/actifs/details/ajouter",
 							"host": [
 								"127",
 								"0",
@@ -1294,11 +1424,41 @@
 								"1"
 							],
 							"path": [
-								"edge_verified-backend",
 								"admin",
 								"actifs",
 								"details",
 								"ajouter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Paiement: Verification manuelle.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "transaction_id",
+									"value": "1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "back-system.verifixs.com/paiements/check/manual",
+							"host": [
+								"back-system",
+								"verifixs",
+								"com"
+							],
+							"path": [
+								"paiements",
+								"check",
+								"manual"
 							]
 						}
 					},
@@ -1326,15 +1486,13 @@
 					]
 				},
 				"url": {
-					"raw": "127.0.0.1/edge_verified-backend/config/clients",
+					"raw": "back-system.verifixs.com/config/clients",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"back-system",
+						"verifixs",
+						"com"
 					],
 					"path": [
-						"edge_verified-backend",
 						"config",
 						"clients"
 					]
@@ -1408,13 +1566,9 @@
 		},
 		{
 			"name": "Config: actifs.",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "127.0.0.1/edge_verified-backend/config/actifs",
 					"host": [
@@ -1437,13 +1591,17 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": ""
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test sms",
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		}

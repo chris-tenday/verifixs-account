@@ -1,0 +1,8 @@
+Ci-dessous  les paramètres de l’intégration pour l’environnement de test du marchand EDGEV :
+Url : Mobile : http://41.243.7.46:3006/api/rest/v1/paymentService
+
+Carte : https://beta-cardpayment.flexpay.cd/v1/pay
+
+Token : Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcL2xvZ2luIiwicm9sZXMiOlsiTUVSQ0hBTlQiXSwiZXhwIjoxNzIwMjgxNzA5LCJzdWIiOiIxMzdhNjRlMDdkNGE5MjFkMWI5NjEyNDQ3MjA3YWY4MCJ9.UBgJc5xh99QxI_F65W8_pgysZamfzZtiis_cqnb3Ll4
+Voici en outre le lien du backend marchand pour le même environnement : https://beta-marchand.flexpay.cd 
+  
