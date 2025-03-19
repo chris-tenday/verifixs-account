@@ -12,7 +12,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Editor directories and files
-dist
+docs
 dist.zip
 .idea
 .vscode
