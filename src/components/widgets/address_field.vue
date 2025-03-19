@@ -109,7 +109,7 @@ export default {
     methods: {
         handleSplit(event) {
             let res = this.model;
-            console.log(JSON.stringify(this.model));
+            //console.log(JSON.stringify(this.model));
             let split = `PROVINCE :  ${res.split.province.title} | VILLE :  ${res.split.ville} |  COMMUNE :  ${res.split.commune} | QUARTIER :  ${res.split.quartier} | AVENUE :  ${res.split.avenue} | NUMERO :  ${res.split.numero} | REFERENCE :  ${res.split.reference}`;
             if (res.reponse !== undefined) {
                 if (res.split.province.title !== '' && res.split.ville !== '' && res.split.commune !== '' && res.split.quartier && res.split.quartier !== '' && res.split.avenue !== '' && res.split.numero !== '' && res.split.reference !== '') {

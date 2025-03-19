@@ -292,7 +292,7 @@ export default {
         if (result.isConfirmed) {
           this.isDeleteLoading = credit.credit_id;
           this.$store.dispatch('deleteCredit', data).then(async (res) => {
-            console.log(JSON.stringify(res));
+            //console.log(JSON.stringify(res));
             await this.$emit("updatecontent");
             this.isDeleteLoading = '';
           })
@@ -323,7 +323,7 @@ export default {
       }
     },
     toggleSelectMotif(event) {
-      console.log(event.target.value);
+      //console.log(event.target.value);
       if (event.target.value.includes('Autre')) {
         this.selectMofif = false;
         this.credit.motif = "";
@@ -332,7 +332,7 @@ export default {
       }
     },
     toggleSelectBanque(event) {
-      console.log(event.target.value);
+      //console.log(event.target.value);
       if (event.target.value.includes('Autre')) {
         this.selectBanque = false;
         this.credit.banque = "";

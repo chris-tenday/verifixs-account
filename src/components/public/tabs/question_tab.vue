@@ -218,8 +218,8 @@ export default {
 
             this.$store.dispatch("supprimerReponse", arr[index].diligence_questionnaire_id).then((data) => {
               console.clear();
-              console.log("deleting..");
-              console.log(data);
+              //console.log("deleting..");
+              //console.log(data);
               this.deleteLoading = '';
               arr[index].reponse="";
               arr.splice(index, 1)

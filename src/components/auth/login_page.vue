@@ -82,7 +82,7 @@ export default {
       const forms = document.querySelectorAll("#form-login");
       // Loop over them and prevent submission
       Array.from(forms).forEach((form) => {
-        // console.log(this.login.pass);
+        // //console.log(this.login.pass);
         if (!form.checkValidity()) {
           event.preventDefault();
           event.stopPropagation();
@@ -90,7 +90,7 @@ export default {
         }
 
         if (form.checkValidity()) {
-          // console.log(this.login.pass + '  2');
+          // //console.log(this.login.pass + '  2');
 
           this.isLoading = true;
           var formData = new FormData();
@@ -99,7 +99,7 @@ export default {
 
           this.$store.dispatch("loginAccount", formData).then((res) => {
             this.isLoading = false;
-            console.log(res);
+            //console.log(res);
             if (res === false) {
               return
             }
@@ -125,7 +125,7 @@ export default {
 
     getDate(date) {
       this.date = date;
-      console.log("new date" + this.date);
+      //console.log("new date" + this.date);
     },
   },
 };

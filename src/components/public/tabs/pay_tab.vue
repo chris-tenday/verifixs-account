@@ -77,7 +77,7 @@
                       </button>
                     </div>
                     <div v-else>
-                      <form action="https://beta-cardpayment.flexpay.cd/v1/pay" method="post" id="card_form">
+                      <form action="#" method="post" id="card_form">
                         <div class="mb-2 d-none">
                           <input type="text" name="authorization" class="form-control"
                             :value="cardTransaction.authorization" />
@@ -114,7 +114,7 @@
                             :value="cardTransaction.decline_url" />
                         </div>
 
-                        <button @click.prevent="pay" type="submit" class="btn btn-success btn-lg w-100 mt-3"
+                        <button @click.prevent="testPay" type="submit" class="btn btn-success btn-lg w-100 mt-3"
                           :class="payLoading ? 'disabled' : ''">
                           <span v-if="payLoading" class="spinner-border spinner-border-sm"></span>
                           <i v-else class="fa fa-lock"></i> Payer
@@ -244,6 +244,15 @@ export default {
         this.$emit("gotoprevioustab");
       }
     },
+    testPay(){
+      if (this.payment.payWithMobile) {
+        if (this.payment.telephone.length < 10) {
+          this.displayMsg("Numéro de téléphone incorrect.");
+          return false;
+        }
+        formData.append("telephone", this.payment.telephone);
+      }
+    },
     toggleWantToPay() {
       if (this.wantToPay) {
         this.wantToPay = false;
@@ -360,7 +369,7 @@ export default {
 
   created() {
     if (this.paiement !== undefined) {
-      console.log(JSON.stringify(this.paiement));
+      //console.log(JSON.stringify(this.paiement));
     }
   }
 };

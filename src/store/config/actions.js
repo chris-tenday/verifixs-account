@@ -22,7 +22,7 @@ const actions = {
     { commit },
     data
   ) /** method pour sauvegarder les données d'un user connecté */ {
-    //console.log("Before commit:"); console.log(data);
+    ////console.log("Before commit:"); //console.log(data);
     commit("setUser", data);
   },
   logUserOut() /** method pour deconnecter un user */ {
@@ -79,7 +79,7 @@ const actions = {
               diligences[i].details = data.details;
             }
           }
-          //console.clear(); console.log(diligences);
+          //console.clear(); //console.log(diligences);
           //commit("setDiligences",diligences);
           //**Copie des reponses precedentes  */
           localStorage.setItem(
@@ -252,7 +252,7 @@ const actions = {
         .post(state.baseURL + "/clients/diligences/repondrequestion", data)
         .then(function(result) {
           var data = result.data;
-          console.log(data);
+          //console.log(data);
           resolve(data);
         })
         .catch((e) => {
@@ -270,7 +270,7 @@ const actions = {
       axios
         .post(state.baseURL + "/clients/diligences/paiements/payer", data)
         .then(function(result) {
-          console.log(JSON.stringify(result));
+          //console.log(JSON.stringify(result));
           var data = result.data;
           resolve(data);
         });
@@ -333,7 +333,7 @@ const actions = {
         .post(state.baseURL + "/clients/account", data)
         .then(function(result) {
           var data = result.data;
-          console.log(JSON.stringify(data));
+          //console.log(JSON.stringify(data));
           if (data.reponse.status === "success") {
             /**
              * Update client dans le store.
@@ -349,10 +349,10 @@ const actions = {
     { state, getters },
     payload
   ) /** method pour activier un compte */ {
-    console.log(payload);
+    //console.log(payload);
     let client = getters.getClient;
 
-    console.log(JSON.stringify(client));
+    //console.log(JSON.stringify(client));
     return new Promise(function(resolve, reject) {
       if (!checkConnection()) {
         alert("Vous êtes actuellement hors ligne.");
@@ -371,7 +371,7 @@ const actions = {
           resolve(data);
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
           reject(false);
         });
     });
@@ -392,7 +392,7 @@ const actions = {
           resolve(data);
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
           reject(e);
         });
     });
@@ -419,7 +419,7 @@ const actions = {
           resolve(data);
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
           reject(e);
         });
     });
@@ -446,7 +446,7 @@ const actions = {
           resolve(data);
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
           reject(e);
         });
     });

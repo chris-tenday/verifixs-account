@@ -104,10 +104,10 @@ export default {
     },
 
     cameraCapture(data) {
-      console.log(data);
+      //console.log(data);
       this.documentUploaded = data;
       this.question.reponses[0].reponse = data;
-      console.log(JSON.stringify(this.question));
+      //console.log(JSON.stringify(this.question));
     },
     /** method pour supprimer une capture */
     deleteCapture() {
@@ -375,7 +375,7 @@ export default {
           await this.$store
             .dispatch("repondreQuestion", formData)
             .then((res) => {
-              console.log("Res:" + res);
+              //console.log("Res:" + res);
 
               if (
                 res.reponse === undefined ||
@@ -468,15 +468,15 @@ export default {
   watch: {
     question(oldQuestion, newQuestion) {
       /*console.clear();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 console.log("Old: "+oldQuestion.question);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    console.log("New:" +newQuestion.question);*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 //console.log("Old: "+oldQuestion.question);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    //console.log("New:" +newQuestion.question);*/
       /**
        * Update sousQuestions quand la question change.
        */
     },
 
     "question.reponses[0]"(old, val) {
-      console.log(old, val);
+      //console.log(old, val);
     },
   },
 };

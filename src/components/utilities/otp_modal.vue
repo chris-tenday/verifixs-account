@@ -74,13 +74,13 @@ export default {
 
     async resendOtp() {
       let formData = new FormData();
-      console.log(this.user.telephone);
+      //console.log(this.user.telephone);
       formData.append('telephone', this.user.telephone);
       this.otpSendLoading = true;
       this.$store.dispatch('resendOtp', formData).then((res) => {
         this.otpSendLoading = false;
         this.time = 60;
-        console.log(JSON.stringify(res));
+        //console.log(JSON.stringify(res));
       });
     },
 

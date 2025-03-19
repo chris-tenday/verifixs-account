@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     updated(event) {
-      console.log(event);
+      //console.log(event);
       let date = `${this.day}-${this.month}-${this.year}`;
       this.$emit("input", date);
     },

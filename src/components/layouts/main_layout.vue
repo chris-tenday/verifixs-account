@@ -128,7 +128,7 @@ export default {
       }
     },
     activateAccount(otp) /** method pour activer un compte */ {
-      console.log("user otp ###:" + otp);
+      //console.log("user otp ###:" + otp);
       var form = new FormData();
       form.append("client_id", this.client.client_id);
       form.append("otp", otp);

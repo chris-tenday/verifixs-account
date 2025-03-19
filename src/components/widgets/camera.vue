@@ -74,7 +74,7 @@ export default {
   },
   mounted() {
     this.startCamera()
-    console.log("captured value", this.dataImg);
+    //console.log("captured value", this.dataImg);
   },
   methods: {
     startCapture() {
@@ -84,7 +84,7 @@ export default {
           this.video.srcObject = stream;
           this.video.play();
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log("CAM"));
     },
 
     uploadImage(event) {
@@ -103,7 +103,7 @@ export default {
           reader.readAsDataURL(file);
         }
       } catch (error) {
-        console.log("uploading error", error);
+        //console.log("uploading error", error);
       }
     },
 

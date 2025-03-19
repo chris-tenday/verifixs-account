@@ -152,9 +152,9 @@ export default {
   },
   methods: {
     setChoosenType(diligenceType) {
-      //console.log(JSON.stringify(diligenceType));
+      ////console.log(JSON.stringify(diligenceType));
       this.choosenType = diligenceType;
-      console.log(this.choosenType.description);
+      //console.log(this.choosenType.description);
     },
     toggleSeeMore(id) {
       if (this.seeMore === "") {
@@ -165,7 +165,7 @@ export default {
       }
     },
     postuler() {
-      console.log("submitted");
+      //console.log("submitted");
       if (this.objet.length < 3) {
         this.$swal({
           title: "Saisissez correctement le motif de votre demande",

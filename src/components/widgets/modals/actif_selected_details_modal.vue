@@ -252,10 +252,10 @@ export default {
     },
     changeFile(event) {
       let file = event.target.files[0];
-      console.log(file);
+      //console.log(file);
     },
     toggleInputOther(field) {
-      console.log(JSON.stringify(field));
+      //console.log(JSON.stringify(field));
       if (field.select) {
         field.select = "non";
       } else {
@@ -329,7 +329,7 @@ export default {
       this.$axios
         .post("/clients/diligences/actifs/add", formData)
         .then(async (result) => {
-          //console.log(JSON.stringify(result.data));
+          ////console.log(JSON.stringify(result.data));
           var data = result.data;
           if (data.reponse !== undefined && data.reponse.status === "success") {
             for (let i = 0; i < this.data.details.length; i++) {
@@ -368,7 +368,7 @@ export default {
         })
         .catch((err) => {
           this.isLoading = false;
-          console.log(err);
+          //console.log(err);
         });
     },
     saveDetail(detail, id) {
@@ -393,11 +393,11 @@ export default {
         .post("/clients/diligences/actifs/savedetail", formData)
         .then((result) => {
           let res = JSON.stringify(result.data);
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
           this.isLoading = false;
-          console.log(err);
+          //console.log(err);
         });
     },
   },

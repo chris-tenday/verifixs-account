@@ -197,15 +197,15 @@ export default {
   },
   methods: {
     showQuestions() {
-      console.log(JSON.stringify(this.questions));
+      //console.log(JSON.stringify(this.questions));
     },
     onSelectedActif(actif) {
-      console.log('show details');
+      //console.log('show details');
       this.selected_actif = actif;
       $("#inputsShowBtn").click();
     },
     onShowDetails(inputs) {
-      console.log('inputs');
+      //console.log('inputs');
       this.actif_details = inputs;
       $("#detailShowBtn").click();
     },
@@ -283,7 +283,7 @@ export default {
     },
     /** method pour mettre à jour le contenu affiché */
     async updateContent() {
-      console.log("updatecontent called..");
+      //console.log("updatecontent called..");
       var formData = new FormData();
       formData.append("diligence_id", this.diligenceId);
       formData.append("client_id", this.client.client_id);
@@ -342,8 +342,8 @@ export default {
     },
     diligence() {
       var diligences = this.$store.getters.getDiligences;
-      //console.clear(); console.log("2getters..");
-      //console.log(diligences);
+      //console.clear(); //console.log("2getters..");
+      ////console.log(diligences);
       var diligence = {};
       for (var i = 0; i < diligences.length; i++) {
         if (diligences[i].diligence_id === this.diligenceId) {

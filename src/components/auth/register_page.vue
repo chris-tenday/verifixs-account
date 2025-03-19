@@ -121,7 +121,7 @@ export default {
     checked(val) {
       let modalShow = $("#btn-privacy");
       if (val) {
-        console.log(val);
+        //console.log(val);
         modalShow.click();
       }
     },
@@ -170,7 +170,7 @@ export default {
   methods: {
 
     async registerAccount(event) {
-      console.log(this.register.telephone);
+      //console.log(this.register.telephone);
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
       const forms = document.querySelectorAll("#form-register");
       // Loop over them and prevent submission
@@ -179,7 +179,7 @@ export default {
         {
           event.preventDefault();
           event.stopPropagation();
-          console.log("form not validated!");
+          //console.log("form not validated!");
           form.classList.add("was-validated");
           //return;
         }

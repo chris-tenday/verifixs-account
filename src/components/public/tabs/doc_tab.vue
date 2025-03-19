@@ -132,7 +132,7 @@ export default {
     },
 
     deleteDoc(doc) {
-      console.log(JSON.stringify(doc));
+      //console.log(JSON.stringify(doc));
       this.$swal({
         text: "Etes-vous sûr de vouloir supprimer le document sélectionné ?",
         icon: "warning",
@@ -146,7 +146,7 @@ export default {
         formData.append("diligence_upload_id", doc.diligence_upload_id)
         this.isDeletedDocLoading = doc.diligence_upload_id;
         this.$axios.post("/clients/diligences/deletedoc", formData).then((res) => {
-          console.log(JSON.stringify(res.data));
+          //console.log(JSON.stringify(res.data));
           this.$emit('updatecontent');
           this.isDeletedDocLoading = '';
         })
@@ -243,7 +243,7 @@ export default {
     },
     setDesignation(designation) {
       this.uploadedDocument.designation = designation;
-      console.log(this.uploadedDocument.designation);
+      //console.log(this.uploadedDocument.designation);
       this.noEdit = true;
       $("#uploadModalBtn").click();
       //this.openUploadModal(true);

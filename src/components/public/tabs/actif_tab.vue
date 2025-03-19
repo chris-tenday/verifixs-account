@@ -192,7 +192,7 @@ export default {
 
     changeFile(event) {
       let file = event.target.files[0];
-      console.log(file);
+      //console.log(file);
     },
 
     getSelectedActif(actif) {
@@ -222,11 +222,11 @@ export default {
         .post("/clients/diligences/actifs/savedetail", formData)
         .then((result) => {
           let res = JSON.stringify(result.data);
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
           this.isLoading = false;
-          console.log(err);
+          //console.log(err);
         });
     },
   },

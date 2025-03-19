@@ -68,10 +68,10 @@ const getters = {
                 questions = questions.concat(additionnel);
             }
             //console.clear();
-            //console.log(questions);
+            ////console.log(questions);
         } catch (error) {
-            console.log("additionel exception");
-            console.log(error);
+            //console.log("additionel exception");
+            //console.log(error);
         }
         return questions;
     },

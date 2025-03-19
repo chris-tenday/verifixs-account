@@ -73,7 +73,7 @@ export default {
          * */
         this.$emit("gototab", nextTab);
       } else {
-        console.log("tab go");
+        //console.log("tab go");
         /**
          * Throw event pour passer au next Tab .
          */

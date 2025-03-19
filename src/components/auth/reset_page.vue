@@ -129,7 +129,7 @@ export default {
             const forms = document.querySelectorAll("#form-reset");
             // Loop over them and prevent submission
             Array.from(forms).forEach((form) => {
-                // console.log(this.login.pass);
+                // //console.log(this.login.pass);
                 if (!form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
@@ -146,7 +146,7 @@ export default {
             this.isLoading = true;
             this.emptyField();
             this.$store.dispatch('resetPassSendOtp', this.form.phone).then((res) => {
-                console.log(JSON.stringify(res));
+                //console.log(JSON.stringify(res));
                 this.isLoading = false;
                 let result = res.reponse;
                 if (result.status === 'success') {
@@ -188,7 +188,7 @@ export default {
             const forms = document.querySelectorAll("#form-reset");
             // Loop over them and prevent submission
             Array.from(forms).forEach((form) => {
-                // console.log(this.login.pass);
+                // //console.log(this.login.pass);
                 if (!form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
