@@ -7,12 +7,11 @@ if (location.href.includes(".com"))
   }
 
 
-  if (location.href.includes("verifixs.com"))
+  if (location.href.includes(".com"))
   {
-    domain = "https://back-system.verifixs.com"; /** live server */
+    domain = "https://dgi.kaapital.net"; /** live server */
   }
 }
-
 
 const states = {
   baseURL: domain,
