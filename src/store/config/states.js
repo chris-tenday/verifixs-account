@@ -1,5 +1,5 @@
 var domain = "http://127.0.0.1/verifixs-backend-new";
-if (location.href.includes(".com"))
+if (location.href.includes(".io"))
 {
   if (location.protocol != "https:")
   {
@@ -7,7 +7,7 @@ if (location.href.includes(".com"))
   }
 
 
-  if (location.href.includes(".com"))
+  if (location.href.includes(".io"))
   {
     domain = "https://dgi.kaapital.net"; /** live server */
   }
